@@ -428,7 +428,7 @@
 <h2 id="详细加密过程"><a href="#详细加密过程" class="headerlink" title="详细加密过程"></a><strong>详细加密过程</strong></h2><p>四个步骤：<strong>字节替换、行移位、列合和轮密钥加</strong>。</p>
 <p><strong>注：根据密钥长度不同，加密的轮数也不同，128位的密钥推荐加密轮数为10，192位的密钥推荐加密轮数为12，256位的密钥推荐加密轮数为14</strong>。<strong>在第一轮之前要进行轮密钥加，即将明文矩阵与密钥矩阵进行异或操作。最后一轮没有进行列混合操作</strong>。 </p>
 <p><strong>1、字节替换</strong></p>
-<p>通过一个替换表（S盒）对每个字节进行替换，且过程是可逆的，将每一个字节的前4位作为行值，后4位作为列值，到t查找，进行输出。<br> 下图为S盒，例如字节为0x16，那么前四位的16进制为1，后四位的16进制为6，去查找S盒中的第1行第6列的值，可以看出为0x47，就把原先的字节0x16替换为0x47。<br><img src="C:\Users\lenovo\Desktop\S盒.png" alt="S盒"></p>
+<p>通过一个替换表（S盒）对每个字节进行替换，且过程是可逆的，将每一个字节的前4位作为行值，后4位作为列值，到t查找，进行输出。<br> 下图为S盒，例如字节为0x16，那么前四位的16进制为1，后四位的16进制为6，去查找S盒中的第1行第6列的值，可以看出为0x47，就把原先的字节0x16替换为0x47。<br><img src="https://img-blog.csdnimg.cn/20200119170513844.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3lhbmhhaWp1bnlhbg==,size_16,color_FFFFFF,t_70" alt="S盒"></p>
 <p>解密过程就是用逆盒进行相同的操作。</p>
 <p><strong>2、行移位</strong></p>
 <p>将16位的明文P分成16组，放入4*4的矩阵中：</p>
