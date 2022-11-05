@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="AES加密, Luino&#39;s Bold">
+    <meta name="keywords" content="DASCTF X GFCTF 2022十月挑战赛--Crypto, Luino&#39;s Bold">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>AES加密 | Luino&#39;s Bold</title>
+    <title>DASCTF X GFCTF 2022十月挑战赛--Crypto | Luino&#39;s Bold</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">AES加密</h1>
+                    <h1 class="description center-align post-title">DASCTF X GFCTF 2022十月挑战赛--Crypto</h1>
                 </div>
             </div>
         </div>
@@ -366,13 +366,9 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                    <div class="article-tag">
-                        
-                            <a href="/tags/%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86/">
-                                <span class="chip bg-color">对称加密</span>
-                            </a>
-                        
-                    </div>
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -393,7 +389,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-10-30
+                    2022-11-05
                 </div>
                 
 
@@ -414,169 +410,205 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="简单了解"><a href="#简单了解" class="headerlink" title="简单了解"></a><strong>简单了解</strong></h2><p>之前学到的RSA加密是非对称加密，而AES则是对称加密，区分点在于AES加密解密过程中用的密钥是相同的。这里记明文为P，密文为C，密钥为K。支持的密钥K的长度有128位，192位，256位。</p>
-<p>加密：C = E(P,K)，E为加密函数</p>
-<p>解密：P = D(C,K)，D为解密函数</p>
-<h2 id="大致加密过程"><a href="#大致加密过程" class="headerlink" title="大致加密过程"></a><strong>大致加密过程</strong></h2><p>AES加密过程使用的是分组加密，即把明文P分成n组，对n组明文分别使用密钥K加密得到n组密文，将n组密文组合就得到了最终的密文C。<strong>且对每一组明文有长度要求，即128bit位（16个字节，每个字节8位）</strong>。可以知道，加密得到的每一组密文的长度也是128bit位。</p>
-<h2 id="明文填充"><a href="#明文填充" class="headerlink" title="明文填充"></a><strong>明文填充</strong></h2><p>加密过程中，很可能出现明文长度不为128整数倍的情况，这就不能保证每一组的明文长度一致，这时就需要进行填充了。填充的方法有这么几种：NoPadding、PKCS#5、PKCS#7、ISO 10126、ANSI X9.23、ZerosPadding 。可以知道，如果在加密的时候，如果使用了某种填充方法，对应解密也需要用对应的填充方法。</p>
-<p><strong>填充方法解释</strong></p>
-<p><strong>NoPadding</strong>：不填充，只能加密长为128bits倍数的信息，很少使用。</p>
-<p><strong>PKCS#5、PKCS#7</strong>：缺几个字节，就补充几个字节，且补充的值为缺失字节的数量。举例：(1,2,3,4,5,a,b,c,d,e)，缺少6个字节，则补全为(1,2,3,4,5,a,b,c,d,e,6,6,6,6,6,6)</p>
-<p><strong>ISO 10126</strong>：最后一个字节是填充的字节数（包括最后一字节），其他全部填随机数</p>
-<p><strong>ANSI X9.23</strong>： 类似于ISO 10126，只不过ANSI X9.23其他字节填的都是0而不是随机数</p>
-<p><strong>ZerosPadding</strong>：全部填充<code>0x00</code>，无论缺多少全部填充<code>0x00</code></p>
-<h2 id="详细加密过程"><a href="#详细加密过程" class="headerlink" title="详细加密过程"></a><strong>详细加密过程</strong></h2><p>四个步骤：<strong>字节替换、行移位、列合和轮密钥加</strong>。</p>
-<p><strong>注：根据密钥长度不同，加密的轮数也不同，128位的密钥推荐加密轮数为10，192位的密钥推荐加密轮数为12，256位的密钥推荐加密轮数为14</strong>。<strong>在第一轮之前要进行轮密钥加，即将明文矩阵与密钥矩阵进行异或操作。最后一轮没有进行列混合操作</strong>。 </p>
-<p><strong>1、字节替换</strong></p>
-<p>通过一个替换表（S盒）对每个字节进行替换，且过程是可逆的，将每一个字节的前4位作为行值，后4位作为列值，到t查找，进行输出。<br> 下图为S盒，例如字节为0x16，那么前四位的16进制为1，后四位的16进制为6，去查找S盒中的第1行第6列的值，可以看出为0x47，就把原先的字节0x16替换为0x47。<br><img src="https://img-blog.csdnimg.cn/20200119170513844.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3lhbmhhaWp1bnlhbg==,size_16,color_FFFFFF,t_70" alt="S盒"></p>
-<p>解密过程就是用逆盒进行相同的操作。</p>
-<p><strong>2、行移位</strong></p>
-<p>将16位的明文P分成16组，放入4*4的矩阵中：</p>
-<table>
-<thead>
-<tr>
-<th><strong>a00</strong></th>
-<th><strong>a01</strong></th>
-<th><strong>a02</strong></th>
-<th><strong>a03</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>a10</strong></td>
-<td><strong>a11</strong></td>
-<td><strong>a12</strong></td>
-<td><strong>a13</strong></td>
-</tr>
-<tr>
-<td><strong>a20</strong></td>
-<td><strong>a21</strong></td>
-<td><strong>a22</strong></td>
-<td><strong>a23</strong></td>
-</tr>
-<tr>
-<td><strong>a30</strong></td>
-<td><strong>a31</strong></td>
-<td><strong>a32</strong></td>
-<td><strong>a33</strong></td>
-</tr>
-</tbody></table>
-<p>顺序位从上到下，从左到右</p>
-<p>加密行移位操作：</p>
-<p>​               第0行：保持不动；<br>​               第1行：循环左移1个字节；<br>​               第2行：循环左移2个字节；<br>​               第3行：循环左移3个字节。</p>
-<p>移位后的明文矩阵：</p>
-<table>
-<thead>
-<tr>
-<th>a00</th>
-<th>a01</th>
-<th>a02</th>
-<th>a03</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>a11</strong></td>
-<td><strong>a12</strong></td>
-<td><strong>a13</strong></td>
-<td><strong>a10</strong></td>
-</tr>
-<tr>
-<td><strong>a22</strong></td>
-<td><strong>a23</strong></td>
-<td><strong>a20</strong></td>
-<td><strong>a21</strong></td>
-</tr>
-<tr>
-<td><strong>a33</strong></td>
-<td><strong>a30</strong></td>
-<td><strong>a31</strong></td>
-<td><strong>a32</strong></td>
-</tr>
-</tbody></table>
-<p>解密操作对应进行右移即可。</p>
-<p><strong>3、列混合</strong></p>
-<p>加密过程：将得到的状态矩阵左乘另一个给定的4*4的矩阵，即<strong>给定矩阵*经过行移位的矩阵</strong>。</p>
-<p>解密过程：只需再次与相乘的矩阵进行异或即可</p>
-<p>需要注意的是，这里的矩阵相乘与普通的矩阵相乘不大一样，举例操作：假设<strong>给定矩阵</strong>第一行为</p>
-<p>{02 03 01 01}，<strong>经过行移位的矩阵</strong>的第一列为(d4 bf 5d 30)，相乘得到：02<em>d4⊕03</em>bf⊕5d⊕30，</p>
+                <p>最后一步没搞出来，勉强就会这一道了（看了wp的情况下）。</p>
+<h2 id="RSA"><a href="#RSA" class="headerlink" title="RSA"></a><strong>RSA</strong></h2><pre><code class="python">from Crypto.Util.number import *
+from secret import flag
+
+def encrypt1(n):
+    n1 = hex(n&gt;&gt;200).encode()
+    n2 = str(hex(n))[20:].encode()
+    return n1,n2
+
+
+def encrypt2(m , n_1):
+    c_1 = pow(m,e_1,n_1)
+    print(&#39;c_1 = &#39;+str(c_1))
+
+
+def encrypt3(m , n_2):
+    c_2 = pow( m , e_2 , n_2)
+    print(&#39;c_2 = &#39;+str(c_2))
+
+
+def encrypt4(m):
+    k = getPrime(512)
+    m = m % k
+    c_3 = pow(m, e_2, n_3)
+    print(&#39;c_3 = &#39; + str(c_3))
+    print(&#39;m = &#39; + str(m))
+    print(&#39;k = &#39; + str(k))
+
+
+m1,m2 = encrypt1(flag)
+m1 = bytes_to_long(m1)
+m2 = bytes_to_long(m2)
+
+
+print(&#39;n_2 = &#39; + str(n_2))
+print(&#39;n_3 = &#39; + str(n_3))
+print(&#39;e_1 = &#39; + str(e_1))
+print(&#39;e_2 = &#39; + str(e_2))
+
+
+encrypt2(m1,n_1)
+encrypt3(n_1,n_2)
+encrypt4(m2)
+
+&#39;&#39;&#39;
+n_2 = 675835056744450121024004008337170937331109883435712066354955474563267257037603081555653829598886559337325172694278764741403348512872239277008719548968016702852609803016353158454788807563316656327979897318887566108985783153878668451688372252234938716250621575338314779485058267785731636967957494369458211599823364746908763588582489400785865427060804408606617016267936273888743392372620816053927031794575978032607311497491069242347165424963308662091557862342478844612402720375931726316909635118113432836702120449010
+n_3 = 91294511667572917673898699346231897684542006136956966126836916292947639514392684487940336406038086150289315439796780158189004157494824987037667065310517044311794725172075653186677331434123198117797575528982908532086038107428540586044471407073066169603930082133459486076777574046803264038780927350142555712567
+e_1 = 65537
+e_2 = 3
+c_1 = 47029848959680138397125259006172340325269302342762903311733700258745280761154948381409328053449580957972265859283407071931484707002138926840483316880087281153554181290481533
+c_2 = 332431
+c_3 = 11951299411967534922967467740790967733301092706094553308467975774492025797106594440070380723007894861454249455013202734019215071856834943490096156048504952328784989777263664832098681831398770963056616417301705739505187754236801407014715780468333977293887519001724078504320344074325196167699818117367329779609
+m = 9530454742891231590945778054072843874837824815724564463369259282490619049557772650832818763768769359762168560563265763313176741847581931364
+k = 8139616873420730499092246564709331937498029453340099806219977060224838957080870950877930756958455278369862703151353509623205172658012437573652818022676431
+&#39;&#39;&#39;
+</code></pre>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>分析：</p>
+<p><strong>encrypt1：</strong></p>
+<pre><code class="python">def encrypt1(n):
+    n1 = hex(n&gt;&gt;200).encode()
+    n2 = str(hex(n))[20:].encode()
+    return n1,n2
+</code></pre>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>n1：将flag右移200比特</p>
+<p>n2：取flag第20位字节之后的部分</p>
+<p>就是把flag截取成前一部分和后一部分。</p>
+<p><strong>encrypt2</strong>和<strong>encrypt3：</strong></p>
+<p>看起来逻辑一样，基础rsa加密</p>
+<p>其中<strong>encrypt3</strong>里的e_2=3，故猜测是低指数解密攻击，直接爆破：</p>
+<pre><code class="python">#encrypt3
+e_2 = 3
+c_2 = 332431
+n_2 = 675835056744450121024004008337170937331109883435712066354955474563267257037603081555653829598886559337325172694278764741403348512872239277008719548968016702852609803016353158454788807563316656327979897318887566108985783153878668451688372252234938716250621575338314779485058267785731636967957494369458211599823364746908763588582489400785865427060804408606617016267936273888743392372620816053927031794575978032607311497491069242347165424963308662091557862342478844612402720375931726316909635118113432836702120449010
+k = 0
+while True:
+    res = iroot(c_2+k*n_2,e_2)
+    if res[1] == True:
+        n_1 = res[0]
+        break
+    k += 1
+print(n_1)
+#n_1 = 70406706457855863712635967741447303613971473150228480705119773604469794649140239446237334040048504811343327173817296308781190911727763110615393368497803655390445303946160971
+</code></pre>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>解出n_1，发现可以分解，有三个因数，那<strong>encrypt2</strong>也能解了</p>
+<pre><code class="python">#encrypt2
+e_1 = 65537
+c_1 = 47029848959680138397125259006172340325269302342762903311733700258745280761154948381409328053449580957972265859283407071931484707002138926840483316880087281153554181290481533
+p = 2224243981
+q = 2732337821
+r = 11585031296201346891716939633970482508158508580350404805965250133832632323150440185890235814142601827544669601048550999405490149435265122374459158586377571
+phi_n = (p-1)*(q-1)*(r-1)
+d = invert(e_1,phi_n)
+m1 = pow(c_1,d,n_1)
+#print(long_to_bytes(m1))
+#b&#39;0x666c61677b3230366538353964&#39;
+</code></pre>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>得到了flag的前一部分 </p>
+<p><strong>encrypt4：</strong></p>
+<pre><code class="python">def encrypt4(m):
+    k = getPrime(512)
+    m = m % k
+    c_3 = pow(m, e_2, n_3)
+    print(&#39;c_3 = &#39; + str(c_3))
+    print(&#39;m = &#39; + str(m))
+    print(&#39;k = &#39; + str(k))
+</code></pre>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>对m进行随机数取余，再进行rsa基础加密</p>
 <blockquote>
-<p>对02*d4，计算过程为： </p>
-<p>换成二进制形式，(00000010) * (11010100)，d4的二进制最高位为1，此时将d4左移一位再与00011011异或，即(00000010) * (11010100) = (10101000) ⊕ (00011011) = <strong>10110011</strong></p>
-<p>若右边的二进制最高位为0，则结果直接为右边的二进制左移一位，即不需再与(00011011)异或。</p>
-<p>对03*bf，计算过程为：</p>
-<p>换成二进制形式，((00000010)⊕(00000001))*(10111111)，bf的二进制最高位也为1，将bf左移一位再与00011011相异或，</p>
-<p>即((00000010)⊕(00000001))*(10111111) = (01111110) ⊕ (00011011) = <strong>11011010</strong></p>
-<p>对01<em>5d，就等于5d，二进制为*<em>01011101</em></em></p>
-<p>对01<em>30，就等于30，二进制为*<em>00110000</em></em></p>
-<p>最后将每一步的结果进行异或：<strong>10110011</strong>⊕<strong>11011010</strong>⊕<strong>01011101</strong>⊕<strong>00110000</strong> = <strong>00000100 = 04</strong></p>
+<p>传的参数是m2，即flag的后一部分。</p>
+<p>m = m2 % k ==&gt; m = m2 + k2*k</p>
+<p>c3 = m^e2 mod n3 ==&gt; c3 = (m2 + k2*k)^e2 mod n3</p>
+<p>于是在模n_3的域上构造<img src="https://latex.codecogs.com/gif.latex?f%20=%20(m2&plus;k2*k)%5E%7Be2%7D%20-%20c3" alt="f = (m2+k2*k)^{e2} - c3"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑，解得k2 = 0，即m2 = m</p>
 </blockquote>
-<p><strong>4、轮密钥加</strong> </p>
-<p>将经过列混合的矩阵与轮密钥矩阵，每一列对应进行异或操作。而轮密钥矩阵是通过最开始的密钥矩阵经过<strong>密钥扩展</strong>得到的。之前说到128位的密钥推荐加密轮数为10，而每一轮都会得到一个轮密钥。</p>
-<p>综上，总体过程为：</p>
+<pre><code class="python">#Sage
+e_2 = 3
+n_3 = 91294511667572917673898699346231897684542006136956966126836916292947639514392684487940336406038086150289315439796780158189004157494824987037667065310517044311794725172075653186677331434123198117797575528982908532086038107428540586044471407073066169603930082133459486076777574046803264038780927350142555712567
+c_3 = 11951299411967534922967467740790967733301092706094553308467975774492025797106594440070380723007894861454249455013202734019215071856834943490096156048504952328784989777263664832098681831398770963056616417301705739505187754236801407014715780468333977293887519001724078504320344074325196167699818117367329779609
+m = 9530454742891231590945778054072843874837824815724564463369259282490619049557772650832818763768769359762168560563265763313176741847581931364
+k = 8139616873420730499092246564709331937498029453340099806219977060224838957080870950877930756958455278369862703151353509623205172658012437573652818022676431
+p.&lt;k2&gt; = PolynomialRing(Zmod(n_3))
+f = (m+k2*k)^e_2 - c_3
+f = f.monic()
+k2 = f.small_roots()[0]
+flag = int(m+k2*k)
+print(flag)
+</code></pre>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p> 解出后一部分</p>
 <blockquote>
-<p>（一）将明文矩阵与子密钥矩阵进行异或操作</p>
-<p>（二）将得到的矩阵进行上述1、2、3、4操作9次</p>
-<p>（三）最后进行第10轮循环，只进行1、2、4操作</p>
-<p>操作结束后即为密文矩阵</p>
+<p>至此</p>
+<p>m1 = 0x666c61677b3230366538353964</p>
+<p>m2 = 383539643865383534633466363030636231323735376262663966357d</p>
+<p>发现有重合的部分，去除得到原始m：</p>
+<p>m=0x666c61677b32303665383539643865383534633466363030636231323735376262663966357d</p>
 </blockquote>
-<p>那10轮循环过程中的轮密钥怎么得来的呢—<strong>密钥扩展</strong></p>
-<h2 id="密钥扩展"><a href="#密钥扩展" class="headerlink" title="密钥扩展"></a><strong>密钥扩展</strong></h2><p>将子密钥K分组，放入矩阵中去：</p>
-<table>
-<thead>
-<tr>
-<th>k00</th>
-<th>k01</th>
-<th>k02</th>
-<th>k03</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>k10</strong></td>
-<td><strong>k11</strong></td>
-<td><strong>k12</strong></td>
-<td><strong>k13</strong></td>
-</tr>
-<tr>
-<td><strong>k20</strong></td>
-<td><strong>k21</strong></td>
-<td><strong>k22</strong></td>
-<td><strong>k23</strong></td>
-</tr>
-<tr>
-<td><strong>k30</strong></td>
-<td><strong>k31</strong></td>
-<td><strong>k32</strong></td>
-<td><strong>k33</strong></td>
-</tr>
-</tbody></table>
-<p>记每一列为Wi，补上扩展部分：</p>
-<table>
-<thead>
-<tr>
-<th>W1</th>
-<th>W2</th>
-<th>W3</th>
-<th>W4</th>
-<th>Wi-1</th>
-<th>Wi</th>
-</tr>
-</thead>
-<tbody><tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<p>1、如果i不是4的倍数，则Wi的计算公式为：</p>
-<p>Wi = W[i-4] ⊕ W[i-1]</p>
-<p>2、如果i是4的倍数，则Wi的计算公式为：</p>
-<p>Wi = W[i-4] ⊕ T(W[i-1])，这里用到了T函数，T函数由三部分组成：字循环、字节代换、轮常量异或。</p>
-<p><strong>字循环</strong>：将一个字中的4个字节循环左移一个字节，如(a0，a1，a2，a3)变为(a1，a2，a3，a0)</p>
-<p><strong>字节代换</strong>：对经过字循环的结果使用S盒进行字节代换</p>
-<p><strong>轮常量异或</strong>：轮常量是给定的，将上一步得到的结果，与轮常量R[j]异或，j表示轮数</p>
-<p>学习思路参考：<a target="_blank" rel="noopener" href="http://t.csdn.cn/8cmGx">http://t.csdn.cn/8cmGx</a> 、<a target="_blank" rel="noopener" href="http://t.csdn.cn/sAj7P">http://t.csdn.cn/sAj7P</a></p>
+<p>转字符串得到最终flag：</p>
+<pre><code class="python">m = &#39;666c61677b32303665383539643865383534633466363030636231323735376262663966357d&#39;
+flag = binascii.unhexlify(m.encode(&#39;utf-8&#39;))
+</code></pre>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p> 总体代码如下：</p>
+<pre><code class="python">from gmpy2 import *
+from Crypto.Util.number import *
+import binascii
+
+#encrypt3
+e_2 = 3
+c_2 = 332431
+n_2 = 675835056744450121024004008337170937331109883435712066354955474563267257037603081555653829598886559337325172694278764741403348512872239277008719548968016702852609803016353158454788807563316656327979897318887566108985783153878668451688372252234938716250621575338314779485058267785731636967957494369458211599823364746908763588582489400785865427060804408606617016267936273888743392372620816053927031794575978032607311497491069242347165424963308662091557862342478844612402720375931726316909635118113432836702120449010
+k = 0
+while True:
+    res = iroot(c_2+k*n_2,e_2)
+    if res[1] == True:
+        n_1 = res[0]
+        break
+    k += 1
+print(n_1)
+#n_1 = 70406706457855863712635967741447303613971473150228480705119773604469794649140239446237334040048504811343327173817296308781190911727763110615393368497803655390445303946160971
+
+#encrypt2
+e_1 = 65537
+c_1 = 47029848959680138397125259006172340325269302342762903311733700258745280761154948381409328053449580957972265859283407071931484707002138926840483316880087281153554181290481533
+p = 2224243981
+q = 2732337821
+r = 11585031296201346891716939633970482508158508580350404805965250133832632323150440185890235814142601827544669601048550999405490149435265122374459158586377571
+phi_n = (p-1)*(q-1)*(r-1)
+d = invert(e_1,phi_n)
+m1 = pow(c_1,d,n_1)
+
+
+#encrypt4
+&#39;&#39;&#39;
+#Sage
+e_2 = 3
+n_3 = 91294511667572917673898699346231897684542006136956966126836916292947639514392684487940336406038086150289315439796780158189004157494824987037667065310517044311794725172075653186677331434123198117797575528982908532086038107428540586044471407073066169603930082133459486076777574046803264038780927350142555712567
+c_3 = 11951299411967534922967467740790967733301092706094553308467975774492025797106594440070380723007894861454249455013202734019215071856834943490096156048504952328784989777263664832098681831398770963056616417301705739505187754236801407014715780468333977293887519001724078504320344074325196167699818117367329779609
+m = 9530454742891231590945778054072843874837824815724564463369259282490619049557772650832818763768769359762168560563265763313176741847581931364
+k = 8139616873420730499092246564709331937498029453340099806219977060224838957080870950877930756958455278369862703151353509623205172658012437573652818022676431
+p.&lt;k2&gt; = PolynomialRing(Zmod(n_3))
+f = (m+k2*k)^e_2 - c_3
+f = f.monic()
+k2 = f.small_roots()[0]
+flag = int(m+k2*k)
+print(flag)
+&#39;&#39;&#39;
+m1 = b&#39;0x666c61677b3230366538353964&#39;
+m2 = b&#39;383539643865383534633466363030636231323735376262663966357d&#39;
+#m2 = 9530454742891231590945778054072843874837824815724564463369259282490619049557772650832818763768769359762168560563265763313176741847581931364
+#print(long_to_bytes(m2))
+m = &#39;666c61677b32303665383539643865383534633466363030636231323735376262663966357d&#39;
+flag = binascii.unhexlify(m.encode(&#39;utf-8&#39;))
+print(flag)
+</code></pre>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
 
                 
             </div>
@@ -603,7 +635,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://Luiino.github.io/2022/10/30/AES%E5%8A%A0%E5%AF%86/">http://Luiino.github.io/2022/10/30/AES%E5%8A%A0%E5%AF%86/</a>
+                    <a href="http://Luiino.github.io/2022/11/05/DASCTF-X-GFCTF-2022%E5%8D%81%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B-Crypto/">http://Luiino.github.io/2022/11/05/DASCTF-X-GFCTF-2022%E5%8D%81%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B-Crypto/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -640,11 +672,7 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            
-                                <a href="/tags/%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86/">
-                                    <span class="chip bg-color">对称加密</span>
-                                </a>
-                            
+                            <span class="chip bg-color">无标签</span>
                         </div>
                     
                 </div>
@@ -686,9 +714,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2022/11/05/DASCTF-X-GFCTF-2022%E5%8D%81%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B-Crypto/">
                     <div class="card-image">
@@ -706,9 +735,51 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-11-05
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-05
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Crypto/" class="post-category">
+                                    Crypto
+                                </a>
+                            
+                            
                         </span>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/10/30/AES%E5%8A%A0%E5%AF%86/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="AES加密">
+                        
+                        <span class="card-title">AES加密</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-30
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -722,41 +793,12 @@
                     </div>
                 </div>
                 
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2022/10/25/Luino-first-blog/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="Luino-first-blog">
-                        
-                        <span class="card-title">Luino-first-blog</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-25
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            Luino
-                            
-                        </span>
-                    </div>
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86/">
+                        <span class="chip bg-color">对称加密</span>
+                    </a>
+                    
                 </div>
                 
             </div>
