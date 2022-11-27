@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="AES加密, Luino&#39;s Bold">
+    <meta name="keywords" content="RSA题型总结, Luino&#39;s Bold">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>AES加密 | Luino&#39;s Bold</title>
+    <title>RSA题型总结 | Luino&#39;s Bold</title>
     <link rel="icon" type="image/png" href="/HELLOWORLD.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -208,7 +208,7 @@
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">AES加密</h1>
+                    <h1 class="description center-align post-title">RSA题型总结</h1>
                 </div>
             </div>
         </div>
@@ -324,8 +324,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/AES%E5%8A%A0%E5%AF%86/">
-                                <span class="chip bg-color">AES加密</span>
+                            <a href="/tags/RSA/">
+                                <span class="chip bg-color">RSA</span>
                             </a>
                         
                     </div>
@@ -349,7 +349,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-10-30
+                    2022-11-26
                 </div>
                 
 
@@ -358,7 +358,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.6k
+                    886
                 </div>
                 
 
@@ -383,169 +383,120 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="简单了解"><a href="#简单了解" class="headerlink" title="简单了解"></a><strong>简单了解</strong></h2><p>之前学到的RSA加密是非对称加密，而AES则是对称加密，区分点在于AES加密解密过程中用的密钥是相同的。这里记明文为P，密文为C，密钥为K。支持的密钥K的长度有128位，192位，256位。</p>
-<p>加密：C = E(P,K)，E为加密函数</p>
-<p>解密：P = D(C,K)，D为解密函数</p>
-<h2 id="大致加密过程"><a href="#大致加密过程" class="headerlink" title="大致加密过程"></a><strong>大致加密过程</strong></h2><p>AES加密过程使用的是分组加密，即把明文P分成n组，对n组明文分别使用密钥K加密得到n组密文，将n组密文组合就得到了最终的密文C。<strong>且对每一组明文有长度要求，即128bit位（16个字节，每个字节8位）</strong>。可以知道，加密得到的每一组密文的长度也是128bit位。</p>
-<h2 id="明文填充"><a href="#明文填充" class="headerlink" title="明文填充"></a><strong>明文填充</strong></h2><p>加密过程中，很可能出现明文长度不为128整数倍的情况，这就不能保证每一组的明文长度一致，这时就需要进行填充了。填充的方法有这么几种：NoPadding、PKCS#5、PKCS#7、ISO 10126、ANSI X9.23、ZerosPadding 。可以知道，如果在加密的时候，如果使用了某种填充方法，对应解密也需要用对应的填充方法。</p>
-<p><strong>填充方法解释</strong></p>
-<p><strong>NoPadding</strong>：不填充，只能加密长为128bits倍数的信息，很少使用。</p>
-<p><strong>PKCS#5、PKCS#7</strong>：缺几个字节，就补充几个字节，且补充的值为缺失字节的数量。举例：(1,2,3,4,5,a,b,c,d,e)，缺少6个字节，则补全为(1,2,3,4,5,a,b,c,d,e,6,6,6,6,6,6)</p>
-<p><strong>ISO 10126</strong>：最后一个字节是填充的字节数（包括最后一字节），其他全部填随机数</p>
-<p><strong>ANSI X9.23</strong>： 类似于ISO 10126，只不过ANSI X9.23其他字节填的都是0而不是随机数</p>
-<p><strong>ZerosPadding</strong>：全部填充<code>0x00</code>，无论缺多少全部填充<code>0x00</code></p>
-<h2 id="详细加密过程"><a href="#详细加密过程" class="headerlink" title="详细加密过程"></a><strong>详细加密过程</strong></h2><p>四个步骤：<strong>字节替换、行移位、列合和轮密钥加</strong>。</p>
-<p><strong>注：根据密钥长度不同，加密的轮数也不同，128位的密钥推荐加密轮数为10，192位的密钥推荐加密轮数为12，256位的密钥推荐加密轮数为14</strong>。<strong>在第一轮之前要进行轮密钥加，即将明文矩阵与密钥矩阵进行异或操作。最后一轮没有进行列混合操作</strong>。 </p>
-<p><strong>1、字节替换</strong></p>
-<p>通过一个替换表（S盒）对每个字节进行替换，且过程是可逆的，将每一个字节的前4位作为行值，后4位作为列值，到t查找，进行输出。<br> 下图为S盒，例如字节为0x16，那么前四位的16进制为1，后四位的16进制为6，去查找S盒中的第1行第6列的值，可以看出为0x47，就把原先的字节0x16替换为0x47。<br><img src="https://img-blog.csdnimg.cn/20200119170513844.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3lhbmhhaWp1bnlhbg==,size_16,color_FFFFFF,t_70" alt="S盒"></p>
-<p>解密过程就是用逆盒进行相同的操作。</p>
-<p><strong>2、行移位</strong></p>
-<p>将16位的明文P分成16组，放入4*4的矩阵中：</p>
-<table>
-<thead>
-<tr>
-<th><strong>a00</strong></th>
-<th><strong>a01</strong></th>
-<th><strong>a02</strong></th>
-<th><strong>a03</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>a10</strong></td>
-<td><strong>a11</strong></td>
-<td><strong>a12</strong></td>
-<td><strong>a13</strong></td>
-</tr>
-<tr>
-<td><strong>a20</strong></td>
-<td><strong>a21</strong></td>
-<td><strong>a22</strong></td>
-<td><strong>a23</strong></td>
-</tr>
-<tr>
-<td><strong>a30</strong></td>
-<td><strong>a31</strong></td>
-<td><strong>a32</strong></td>
-<td><strong>a33</strong></td>
-</tr>
-</tbody></table>
-<p>顺序位从上到下，从左到右</p>
-<p>加密行移位操作：</p>
-<p>​               第0行：保持不动；<br>​               第1行：循环左移1个字节；<br>​               第2行：循环左移2个字节；<br>​               第3行：循环左移3个字节。</p>
-<p>移位后的明文矩阵：</p>
-<table>
-<thead>
-<tr>
-<th>a00</th>
-<th>a01</th>
-<th>a02</th>
-<th>a03</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>a11</strong></td>
-<td><strong>a12</strong></td>
-<td><strong>a13</strong></td>
-<td><strong>a10</strong></td>
-</tr>
-<tr>
-<td><strong>a22</strong></td>
-<td><strong>a23</strong></td>
-<td><strong>a20</strong></td>
-<td><strong>a21</strong></td>
-</tr>
-<tr>
-<td><strong>a33</strong></td>
-<td><strong>a30</strong></td>
-<td><strong>a31</strong></td>
-<td><strong>a32</strong></td>
-</tr>
-</tbody></table>
-<p>解密操作对应进行右移即可。</p>
-<p><strong>3、列混合</strong></p>
-<p>加密过程：将得到的状态矩阵左乘另一个给定的4*4的矩阵，即<strong>给定矩阵*经过行移位的矩阵</strong>。</p>
-<p>解密过程：只需再次与相乘的矩阵进行异或即可</p>
-<p>需要注意的是，这里的矩阵相乘与普通的矩阵相乘不大一样，举例操作：假设<strong>给定矩阵</strong>第一行为</p>
-<p>{02 03 01 01}，<strong>经过行移位的矩阵</strong>的第一列为(d4 bf 5d 30)，相乘得到：02<em>d4⊕03</em>bf⊕5d⊕30，</p>
+                <p>学了RSA也有这么久了，也遇到了不少类型的题，有的还是不够熟悉，经常去找之前的题解，所以在这进行一个总结，仅供自己复习。</p>
+<h3 id="基础型"><a href="#基础型" class="headerlink" title="基础型"></a>基础型</h3><p>e、n、c、p、q都直接给了，或者给了e、n、c，且n能直接分解（用在线工具[factordb](<a target="_blank" rel="noopener" href="http://factordb.com/">新建标签页 (factordb.com)</a>)，或者用yafu工具），yafu使用方法：</p>
 <blockquote>
-<p>对02*d4，计算过程为： </p>
-<p>换成二进制形式，(00000010) * (11010100)，d4的二进制最高位为1，此时将d4左移一位再与00011011异或，即(00000010) * (11010100) = (10101000) ⊕ (00011011) = <strong>10110011</strong></p>
-<p>若右边的二进制最高位为0，则结果直接为右边的二进制左移一位，即不需再与(00011011)异或。</p>
-<p>对03*bf，计算过程为：</p>
-<p>换成二进制形式，((00000010)⊕(00000001))*(10111111)，bf的二进制最高位也为1，将bf左移一位再与00011011相异或，</p>
-<p>即((00000010)⊕(00000001))*(10111111) = (01111110) ⊕ (00011011) = <strong>11011010</strong></p>
-<p>对01<em>5d，就等于5d，二进制为*<em>01011101</em></em></p>
-<p>对01<em>30，就等于30，二进制为*<em>00110000</em></em></p>
-<p>最后将每一步的结果进行异或：<strong>10110011</strong>⊕<strong>11011010</strong>⊕<strong>01011101</strong>⊕<strong>00110000</strong> = <strong>00000100 = 04</strong></p>
+<p>1、打开cmd</p>
+<p>2、输入yafu-x64进入命令行</p>
+<p>3、factor(n)进行分解</p>
 </blockquote>
-<p><strong>4、轮密钥加</strong> </p>
-<p>将经过列混合的矩阵与轮密钥矩阵，每一列对应进行异或操作。而轮密钥矩阵是通过最开始的密钥矩阵经过<strong>密钥扩展</strong>得到的。之前说到128位的密钥推荐加密轮数为10，而每一轮都会得到一个轮密钥。</p>
-<p>综上，总体过程为：</p>
+<p>例题就不给了。</p>
+<h3 id="公共n求最大公约数"><a href="#公共n求最大公约数" class="headerlink" title="公共n求最大公约数"></a><strong>公共n求最大公约数</strong></h3><p>给了两组e、n、c，且e相同，可通过欧几里得算法求两个n的最大公因数p，任取一个n求q即可。例题：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">e <span class="token operator">=</span> <span class="token number">65537</span>
+n <span class="token operator">=</span> <span class="token number">23686563925537577753047229040754282953352221724154495390687358877775380147605152455537988563490716943872517593212858326146811511103311865753018329109314623702207073882884251372553225986112006827111351501044972239272200616871716325265416115038890805114829315111950319183189591283821793237999044427887934536835813526748759612963103377803089900662509399569819785571492828112437312659229879806168758843603248823629821851053775458651933952183988482163950039248487270453888288427540305542824179951734412044985364866532124803746008139763081886781361488304666575456680411806505094963425401175510416864929601220556158569443747</span>
+c <span class="token operator">=</span> <span class="token number">1627484142237897613944607828268981193911417408064824540711945192035649088104133038147400224070588410335190662682231189997580084680424209495303078061205122848904648319219646588720994019249279863462981015329483724747823991513714172478886306703290044871781158393304147301058706003793357846922086994952763485999282741595204008663847963539422096343391464527068599046946279309037212859931303335507455146001390326550668531665493245293839009832468668390820282664984066399051403227990068032226382222173478078505888238749583237980643698405005689247922901342204142833875409505180847943212126302482358445768662608278731750064815</span>
+
+e <span class="token operator">=</span> <span class="token number">65537</span>
+n <span class="token operator">=</span> <span class="token number">22257605320525584078180889073523223973924192984353847137164605186956629675938929585386392327672065524338176402496414014083816446508860530887742583338880317478862512306633061601510404960095143941320847160562050524072860211772522478494742213643890027443992183362678970426046765630946644339093149139143388752794932806956589884503569175226850419271095336798456238899009883100793515744579945854481430194879360765346236418019384644095257242811629393164402498261066077339304875212250897918420427814000142751282805980632089867108525335488018940091698609890995252413007073725850396076272027183422297684667565712022199054289711</span>
+c <span class="token operator">=</span> <span class="token number">2742600695441836559469553702831098375948641915409106976157840377978123912007398753623461112659796209918866985480471911393362797753624479537646802510420415039461832118018849030580675249817576926858363541683135777239322002741820145944286109172066259843766755795255913189902403644721138554935991439893850589677849639263080528599197595705927535430942463184891689410078059090474682694886420022230657661157993875931600932763824618773420077273617106297660195179922018875399174346863404710420166497017196424586116535915712965147141775026549870636328195690774259990189286665844641289108474834973710730426105047318959307995062</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>题解：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> gmpy2 <span class="token keyword">import</span> <span class="token operator">*</span>
+<span class="token keyword">from</span> Crypto<span class="token punctuation">.</span>Util<span class="token punctuation">.</span>number <span class="token keyword">import</span> <span class="token operator">*</span>
+ 
+e <span class="token operator">=</span> <span class="token number">65537</span>
+N1 <span class="token operator">=</span> <span class="token number">23686563925537577753047229040754282953352221724154495390687358877775380147605152455537988563490716943872517593212858326146811511103311865753018329109314623702207073882884251372553225986112006827111351501044972239272200616871716325265416115038890805114829315111950319183189591283821793237999044427887934536835813526748759612963103377803089900662509399569819785571492828112437312659229879806168758843603248823629821851053775458651933952183988482163950039248487270453888288427540305542824179951734412044985364866532124803746008139763081886781361488304666575456680411806505094963425401175510416864929601220556158569443747</span>
+c1 <span class="token operator">=</span> <span class="token number">1627484142237897613944607828268981193911417408064824540711945192035649088104133038147400224070588410335190662682231189997580084680424209495303078061205122848904648319219646588720994019249279863462981015329483724747823991513714172478886306703290044871781158393304147301058706003793357846922086994952763485999282741595204008663847963539422096343391464527068599046946279309037212859931303335507455146001390326550668531665493245293839009832468668390820282664984066399051403227990068032226382222173478078505888238749583237980643698405005689247922901342204142833875409505180847943212126302482358445768662608278731750064815</span>
+ 
+N2 <span class="token operator">=</span> <span class="token number">22257605320525584078180889073523223973924192984353847137164605186956629675938929585386392327672065524338176402496414014083816446508860530887742583338880317478862512306633061601510404960095143941320847160562050524072860211772522478494742213643890027443992183362678970426046765630946644339093149139143388752794932806956589884503569175226850419271095336798456238899009883100793515744579945854481430194879360765346236418019384644095257242811629393164402498261066077339304875212250897918420427814000142751282805980632089867108525335488018940091698609890995252413007073725850396076272027183422297684667565712022199054289711</span>
+c2 <span class="token operator">=</span> <span class="token number">2742600695441836559469553702831098375948641915409106976157840377978123912007398753623461112659796209918866985480471911393362797753624479537646802510420415039461832118018849030580675249817576926858363541683135777239322002741820145944286109172066259843766755795255913189902403644721138554935991439893850589677849639263080528599197595705927535430942463184891689410078059090474682694886420022230657661157993875931600932763824618773420077273617106297660195179922018875399174346863404710420166497017196424586116535915712965147141775026549870636328195690774259990189286665844641289108474834973710730426105047318959307995062</span>
+ 
+p <span class="token operator">=</span> gcd<span class="token punctuation">(</span>N1<span class="token punctuation">,</span>N2<span class="token punctuation">)</span>
+q <span class="token operator">=</span> N1<span class="token operator">//</span>p
+phi_n <span class="token operator">=</span> <span class="token punctuation">(</span>p<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">(</span>q<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+d <span class="token operator">=</span> invert<span class="token punctuation">(</span>e<span class="token punctuation">,</span>phi_n<span class="token punctuation">)</span>
+m <span class="token operator">=</span> powmod<span class="token punctuation">(</span>c1<span class="token punctuation">,</span>d<span class="token punctuation">,</span>N1<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>long_to_bytes<span class="token punctuation">(</span>m<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="共模攻击"><a href="#共模攻击" class="headerlink" title="共模攻击"></a><strong>共模攻击</strong></h3><p>辨别：在加密过程中使用了相同的模n。即：</p>
+<p>$c1 \equiv m^{e1}modn$</p>
+<p>$c1 \equiv m^{e2}modn$</p>
+<p>此时，若gcd(e1,e2)，即e1和e2互质，则根据扩展欧几里德算法，存在整数x，y使得 gcd(a,b) = ax + by = 1，x，y一正一负。例题：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">e <span class="token operator">=</span> <span class="token number">65537</span>
+n <span class="token operator">=</span> <span class="token number">23686563925537577753047229040754282953352221724154495390687358877775380147605152455537988563490716943872517593212858326146811511103311865753018329109314623702207073882884251372553225986112006827111351501044972239272200616871716325265416115038890805114829315111950319183189591283821793237999044427887934536835813526748759612963103377803089900662509399569819785571492828112437312659229879806168758843603248823629821851053775458651933952183988482163950039248487270453888288427540305542824179951734412044985364866532124803746008139763081886781361488304666575456680411806505094963425401175510416864929601220556158569443747</span>
+c <span class="token operator">=</span> <span class="token number">1627484142237897613944607828268981193911417408064824540711945192035649088104133038147400224070588410335190662682231189997580084680424209495303078061205122848904648319219646588720994019249279863462981015329483724747823991513714172478886306703290044871781158393304147301058706003793357846922086994952763485999282741595204008663847963539422096343391464527068599046946279309037212859931303335507455146001390326550668531665493245293839009832468668390820282664984066399051403227990068032226382222173478078505888238749583237980643698405005689247922901342204142833875409505180847943212126302482358445768662608278731750064815</span>
+
+e <span class="token operator">=</span> <span class="token number">65537</span>
+n <span class="token operator">=</span> <span class="token number">22257605320525584078180889073523223973924192984353847137164605186956629675938929585386392327672065524338176402496414014083816446508860530887742583338880317478862512306633061601510404960095143941320847160562050524072860211772522478494742213643890027443992183362678970426046765630946644339093149139143388752794932806956589884503569175226850419271095336798456238899009883100793515744579945854481430194879360765346236418019384644095257242811629393164402498261066077339304875212250897918420427814000142751282805980632089867108525335488018940091698609890995252413007073725850396076272027183422297684667565712022199054289711</span>
+c <span class="token operator">=</span> <span class="token number">2742600695441836559469553702831098375948641915409106976157840377978123912007398753623461112659796209918866985480471911393362797753624479537646802510420415039461832118018849030580675249817576926858363541683135777239322002741820145944286109172066259843766755795255913189902403644721138554935991439893850589677849639263080528599197595705927535430942463184891689410078059090474682694886420022230657661157993875931600932763824618773420077273617106297660195179922018875399174346863404710420166497017196424586116535915712965147141775026549870636328195690774259990189286665844641289108474834973710730426105047318959307995062</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>上脚本：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> gmpy2 <span class="token keyword">import</span> <span class="token operator">*</span>
+<span class="token keyword">from</span> Crypto<span class="token punctuation">.</span>Util<span class="token punctuation">.</span>number <span class="token keyword">import</span> <span class="token operator">*</span>
+
+n <span class="token operator">=</span> <span class="token number">15944475431088053285580229796309956066521520107276817969079550919586650535459242543036143360865780730044733026945488511390818947440767542658956272380389388112372084760689777141392370253850735307578445988289714647332867935525010482197724228457592150184979819463711753058569520651205113690397003146105972408452854948512223702957303406577348717348753106868356995616116867724764276234391678899662774272419841876652126127684683752880568407605083606688884120054963974930757275913447908185712204577194274834368323239143008887554264746068337709465319106886618643849961551092377843184067217615903229068010117272834602469293571</span>
+e1 <span class="token operator">=</span> <span class="token number">797</span>
+c1 <span class="token operator">=</span> <span class="token number">11157593264920825445770016357141996124368529899750745256684450189070288181107423044846165593218013465053839661401595417236657920874113839974471883493099846397002721270590059414981101686668721548330630468951353910564696445509556956955232059386625725883038103399028010566732074011325543650672982884236951904410141077728929261477083689095161596979213961494716637502980358298944316636829309169794324394742285175377601826473276006795072518510850734941703194417926566446980262512429590253643561098275852970461913026108090608491507300365391639081555316166526932233787566053827355349022396563769697278239577184503627244170930</span>
+
+e2 <span class="token operator">=</span> <span class="token number">521</span>
+c2 <span class="token operator">=</span> <span class="token number">6699274351853330023117840396450375948797682409595670560999898826038378040157859939888021861338431350172193961054314487476965030228381372659733197551597730394275360811462401853988404006922710039053586471244376282019487691307865741621991977539073601368892834227191286663809236586729196876277005838495318639365575638989137572792843310915220039476722684554553337116930323671829220528562573169295901496437858327730504992799753724465760161805820723578087668737581704682158991028502143744445435775458296907671407184921683317371216729214056381292474141668027801600327187443375858394577015394108813273774641427184411887546849</span>
+
+s <span class="token operator">=</span> gcdext<span class="token punctuation">(</span>e1<span class="token punctuation">,</span> e2<span class="token punctuation">)</span>  <span class="token comment"># 扩展欧几里得算法，得到x，y，即ax+by=gcd(a,b)</span>
+m1 <span class="token operator">=</span> powmod<span class="token punctuation">(</span>c1<span class="token punctuation">,</span> s<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> n<span class="token punctuation">)</span>
+m2 <span class="token operator">=</span> powmod<span class="token punctuation">(</span>c2<span class="token punctuation">,</span> s<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> n<span class="token punctuation">)</span>
+
+m <span class="token operator">=</span> <span class="token punctuation">(</span>m1 <span class="token operator">*</span> m2<span class="token punctuation">)</span> <span class="token operator">%</span> n
+<span class="token keyword">print</span><span class="token punctuation">(</span>long_to_bytes<span class="token punctuation">(</span>m<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>就不推导了。</p>
+<h3 id="低加密指数攻击"><a href="#低加密指数攻击" class="headerlink" title="低加密指数攻击"></a>低加密指数攻击</h3><p>顾名思义，低加密指数是说加密指数e比较小。一般满足e = 3</p>
+<p>第一种情况，若明文比较小，满足$m^{e}&lt;n$，那么，$c\equiv m^{e}$ mod n = $m^{e}$，对c开e(3)次方即为明文m。</p>
+<p>第二种情况，若明文同样比较小，但$m^{e}&gt;n$，且只是比n稍大，此时我们可以进行爆破。</p>
+<p>因为$c=m^{e}+kn$，即$m^{e}=c+kn$，若c + kn能开三次方，那明文也就出来了。</p>
+<p>第二种情况脚本：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">e <span class="token operator">=</span> <span class="token number">3</span>
+n1 <span class="token operator">=</span> <span class="token operator">**</span><span class="token operator">*</span>
+c1 <span class="token operator">=</span> <span class="token operator">**</span><span class="token operator">*</span>
+k <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token keyword">while</span> <span class="token number">1</span><span class="token punctuation">:</span>
+    res <span class="token operator">=</span> iroot<span class="token punctuation">(</span>k<span class="token operator">*</span>n1<span class="token operator">+</span>c1<span class="token punctuation">,</span>e<span class="token punctuation">)</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>res<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token boolean">True</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        m1 <span class="token operator">=</span> res<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+        <span class="token keyword">break</span>
+    k <span class="token operator">+=</span> <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="低加密指数广播攻击"><a href="#低加密指数广播攻击" class="headerlink" title="低加密指数广播攻击"></a>低加密指数广播攻击</h3><p>因为还没有碰到过这种类型的题，所以借鉴下大佬的思路和脚本。</p>
+<p>同样e很小，一般取e=3。若使用相同的加密指数给一个接收者群发送相同的信息，那么可以进行广播攻击得到明文。</p>
+<p>$c1\equiv m^emod$ n1 </p>
+<p>$c2\equiv m^emod$ n2</p>
+<p>$c3\equiv m^emod$ n3</p>
+<p>待补充。。。</p>
+<h3 id="低解密指数攻击"><a href="#低解密指数攻击" class="headerlink" title="低解密指数攻击"></a><strong>低解密指数攻击</strong></h3><p>参考之前写的<strong>Wiener-attack</strong></p>
+<h3 id="dp泄露"><a href="#dp泄露" class="headerlink" title="dp泄露"></a>dp泄露</h3><p>前提条件$dp\equiv d$ mod (p-1)</p>
+<p>推导过程：</p>
 <blockquote>
-<p>（一）将明文矩阵与子密钥矩阵进行异或操作</p>
-<p>（二）将得到的矩阵进行上述1、2、3、4操作9次</p>
-<p>（三）最后进行第10轮循环，只进行1、2、4操作</p>
-<p>操作结束后即为密文矩阵</p>
+<p>在$dp\equiv d$ mod (p-1)两边同乘上e，得到$dp<em>e \equiv e</em>d mod (p-1)$ ，</p>
+<p>变形得$e<em>d\equiv dp</em>e mod (p-1) = dp*e+k1(p-1)$，又已知$ed \equiv1$ mod $\phi(n)$，</p>
+<p>故$dp<em>e+k1(p-1)\equiv1 mod \phi(n) = 1 + k2(p-1)</em>(q-1)$，</p>
+<p>再次变形得$dp<em>e = 1 + k2(p-1)</em>(q-1)-k1(p-1)$，</p>
+<p>提取公因式(p-1)得，$dp<em>e = 1+[k2(q-1)-k1]</em>(p-1)$</p>
+<p>因为dp是比p小的，故dp &lt; p-1。再结合上面的等式可以知道，0 &lt; [k2(q-1) - k1] * (p-1) &lt; e</p>
+<p>爆破出p-1，使p能被n整除</p>
 </blockquote>
-<p>那10轮循环过程中的轮密钥怎么得来的呢—<strong>密钥扩展</strong></p>
-<h2 id="密钥扩展"><a href="#密钥扩展" class="headerlink" title="密钥扩展"></a><strong>密钥扩展</strong></h2><p>将子密钥K分组，放入矩阵中去：</p>
-<table>
-<thead>
-<tr>
-<th>k00</th>
-<th>k01</th>
-<th>k02</th>
-<th>k03</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>k10</strong></td>
-<td><strong>k11</strong></td>
-<td><strong>k12</strong></td>
-<td><strong>k13</strong></td>
-</tr>
-<tr>
-<td><strong>k20</strong></td>
-<td><strong>k21</strong></td>
-<td><strong>k22</strong></td>
-<td><strong>k23</strong></td>
-</tr>
-<tr>
-<td><strong>k30</strong></td>
-<td><strong>k31</strong></td>
-<td><strong>k32</strong></td>
-<td><strong>k33</strong></td>
-</tr>
-</tbody></table>
-<p>记每一列为Wi，补上扩展部分：</p>
-<table>
-<thead>
-<tr>
-<th>W1</th>
-<th>W2</th>
-<th>W3</th>
-<th>W4</th>
-<th>Wi-1</th>
-<th>Wi</th>
-</tr>
-</thead>
-<tbody><tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<p>1、如果i不是4的倍数，则Wi的计算公式为：</p>
-<p>Wi = W[i-4] ⊕ W[i-1]</p>
-<p>2、如果i是4的倍数，则Wi的计算公式为：</p>
-<p>Wi = W[i-4] ⊕ T(W[i-1])，这里用到了T函数，T函数由三部分组成：字循环、字节代换、轮常量异或。</p>
-<p><strong>字循环</strong>：将一个字中的4个字节循环左移一个字节，如(a0，a1，a2，a3)变为(a1，a2，a3，a0)</p>
-<p><strong>字节代换</strong>：对经过字循环的结果使用S盒进行字节代换</p>
-<p><strong>轮常量异或</strong>：轮常量是给定的，将上一步得到的结果，与轮常量R[j]异或，j表示轮数</p>
-<p>学习思路参考：<a target="_blank" rel="noopener" href="http://t.csdn.cn/8cmGx">http://t.csdn.cn/8cmGx</a> 、<a target="_blank" rel="noopener" href="http://t.csdn.cn/sAj7P">http://t.csdn.cn/sAj7P</a></p>
+<p>脚本如下：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> Crypto<span class="token punctuation">.</span>Util<span class="token punctuation">.</span>number <span class="token keyword">import</span> <span class="token operator">*</span>
+<span class="token keyword">import</span> gmpy2
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span>e<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>dp<span class="token operator">*</span>e<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">%</span>i <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>n<span class="token operator">%</span><span class="token punctuation">(</span><span class="token punctuation">(</span>dp<span class="token operator">*</span>e<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">//</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+            p <span class="token operator">=</span> <span class="token punctuation">(</span>dp<span class="token operator">*</span>e<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">//</span>i<span class="token operator">+</span><span class="token number">1</span>
+            q <span class="token operator">=</span> n <span class="token operator">//</span> p<span class="token comment">#注意都是整除</span>
+            phi_n <span class="token operator">=</span> <span class="token punctuation">(</span>p<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">(</span>q<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+            d <span class="token operator">=</span> gmpy2<span class="token punctuation">.</span>invert<span class="token punctuation">(</span>e<span class="token punctuation">,</span>phi_n<span class="token punctuation">)</span>
+            m <span class="token operator">=</span> <span class="token builtin">pow</span><span class="token punctuation">(</span>c<span class="token punctuation">,</span>d<span class="token punctuation">,</span>n<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>long_to_bytes<span class="token punctuation">(</span>m<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>待补充。。。</p>
 
                 
             </div>
@@ -572,7 +523,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://Luiino.github.io/2022/10/30/AES%E5%8A%A0%E5%AF%86/">http://Luiino.github.io/2022/10/30/AES%E5%8A%A0%E5%AF%86/</a>
+                    <a href="http://Luiino.github.io/2022/11/26/RSA%E9%A2%98%E5%9E%8B%E6%80%BB%E7%BB%93/">http://Luiino.github.io/2022/11/26/RSA%E9%A2%98%E5%9E%8B%E6%80%BB%E7%BB%93/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -610,8 +561,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/AES%E5%8A%A0%E5%AF%86/">
-                                    <span class="chip bg-color">AES加密</span>
+                                <a href="/tags/RSA/">
+                                    <span class="chip bg-color">RSA</span>
                                 </a>
                             
                         </div>
@@ -655,66 +606,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2022/11/05/DASCTF-X-GFCTF-2022%E5%8D%81%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B-Crypto/">
+                <a href="/2022/11/26/RSA%E9%A2%98%E5%9E%8B%E6%80%BB%E7%BB%93/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="DASCTF X GFCTF 2022十月挑战赛--Crypto">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="RSA题型总结">
                         
-                        <span class="card-title">DASCTF X GFCTF 2022十月挑战赛--Crypto</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-11-05
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/Crypto/" class="post-category">
-                                    Crypto
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%8E%B0/">
-                        <span class="chip bg-color">比赛复现</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
-            </div>
-            <div class="card">
-                <a href="/2022/10/30/AES%E5%8A%A0%E5%AF%86/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="AES加密">
-                        
-                        <span class="card-title">AES加密</span>
+                        <span class="card-title">RSA题型总结</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -725,7 +628,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-30
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-26
                             </span>
                         <span class="publish-author">
                             
@@ -743,8 +646,57 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/AES%E5%8A%A0%E5%AF%86/">
-                        <span class="chip bg-color">AES加密</span>
+                    <a href="/tags/RSA/">
+                        <span class="chip bg-color">RSA</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/11/24/%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="费马小定理">
+                        
+                        <span class="card-title">费马小定理</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-24
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Crypto/" class="post-category">
+                                    Crypto
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86/">
+                        <span class="chip bg-color">费马小定理</span>
                     </a>
                     
                 </div>
