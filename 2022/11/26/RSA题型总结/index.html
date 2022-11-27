@@ -358,7 +358,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    886
+                    900
                 </div>
                 
 
@@ -475,11 +475,11 @@ k <span class="token operator">=</span> <span class="token number">0</span>
 <h3 id="dp泄露"><a href="#dp泄露" class="headerlink" title="dp泄露"></a>dp泄露</h3><p>前提条件$dp\equiv d$ mod (p-1)</p>
 <p>推导过程：</p>
 <blockquote>
-<p>在$dp\equiv d$ mod (p-1)两边同乘上e，得到$dp<em>e \equiv e</em>d mod (p-1)$ ，</p>
-<p>变形得$e<em>d\equiv dp</em>e mod (p-1) = dp*e+k1(p-1)$，又已知$ed \equiv1$ mod $\phi(n)$，</p>
-<p>故$dp<em>e+k1(p-1)\equiv1 mod \phi(n) = 1 + k2(p-1)</em>(q-1)$，</p>
-<p>再次变形得$dp<em>e = 1 + k2(p-1)</em>(q-1)-k1(p-1)$，</p>
-<p>提取公因式(p-1)得，$dp<em>e = 1+[k2(q-1)-k1]</em>(p-1)$</p>
+<p>在$dp\equiv d$ mod (p-1)两边同乘上e，得到$dp\ast e \equiv ed mod (p-1)$ ，</p>
+<p>变形得$ed\equiv dp\ast e mod (p-1) = dp\ast e+k1(p-1)$，又已知$ed \equiv1$ mod $\phi(n)$，</p>
+<p>故$dp\ast e+k1(p-1)\equiv1 mod \phi(n) = 1 + k2(p-1)\ast (q-1)$，</p>
+<p>再次变形得$dp\ast e = 1 + k2(p-1)\ast (q-1)-k1(p-1)$，</p>
+<p>提取公因式(p-1)得，$dp\ast e = 1+[k2(q-1)-k1]\ast (p-1)$</p>
 <p>因为dp是比p小的，故dp &lt; p-1。再结合上面的等式可以知道，0 &lt; [k2(q-1) - k1] * (p-1) &lt; e</p>
 <p>爆破出p-1，使p能被n整除</p>
 </blockquote>
