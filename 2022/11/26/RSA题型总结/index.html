@@ -358,7 +358,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    895
+                    1k
                 </div>
                 
 
@@ -420,8 +420,8 @@ m <span class="token operator">=</span> powmod<span class="token punctuation">(<
 
 <h3 id="共模攻击"><a href="#共模攻击" class="headerlink" title="共模攻击"></a><strong>共模攻击</strong></h3><p>辨别：在加密过程中使用了相同的模n。即：</p>
 <p>$c1 \equiv m^{e1}modn$</p>
-<p>$c1 \equiv m^{e2}modn$</p>
-<p>此时，若gcd(e1,e2)，即e1和e2互质，则根据扩展欧几里德算法，存在整数x，y使得 gcd(a,b) = ax + by = 1，x，y一正一负。例题：</p>
+<p>$c2 \equiv m^{e2}modn$</p>
+<p>此时，若gcd(e1,e2)==1，即满足<strong>e1和e2互质</strong>（这是条件），则根据扩展欧几里德算法，存在整数x，y使得 gcd(a,b) = ax + by = 1，x，y一正一负。例题：</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">e <span class="token operator">=</span> <span class="token number">65537</span>
 n <span class="token operator">=</span> <span class="token number">23686563925537577753047229040754282953352221724154495390687358877775380147605152455537988563490716943872517593212858326146811511103311865753018329109314623702207073882884251372553225986112006827111351501044972239272200616871716325265416115038890805114829315111950319183189591283821793237999044427887934536835813526748759612963103377803089900662509399569819785571492828112437312659229879806168758843603248823629821851053775458651933952183988482163950039248487270453888288427540305542824179951734412044985364866532124803746008139763081886781361488304666575456680411806505094963425401175510416864929601220556158569443747</span>
 c <span class="token operator">=</span> <span class="token number">1627484142237897613944607828268981193911417408064824540711945192035649088104133038147400224070588410335190662682231189997580084680424209495303078061205122848904648319219646588720994019249279863462981015329483724747823991513714172478886306703290044871781158393304147301058706003793357846922086994952763485999282741595204008663847963539422096343391464527068599046946279309037212859931303335507455146001390326550668531665493245293839009832468668390820282664984066399051403227990068032226382222173478078505888238749583237980643698405005689247922901342204142833875409505180847943212126302482358445768662608278731750064815</span>
@@ -448,7 +448,46 @@ m2 <span class="token operator">=</span> powmod<span class="token punctuation">(
 m <span class="token operator">=</span> <span class="token punctuation">(</span>m1 <span class="token operator">*</span> m2<span class="token punctuation">)</span> <span class="token operator">%</span> n
 <span class="token keyword">print</span><span class="token punctuation">(</span>long_to_bytes<span class="token punctuation">(</span>m<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>就不推导了。</p>
+<p>当e1、e2不互质的时候：</p>
+<p>例题：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> Crypto<span class="token punctuation">.</span>Util<span class="token punctuation">.</span>number <span class="token keyword">import</span> <span class="token operator">*</span>
+<span class="token keyword">import</span> flag
+
+m <span class="token operator">=</span> bytes_to_long<span class="token punctuation">(</span>flag<span class="token punctuation">)</span>
+e1 <span class="token operator">=</span> <span class="token number">48962</span>
+e2 <span class="token operator">=</span> <span class="token number">66178</span>
+n <span class="token operator">=</span> <span class="token number">18860369147161365317340760162866306836686697680846811944837525142094856930255357992224861932502678887338047932416586264487563280104455484470518505575982638957066232366620444129592623580448780279399782392083991547954590556920717209212482445902845072979824531295227122087005328625492707047115278826342706540914391041033384618302388052687378992551465208371915035810094231252839812407943878738609286676636774736392475263370142941833197641681827222571447640581231321051378079977425216352080089055565879331328870704795555436373276587131799610797673278730556710522033793163582006298599248443648391365945739803799759208412011</span>
+c1 <span class="token operator">=</span> <span class="token builtin">pow</span><span class="token punctuation">(</span>m<span class="token punctuation">,</span>e1<span class="token punctuation">,</span>n<span class="token punctuation">)</span>
+c2 <span class="token operator">=</span> <span class="token builtin">pow</span><span class="token punctuation">(</span>m<span class="token punctuation">,</span>e2<span class="token punctuation">,</span>n<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>c1<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>c2<span class="token punctuation">)</span>
+<span class="token triple-quoted-string string">'''
+8613537634119817185155272069724215821261502753897680368332473105731276727035745443592819454806477981283715550315851312831340854217517903975094325165715987314802899358584294660215757240879510853658444661114490264596301862506878022135569410048415005252178514287234533868840630161183869939991555602468487578733675434463064488885921541342226521120909235223498544415343888143224658487428920236913875537187557430887594101112657770131698810387032315312800619926314949944831347186397402097955887891854519378386696517453058151877155140010862009372094440887174497300023488022072080735029791984039108005731524158286249846599020
+14637407053483452510936547930656437891459748958635038831745659935591080935826794189726839533344174265143534935674164484645261024138431001051253620877911980801362391581222598461660768452830991217119032510285272732906508998826596416696378913979520753807777557025929961891891578412021310298729664588391181354934234148879115134784075492408092902530343308032791699592672083441783844865546262990424730354475384345284755603167482346607091994025187669205551777555680600617237729519664050016268626418960329977209535510624693641114431858780992939833419462877347678568926750888288245604118695171802250604433391748818746492871808
+'''</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">print</span><span class="token punctuation">(</span>gcd<span class="token punctuation">(</span>e1<span class="token punctuation">,</span>e2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">==</span><span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>发现e1、e2有公因数2，因为指数比较小，参考低加密指数攻击，只需要在（m1*m2）上开2次方就行，代码如下：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> gmpy2 <span class="token keyword">import</span> <span class="token operator">*</span>
+<span class="token keyword">from</span> Crypto<span class="token punctuation">.</span>Util<span class="token punctuation">.</span>number <span class="token keyword">import</span> <span class="token operator">*</span>
+
+n <span class="token operator">=</span> <span class="token number">18860369147161365317340760162866306836686697680846811944837525142094856930255357992224861932502678887338047932416586264487563280104455484470518505575982638957066232366620444129592623580448780279399782392083991547954590556920717209212482445902845072979824531295227122087005328625492707047115278826342706540914391041033384618302388052687378992551465208371915035810094231252839812407943878738609286676636774736392475263370142941833197641681827222571447640581231321051378079977425216352080089055565879331328870704795555436373276587131799610797673278730556710522033793163582006298599248443648391365945739803799759208412011</span>
+e1 <span class="token operator">=</span> <span class="token number">48962</span>
+c1 <span class="token operator">=</span> <span class="token number">8613537634119817185155272069724215821261502753897680368332473105731276727035745443592819454806477981283715550315851312831340854217517903975094325165715987314802899358584294660215757240879510853658444661114490264596301862506878022135569410048415005252178514287234533868840630161183869939991555602468487578733675434463064488885921541342226521120909235223498544415343888143224658487428920236913875537187557430887594101112657770131698810387032315312800619926314949944831347186397402097955887891854519378386696517453058151877155140010862009372094440887174497300023488022072080735029791984039108005731524158286249846599020</span>
+
+e2 <span class="token operator">=</span> <span class="token number">66178</span>
+c2 <span class="token operator">=</span> <span class="token number">14637407053483452510936547930656437891459748958635038831745659935591080935826794189726839533344174265143534935674164484645261024138431001051253620877911980801362391581222598461660768452830991217119032510285272732906508998826596416696378913979520753807777557025929961891891578412021310298729664588391181354934234148879115134784075492408092902530343308032791699592672083441783844865546262990424730354475384345284755603167482346607091994025187669205551777555680600617237729519664050016268626418960329977209535510624693641114431858780992939833419462877347678568926750888288245604118695171802250604433391748818746492871808</span>
+
+s <span class="token operator">=</span> gcdext<span class="token punctuation">(</span>e1<span class="token punctuation">,</span> e2<span class="token punctuation">)</span>
+m1 <span class="token operator">=</span> <span class="token builtin">pow</span><span class="token punctuation">(</span>c1<span class="token punctuation">,</span> s<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> n<span class="token punctuation">)</span>
+m2 <span class="token operator">=</span> <span class="token builtin">pow</span><span class="token punctuation">(</span>c2<span class="token punctuation">,</span> s<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> n<span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span>gcd<span class="token punctuation">(</span>e1<span class="token punctuation">,</span>e2<span class="token punctuation">)</span><span class="token punctuation">)</span>
+m <span class="token operator">=</span> <span class="token punctuation">(</span>m1 <span class="token operator">*</span> m2<span class="token punctuation">)</span> <span class="token operator">%</span> n
+m <span class="token operator">=</span> iroot<span class="token punctuation">(</span>m<span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>long_to_bytes<span class="token punctuation">(</span>m<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="低加密指数攻击"><a href="#低加密指数攻击" class="headerlink" title="低加密指数攻击"></a>低加密指数攻击</h3><p>顾名思义，低加密指数是说加密指数e比较小。一般满足e = 3</p>
 <p>第一种情况，若明文比较小，满足$m^{e}&lt;n$，那么，$c\equiv m^{e}$ mod n = $m^{e}$，对c开e(3)次方即为明文m。</p>
 <p>第二种情况，若明文同样比较小，但$m^{e}&gt;n$，且只是比n稍大，此时我们可以进行爆破。</p>
@@ -906,7 +945,7 @@ k <span class="token operator">=</span> <span class="token number">0</span>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">4.7k</span>&nbsp;字
+                class="white-color">4.9k</span>&nbsp;字
             
             
             
