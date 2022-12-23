@@ -358,7 +358,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1k
+                    1.4k
                 </div>
                 
 
@@ -505,11 +505,44 @@ k <span class="token operator">=</span> <span class="token number">0</span>
     k <span class="token operator">+=</span> <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="低加密指数广播攻击"><a href="#低加密指数广播攻击" class="headerlink" title="低加密指数广播攻击"></a>低加密指数广播攻击</h3><p>因为还没有碰到过这种类型的题，所以借鉴下大佬的思路和脚本。</p>
-<p>同样e很小，一般取e=3。若使用相同的加密指数给一个接收者群发送相同的信息，那么可以进行广播攻击得到明文。</p>
+<p>同样e很小，一般取e=3（这里的3代表了给出的c和n的组数）。若使用相同的加密指数给一个接收者群发送相同的信息，那么可以进行广播攻击得到明文。</p>
 <p>$c1\equiv m^emod$ n1 </p>
 <p>$c2\equiv m^emod$ n2</p>
 <p>$c3\equiv m^emod$ n3</p>
-<p>待补充。。。</p>
+<p>由中国剩余定理：</p>
+<p>设n1，n2，n3是两两互素的正整数，M = $n1<em>n2</em>n3$，则$M<del>i=\frac M{n</del>i}$，</p>
+<p>此时，对于同余式$m^e\equiv c<del>imodn</del>i$，有唯一解：$m^e\equiv c1M1y1+c2M2y2+c3M3y3~(modM)$</p>
+<p>脚本：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> gmpy2 <span class="token keyword">import</span><span class="token operator">*</span>
+<span class="token keyword">from</span> Crypto<span class="token punctuation">.</span>Util<span class="token punctuation">.</span>number <span class="token keyword">import</span> <span class="token operator">*</span>
+
+n1<span class="token operator">=</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+n2<span class="token operator">=</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+n3<span class="token operator">=</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+c1<span class="token operator">=</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+c2<span class="token operator">=</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+c3<span class="token operator">=</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+e<span class="token operator">=</span><span class="token number">3</span>
+ 
+n <span class="token operator">=</span><span class="token punctuation">[</span>n1<span class="token punctuation">,</span>n2<span class="token punctuation">,</span>n3<span class="token punctuation">]</span> 
+c <span class="token operator">=</span><span class="token punctuation">[</span>c1<span class="token punctuation">,</span>c2<span class="token punctuation">,</span>c3<span class="token punctuation">]</span>
+
+<span class="token keyword">def</span> <span class="token function">CRT</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>n<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token builtin">sum</span> <span class="token operator">=</span> <span class="token number">0</span>
+    N <span class="token operator">=</span> <span class="token builtin">reduce</span><span class="token punctuation">(</span><span class="token keyword">lambda</span> x<span class="token punctuation">,</span>y<span class="token punctuation">:</span>x<span class="token operator">*</span>y<span class="token punctuation">,</span>n<span class="token punctuation">)</span>   <span class="token comment"># ni 的乘积,N=n1*n2*n3</span>
+ 
+    <span class="token keyword">for</span> n_i<span class="token punctuation">,</span> a_i <span class="token keyword">in</span> <span class="token builtin">zip</span><span class="token punctuation">(</span>n<span class="token punctuation">,</span>a<span class="token punctuation">)</span><span class="token punctuation">:</span>    <span class="token comment"># zip()将对象打包成元组</span>
+        N_i <span class="token operator">=</span> N <span class="token operator">//</span> n_i           <span class="token comment">#Mi=M/ni</span>
+        <span class="token builtin">sum</span> <span class="token operator">+=</span> a_i<span class="token operator">*</span>N_i<span class="token operator">*</span>invert<span class="token punctuation">(</span>N_i<span class="token punctuation">,</span>n_i<span class="token punctuation">)</span>   <span class="token comment">#sum=C1M1y1+C2M2y2+C3M3y3</span>
+    <span class="token keyword">return</span> <span class="token builtin">sum</span> <span class="token operator">%</span> N 
+ 
+x <span class="token operator">=</span> CRT<span class="token punctuation">(</span>c<span class="token punctuation">,</span>n<span class="token punctuation">)</span>
+ 
+m <span class="token operator">=</span> iroot<span class="token punctuation">(</span>x<span class="token punctuation">,</span>e<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>long_to_bytes<span class="token punctuation">(</span>m<span class="token punctuation">)</span><span class="token punctuation">)</span>
+ <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>借鉴：<a target="_blank" rel="noopener" href="http://t.csdn.cn/DB2J9"></a></p>
 <h3 id="低解密指数攻击"><a href="#低解密指数攻击" class="headerlink" title="低解密指数攻击"></a><strong>低解密指数攻击</strong></h3><p>参考之前写的<strong>Wiener-attack</strong></p>
 <h3 id="dp泄露"><a href="#dp泄露" class="headerlink" title="dp泄露"></a>dp泄露</h3><p>前提条件$dp\equiv d$ mod (p-1)</p>
 <p>推导过程：</p>
@@ -534,6 +567,38 @@ k <span class="token operator">=</span> <span class="token number">0</span>
             d <span class="token operator">=</span> gmpy2<span class="token punctuation">.</span>invert<span class="token punctuation">(</span>e<span class="token punctuation">,</span>phi_n<span class="token punctuation">)</span>
             m <span class="token operator">=</span> <span class="token builtin">pow</span><span class="token punctuation">(</span>c<span class="token punctuation">,</span>d<span class="token punctuation">,</span>n<span class="token punctuation">)</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>long_to_bytes<span class="token punctuation">(</span>m<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="e与-phi-n-不互素"><a href="#e与-phi-n-不互素" class="headerlink" title="e与$\phi(n)$不互素"></a>e与$\phi(n)$不互素</h3><p>例题：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> Crypto<span class="token punctuation">.</span>Util<span class="token punctuation">.</span>number <span class="token keyword">import</span> <span class="token operator">*</span>
+<span class="token keyword">from</span> secret <span class="token keyword">import</span> flag
+m<span class="token operator">=</span>bytes_to_long<span class="token punctuation">(</span>flag<span class="token punctuation">)</span>
+p<span class="token operator">=</span>getPrime<span class="token punctuation">(</span><span class="token number">512</span><span class="token punctuation">)</span>
+q<span class="token operator">=</span>getPrime<span class="token punctuation">(</span><span class="token number">512</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'p='</span><span class="token punctuation">,</span>p<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'q='</span><span class="token punctuation">,</span>q<span class="token punctuation">)</span>
+n<span class="token operator">=</span>p<span class="token operator">*</span>q
+e<span class="token operator">=</span><span class="token number">65537</span>
+c<span class="token operator">=</span><span class="token builtin">pow</span><span class="token punctuation">(</span>m<span class="token punctuation">,</span>e<span class="token punctuation">,</span>n<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'c='</span><span class="token punctuation">,</span>c<span class="token punctuation">)</span>
+<span class="token comment">#p= 12408795636519868275579286477747181009018504169827579387457997229774738126230652970860811085539129972962189443268046963335610845404214331426857155412988073</span>
+<span class="token comment">#q= 12190036856294802286447270376342375357864587534233715766210874702670724440751066267168907565322961270655972226761426182258587581206888580394726683112820379</span>
+<span class="token comment">#c= 68960610962019321576894097705679955071402844421318149418040507036722717269530195000135979777852568744281930839319120003106023209276898286482202725287026853925179071583797231099755287410760748104635674307266042492611618076506037004587354018148812584502385622631122387857218023049204722123597067641896169655595</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>用基础方法解不出来，原因是e与$\phi(n)$不互素，又$\phi(n)$ = (p-1)<em>(q-1)，求gcd(e,(p-1))和gcd(e,(q-1))，发现e与p-1互素。把e</em>d = 1 mod (p-1)<em>(q-1)和m = c ^ d mod p</em>q拆开，利用含p的部分求解即可：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> gmpy2 <span class="token keyword">import</span> <span class="token operator">*</span>
+<span class="token keyword">from</span> Crypto<span class="token punctuation">.</span>Util<span class="token punctuation">.</span>number <span class="token keyword">import</span> <span class="token operator">*</span>
+ 
+e <span class="token operator">=</span> <span class="token number">65537</span>
+p <span class="token operator">=</span> <span class="token number">12408795636519868275579286477747181009018504169827579387457997229774738126230652970860811085539129972962189443268046963335610845404214331426857155412988073</span>
+q <span class="token operator">=</span> <span class="token number">12190036856294802286447270376342375357864587534233715766210874702670724440751066267168907565322961270655972226761426182258587581206888580394726683112820379</span>
+c <span class="token operator">=</span> <span class="token number">68960610962019321576894097705679955071402844421318149418040507036722717269530195000135979777852568744281930839319120003106023209276898286482202725287026853925179071583797231099755287410760748104635674307266042492611618076506037004587354018148812584502385622631122387857218023049204722123597067641896169655595</span>
+n <span class="token operator">=</span> p<span class="token operator">*</span>q
+ 
+phi_n <span class="token operator">=</span> <span class="token punctuation">(</span>p<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">(</span>q<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>gcd<span class="token punctuation">(</span>e<span class="token punctuation">,</span>q<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+d <span class="token operator">=</span> invert<span class="token punctuation">(</span>e<span class="token punctuation">,</span><span class="token punctuation">(</span>p<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+m <span class="token operator">=</span> <span class="token builtin">pow</span><span class="token punctuation">(</span>c<span class="token punctuation">,</span>d<span class="token punctuation">,</span>p<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>long_to_bytes<span class="token punctuation">(</span>m<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>待补充。。。</p>
 
@@ -943,7 +1008,7 @@ k <span class="token operator">=</span> <span class="token number">0</span>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">5k</span>&nbsp;字
+                class="white-color">5.4k</span>&nbsp;字
             
             
             
