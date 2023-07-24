@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>运算域扩大问题 | Luino&#39;s Bold</title>
-  <meta name="keywords" content=" 运算域扩大 ">
-  <meta name="description" content="运算域扩大问题 | Luino&#39;s Bold">
+  <title>Python矩阵学习记录 | Luino&#39;s Bold</title>
+  <meta name="keywords" content=" Python矩阵 ">
+  <meta name="description" content="Python矩阵学习记录 | Luino&#39;s Bold">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="离散对数问题离散对数问题是指给定一个有限群G（一般是乘法群或加法群）及其生成元g，以及另一个元素y，求解离散对数x，使得$g^x &#x3D; y(mod p)$。其中，p是一个素数，称为模数。 Pohlig-Hellman算法思想Pohlig-Hellman算法是一种适用于大素数模数情况下的离散对数问题求解算法。该算法的基本思想是将模数分解成若干个质因子，然后对每个质因子分别求解离散对数，最后使">
 <meta property="og:type" content="article">
@@ -362,9 +362,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-运算域扩大问题" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Python矩阵学习记录" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">运算域扩大问题</h1>
+        <h1 class="article-title">Python矩阵学习记录</h1>
     
     <div class="article-meta">
         
@@ -374,7 +374,7 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="Crypto学习记录">Crypto学习记录</a>
+            <a  data-rel="Python">Python</a>
             
         </span>
         
@@ -382,19 +382,19 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color1">运算域扩大</a>
+            <a class="color4">Python矩阵</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2023-04-29 15:27:09'>2023-03-10 17:43</time>
+            Created At : <time class="date" title='Updated At: 2023-03-02 19:35:42'>2023-01-13 10:50</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:514</span>
+        <span>Count:714</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -429,95 +429,149 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>s上次的黄河流域赛遇到了一道需要将运算域扩大的问题。这种情况在第二届“长城杯”网络安全大赛中的RSA也出现了。</p>
-<p>题目源码：</p>
-<pre><code class="python">from Crypto.Util.number import bytes_to_long, getPrime, isPrime
-import win32gui,PIL,numpy,operator,pymouse
-from Crypto.Random import random
-from random import getrandbits
-from sympy.ntheory.residue_ntheory import nthroot_mod
-from sympy import nextprime
-from secret import flag
+        <p>最近在写航电新生赛的题，遇到一道题中，需要通过矩阵快速幂来加速递归的过程，因为python中矩阵不熟悉，故进行学习并记录。</p>
+<p><strong>构造方法</strong></p>
+<p>首先构造矩阵需要导入numpy，有两种构造方法。</p>
+<pre><code class="python">import numpy
 
-def get_primes(m):
-    p = getPrime(Bits)
-    pl = p &amp; int(&#39;f&#39;*(m//4), 16)#p&amp;(2**(200)-1)
-    q = (getrandbits(Bits - m) &lt;&lt; m)^^pl#rand+p的低200bit
-    while not isPrime(q):
-        q = (getrandbits(Bits - m) &lt;&lt; m)^^pl
-    return (p, q)
-
-def get_key(p, q, delta, beta, Bits):
-    phi = (p - 1) * (q - 1)
-    d1 = getPrime(floor(2 * Bits * delta))
-    e1 = inverse_mod(d1, phi)
-    d2 = nextprime(d1 ^^ getrandbits(floor(2 * Bits * beta)))
-    e2 = inverse_mod(d2, phi)
-    d3 = getPrime(floor(2 * Bits * delta))
-    e3 = inverse_mod(d3, phi)
-    return (e1, e2, e3, d1, d2, d3)
-
-    
-if __name__ == &#39;__main__&#39;:
-    Bits = 1024 
-    alpha = 0.098
-    delta = 0.536
-    beta = delta
-    gamma = 1
-    m = floor(2 * alpha * Bits)#200bit&lt;n^(1/4)
-
-    p, q = get_primes(m)
-    n = p * q
-    assert n % 2^3 == 1
-    u0 = nthroot_mod(n, 2, 2^m, all_roots=False)
-    v0 = (2*u0 + ((n - u0^2) * inverse_mod(u0, 2^(2*m)) % 2^(2*m)))
-    e1, e2, e3, d1, d2, d3 = get_key(p, q, delta, beta, Bits)
-
-    flag = bytes_to_long(flag)
-    c = pow(flag, e3, n)
-    l0 = d1 - d2
-
-    print(f&#39;N = &#123;hex(n)&#125;&#39;)
-    print(f&#39;e1 = &#123;hex(e1)&#125;&#39;)
-    print(f&#39;e2 = &#123;hex(e2)&#125;&#39;)
-    print(f&#39;e3 = &#123;hex(e3)&#125;&#39;)
-    print(f&#39;c = &#123;hex(c)&#125;&#39;)
-    print(f&#39;v0 = &#123;hex(v0)&#125;&#39;)
-    print(f&#39;l0 = &#123;hex(l0)&#125;&#39;)
-
-# N = 0x62c048bc886075bffb9ad01255786dd8ef2480ba510f13689c1e84ffaaf21dfb5695a4d83f4ba22093bdd75bfc8f5979185d29724ecccf045e1857b1b2a4757dd82dc44318c054c9fce9bc451e6beecb97bbda6562420fc8c295521c5455443413f90403cf1af6271fb6d2d54378b86ced18ae6844a877890ea853a215880a09c68c517a75c1183c067b706ce630f3f0913591f7354cfa60c8f6b7ab2f15e466a1ea6e8034417a5fc3c11b8ba746596c22c734b09257e9a6fb18358738d416eda0ba0e7b028dd2d550b1e018b180916ac25f47910657a5db2410946c0593b7e23ed1659a811083f363ad4eb65642091a040befbd643089bbee376634d2394d11
-# e1 = 0x124241a12ea2be53f9b9b1fd92e10d089cfa32aa07e6c2cace848aaa6c73ff06d4c6c92b7d1f29160b2eef95a5f580915d3f15c0ea23975cbadfe8347a10daab2bd0827d7e909b329ec53c5eb306f0a5125b3817e7ea0c15b2317a46c36c4f34fc626dadc6c769bcc7be18ddf7954fae8dde3fd4ce3c5146c019bdb0d9552af1dc9ef7186e06b1d59e763fb05c7cd21fbb3f509fee52d4e24921ebfa76bb8302ea6760e92606e440907cc1c110946af53900904e84dbc309fcef15ea060c667070e5e0310891606df151609ff609bcc6125c6043c35119b25df78b4d5ca61ab6492753cc5e5b32e044fce0aeb0442464f36298add254e9fb6505fa4cddae1cf7
-# e2 = 0x17b3937cec3ca5fdddad8db29c6dc4efae1408bf5b4aa2ff602112c50f302e9698c79c7ab79fef0210c621dcc218d91d358b7f93a978c4e3f2b982794697c4797cef89189d1464ed1c767bf72433092922352885f8e355952c558ad2c9ade58a19375ddc5dcf3f9fa28c68a5cff158734d94224b85f77bd939133f39ab7884ece61d9fb3496373008827c2ae694dfe7da08eee348ef99c3a6737a4b088b62978cf209ef3d1140a30d42872615b94378108266e3d344caf51b497a585a4b5ef8619cc46959bad9b89f59f36175fbf9b64363443f3f7743896c72a198decedf89c518fa07b1d401d0359578a4926b7d67de86232ee24751f17dafbc749c0783b33
-# e3 = 0x5647c4490bda9e7e497651551600572c5ef4e2d889b9b1ba0e9a493660497e10877e975c01da9aebae5e3ba9aad976a1a783b39191e8fd799689dfa26b069264d60543602d514ac412ac75d827d67c78ad544bda633f0fa69fb5bbc37e0f6b95714576ff53bae3f7f991d143a4b1e841730d5d580d4effeb8fb02e8b3c3c9a1f1899d2eb411ce37f16d30cfa1f7af7322be4f42f5d012f484a1181fa4aa0b5f420a472030a5c08c80bff76ab82ef5768bfd495abcdc5f22aae1891561322dfb28ff63c4e467411c8b73c11d64b05f411e2a1de0c7754c6a62d1f72cded9e2592ccc21be3fce4ea6f083a617a246fd3fe464ef2487adbfabfb628c882ea991675
-# c = 0x45f2ee650d622d1e0f0e2e2e861001e9866c541f9f1dd2ec1dec18194f8b7224914916ecd68bbc74b28a000d2664e671586aed63b54c0928a939caf28d39eeba03c0ce3afcf2cdc5805e8e2792d76e88545aa4dee11078ba1e2e5b56ee23d58e443d7aff180d4e7463ae66ea8e96e0c8d4e1443e7664b99599af14e591e28cf2f833bd30b44b89c396b5fc1ee81ea3f7bc08dab426b1871eb66829c81d57e2ebf5c7a3e9c593ce496f0b0c4237906b019ae75ca551d6b0b1adfe64958c2ead6c39e517eb75eaf4b4d72402bea40f043cf0a80317aa2f1a996c727e195e15f903c0cac618f668af1015ee479d1c7b1c1b370fd4a5a76f5bf295e6bd7d0f4ae56f
-# v0 = 0x2c77a013f2595a90c4e10a53a0f863d02b361c7407dad7d59db7c98df427da00c8d8627dbaef9557279ca31227cdb402d2d2
-# l0 = 0x3dbabf6ea5b801221c283bd234f04264d292c8f3048c8b59c21e003cda983a3a41e4392c6ea77a706631de60d261f2b367027e037d37fda5a13a8e01b2c6c0f48a3112315cffe7420a50a3ebada09aba61f8e6da793654a467b9f780c20c5085012e064ab9205c076073b4fb4895e01d0d568fd5c30159879180093855d39d5548a1389a94f57c680c
+A = numpy.matrix([[1,1],[2,2]])
+B = numpy.mat(([[2,2],[1,1]]))
+print(A)
+print(B)
+#输出
+&#39;&#39;&#39;
+[[1 1]
+ [2 2]]
+[[2 2]
+ [1 1]]
+&#39;&#39;&#39;
 </code></pre>
-<p>细节处就不说了，通过代码可以得到下列关系：</p>
-<p>$e1d1\equiv1mod phi $</p>
-<p>$e2d2\equiv1mod phi $</p>
-<p>$e3d3\equiv1mod phi$ </p>
-<p>$ l_{0} &#x3D; d1-d2 $</p>
-<p>由$l_{0}$猜测从e1和e2两行关系入手，推导如下：</p>
-<p>$e1d1&#x3D;e2d2&#x3D;e2(d1-l_{0})&#x3D;e2d1-e2l_{0}$</p>
-<p>$\Rightarrow (e1-e2)d1+e2l_{0} \equiv 0modphi$，两边同乘e1（凑出e1*d1）</p>
-<p>$\Rightarrow (e1-e2)e1d1+e1e2l_{0} \equiv 0modphi$，化简</p>
-<p>$\Rightarrow e1-e2+e1e2l_{0} \equiv0modphi&#x3D;kphi$</p>
-<p>在扩大域$kphi$上有，$e3d^{‘}_{3} \equiv 1mod(kphi)$</p>
-<p>又有$c\equiv m^{e3}modn \Rightarrow c^{d^{‘}_{3}} \equiv m^{1+k^{‘}kphi}&#x3D;m^{1+k^{‘’}phi} \equiv mmodn$</p>
-<p>解题代码：</p>
-<pre><code class="python">n = ...
-e1 = ...
-e2 = ...
-e3 = ...
-c = ...
-v0 = ...
-l0 = ...
+<p>中间部分用逗号间隔的[]可以理解为矩阵的每一行，输出行：</p>
+<pre><code class="python">print(A[0])
+print(A[1])
+#输出
+&#39;&#39;&#39;
+[[1 1]]
+[[2 2]]
+&#39;&#39;&#39;
+</code></pre>
+<p>输出单个元素：</p>
+<pre><code class="python">A = numpy.matrix([[1,2,1],[2,-1,3],[3,1,2]])
+print(A[0])#第一行
+print(A[0][0,0])#第一行第一个元素
+print(A[0,0])#同上
+#输出
+&#39;&#39;&#39;
+[[1 2 1]]
+1
+1
+&#39;&#39;&#39;
+</code></pre>
+<p><strong>shape获取矩阵行列值</strong></p>
+<pre><code class="python">A = numpy.matrix([[1,1],[2,2],[3,3]])
+print(A.shape)
+#输出
+&#39;&#39;&#39;
+(3, 2)
+&#39;&#39;&#39;
+</code></pre>
+<p><strong>A.T或A.transpose()进行矩阵转置</strong></p>
+<pre><code class="python">A = numpy.matrix([[1,1],[2,2],[3,3]])
+print(A.T)
+print(A.transpose())
+#输出
+&#39;&#39;&#39;
+[[1 2 3]
+ [1 2 3]]
+[[1 2 3]
+ [1 2 3]]
+&#39;&#39;&#39;
+</code></pre>
+<p><strong>矩阵相加减</strong></p>
+<pre><code class="python">A = numpy.matrix([[1,1],[2,2],[3,3]])
+B = numpy.matrix([[4,4],[5,5],[6,6]])
+print(A+B)
+print(B-A)
+#输出
+&#39;&#39;&#39;
+[[5 5]
+ [7 7]
+ [9 9]]
+[[3 3]
+ [3 3]
+ [3 3]]
+&#39;&#39;&#39;
+</code></pre>
+<p><strong>矩阵乘法</strong></p>
+<pre><code class="python">A = numpy.matrix([[1,1],[2,2],[3,3]])
+B = numpy.matrix([[1,2,3],[1,2,3]])
+print(numpy.dot(A,B))
+print(numpy.dot(B,A))#矩阵乘法不满足交换律
+#输出
+&#39;&#39;&#39;
+[[ 2  4  6]
+ [ 4  8 12]
+ [ 6 12 18]]
+[[14 14]
+ [14 14]]
+&#39;&#39;&#39;
+</code></pre>
+<p>用dot进行矩阵乘法运算时需注意矩阵乘法运算的规则，否则报错。</p>
+<p><strong>用eye创建单位矩阵</strong></p>
+<pre><code class="python">print(numpy.eye(3))
+#输出
+&#39;&#39;&#39;
+[[1. 0. 0.]
+ [0. 1. 0.]
+ [0. 0. 1.]]
+&#39;&#39;&#39;
+</code></pre>
+<p><strong>trare计算矩阵的迹（主对角线元素的和）</strong></p>
+<pre><code class="python">B = numpy.matrix([[1,2,3],[1,2,3],[1,2,3]])
+print(numpy.trace(B))
+#输出
+&#39;&#39;&#39;
+6
+&#39;&#39;&#39;
+</code></pre>
+<p><strong>linalg.det()计算矩阵对应行列式的值（矩阵行列数必须相等）</strong></p>
+<pre><code class="python">A = numpy.matrix([[1,1],[2,3]])
+B = numpy.matrix([[1,2,3],[1,2,3],[1,2,3]])
+print(numpy.linalg.det(A))
+print(numpy.linalg.det(B))
+#输出
+&#39;&#39;&#39;
+1.0
+0.0
+&#39;&#39;&#39;
+</code></pre>
+<p><strong>linalg.inv()计算矩阵的逆矩阵（逆矩阵：若方阵A、B满足，AB&#x3D;BA&#x3D;E，称B为A的逆矩阵，矩阵A的行列式值不能为0）</strong></p>
+<pre><code class="python">A = numpy.matrix([[1,-2,1],[0,2,-1],[1,1,-2]])
+print(numpy.linalg.inv(A))
+#输出
+&#39;&#39;&#39;
+[[ 1.          1.          0.        ]
+ [ 0.33333333  1.         -0.33333333]
+ [ 0.66666667  1.         -0.66666667]]
+&#39;&#39;&#39;
+</code></pre>
+<p><strong>linalg.solve()解多元一次方程</strong></p>
+<pre><code class="python">a = [[1,2,1],[2,-1,3],[3,1,2]]#未知数系数
+A = numpy.array(a)
+b = [7,7,18]#常数项
+B = numpy.array(b)
+X = numpy.linalg.solve(A,B)
+print(X)
+#输出
+&#39;&#39;&#39;
+[ 7.  1. -2.]
+&#39;&#39;&#39;
 
-kphi = e1 - e2 +e1*e2*l0
-d3 = invert(e3,kphi)
-m = pow(c,d3,n)
-print(long_to_bytes(m))
+#验证结果是否正确
+print(numpy.dot(a,X))
+&#39;&#39;&#39;
+[ 7.  7. 18.]
+&#39;&#39;&#39;
 </code></pre>
 
       
@@ -531,46 +585,6 @@ print(long_to_bytes(m))
 
 
 
-    
-        <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-    "HTML-CSS": {
-        preferredFont: "TeX",
-        availableFonts: ["STIX","TeX"],
-        linebreaks: { automatic:true },
-        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
-    },
-    tex2jax: {
-        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
-        processEscapes: true,
-        ignoreClass: "tex2jax_ignore|dno",
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-    TeX: {
-        equationNumbers: { autoNumber: "AMS" },
-        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
-        Macros: { href: "{}" }
-    },
-    messageStyle: "none"
-    });
-</script>
-<!-- 给MathJax元素添加has-jax class -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-<!-- 通过连接CDN加载MathJax的js代码 -->
-<script type="text/javascript" async
-        src="//cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
-<input type="hidden" id="MathJax-js"
-        value="//cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
-</input>
     
 
 

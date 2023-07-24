@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>运算域扩大问题 | Luino&#39;s Bold</title>
-  <meta name="keywords" content=" 运算域扩大 ">
-  <meta name="description" content="运算域扩大问题 | Luino&#39;s Bold">
+  <title>解决离散对数问题 | Luino&#39;s Bold</title>
+  <meta name="keywords" content=" 离散对数 ">
+  <meta name="description" content="解决离散对数问题 | Luino&#39;s Bold">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="离散对数问题离散对数问题是指给定一个有限群G（一般是乘法群或加法群）及其生成元g，以及另一个元素y，求解离散对数x，使得$g^x &#x3D; y(mod p)$。其中，p是一个素数，称为模数。 Pohlig-Hellman算法思想Pohlig-Hellman算法是一种适用于大素数模数情况下的离散对数问题求解算法。该算法的基本思想是将模数分解成若干个质因子，然后对每个质因子分别求解离散对数，最后使">
 <meta property="og:type" content="article">
@@ -362,9 +362,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-运算域扩大问题" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-解决离散对数问题" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">运算域扩大问题</h1>
+        <h1 class="article-title">解决离散对数问题</h1>
     
     <div class="article-meta">
         
@@ -382,19 +382,19 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color1">运算域扩大</a>
+            <a class="color5">离散对数</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2023-04-29 15:27:09'>2023-03-10 17:43</time>
+            Created At : <time class="date" title='Updated At: 2023-04-29 20:20:02'>2023-04-29 20:02</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:514</span>
+        <span>Count:645</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -413,7 +413,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A6%BB%E6%95%A3%E5%AF%B9%E6%95%B0%E9%97%AE%E9%A2%98"><span class="toc-text">离散对数问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pohlig-Hellman%E7%AE%97%E6%B3%95"><span class="toc-text">Pohlig-Hellman算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E6%83%B3"><span class="toc-text">思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E8%BF%87%E7%A8%8B"><span class="toc-text">实现过程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Baby-Step-Giant-Step%EF%BC%88BSGS%EF%BC%89%E7%AE%97%E6%B3%95"><span class="toc-text">Baby Step Giant Step（BSGS）算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E6%83%B3-1"><span class="toc-text">思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E8%BF%87%E7%A8%8B-1"><span class="toc-text">实现过程</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -429,96 +429,25 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>s上次的黄河流域赛遇到了一道需要将运算域扩大的问题。这种情况在第二届“长城杯”网络安全大赛中的RSA也出现了。</p>
-<p>题目源码：</p>
-<pre><code class="python">from Crypto.Util.number import bytes_to_long, getPrime, isPrime
-import win32gui,PIL,numpy,operator,pymouse
-from Crypto.Random import random
-from random import getrandbits
-from sympy.ntheory.residue_ntheory import nthroot_mod
-from sympy import nextprime
-from secret import flag
-
-def get_primes(m):
-    p = getPrime(Bits)
-    pl = p &amp; int(&#39;f&#39;*(m//4), 16)#p&amp;(2**(200)-1)
-    q = (getrandbits(Bits - m) &lt;&lt; m)^^pl#rand+p的低200bit
-    while not isPrime(q):
-        q = (getrandbits(Bits - m) &lt;&lt; m)^^pl
-    return (p, q)
-
-def get_key(p, q, delta, beta, Bits):
-    phi = (p - 1) * (q - 1)
-    d1 = getPrime(floor(2 * Bits * delta))
-    e1 = inverse_mod(d1, phi)
-    d2 = nextprime(d1 ^^ getrandbits(floor(2 * Bits * beta)))
-    e2 = inverse_mod(d2, phi)
-    d3 = getPrime(floor(2 * Bits * delta))
-    e3 = inverse_mod(d3, phi)
-    return (e1, e2, e3, d1, d2, d3)
-
-    
-if __name__ == &#39;__main__&#39;:
-    Bits = 1024 
-    alpha = 0.098
-    delta = 0.536
-    beta = delta
-    gamma = 1
-    m = floor(2 * alpha * Bits)#200bit&lt;n^(1/4)
-
-    p, q = get_primes(m)
-    n = p * q
-    assert n % 2^3 == 1
-    u0 = nthroot_mod(n, 2, 2^m, all_roots=False)
-    v0 = (2*u0 + ((n - u0^2) * inverse_mod(u0, 2^(2*m)) % 2^(2*m)))
-    e1, e2, e3, d1, d2, d3 = get_key(p, q, delta, beta, Bits)
-
-    flag = bytes_to_long(flag)
-    c = pow(flag, e3, n)
-    l0 = d1 - d2
-
-    print(f&#39;N = &#123;hex(n)&#125;&#39;)
-    print(f&#39;e1 = &#123;hex(e1)&#125;&#39;)
-    print(f&#39;e2 = &#123;hex(e2)&#125;&#39;)
-    print(f&#39;e3 = &#123;hex(e3)&#125;&#39;)
-    print(f&#39;c = &#123;hex(c)&#125;&#39;)
-    print(f&#39;v0 = &#123;hex(v0)&#125;&#39;)
-    print(f&#39;l0 = &#123;hex(l0)&#125;&#39;)
-
-# N = 0x62c048bc886075bffb9ad01255786dd8ef2480ba510f13689c1e84ffaaf21dfb5695a4d83f4ba22093bdd75bfc8f5979185d29724ecccf045e1857b1b2a4757dd82dc44318c054c9fce9bc451e6beecb97bbda6562420fc8c295521c5455443413f90403cf1af6271fb6d2d54378b86ced18ae6844a877890ea853a215880a09c68c517a75c1183c067b706ce630f3f0913591f7354cfa60c8f6b7ab2f15e466a1ea6e8034417a5fc3c11b8ba746596c22c734b09257e9a6fb18358738d416eda0ba0e7b028dd2d550b1e018b180916ac25f47910657a5db2410946c0593b7e23ed1659a811083f363ad4eb65642091a040befbd643089bbee376634d2394d11
-# e1 = 0x124241a12ea2be53f9b9b1fd92e10d089cfa32aa07e6c2cace848aaa6c73ff06d4c6c92b7d1f29160b2eef95a5f580915d3f15c0ea23975cbadfe8347a10daab2bd0827d7e909b329ec53c5eb306f0a5125b3817e7ea0c15b2317a46c36c4f34fc626dadc6c769bcc7be18ddf7954fae8dde3fd4ce3c5146c019bdb0d9552af1dc9ef7186e06b1d59e763fb05c7cd21fbb3f509fee52d4e24921ebfa76bb8302ea6760e92606e440907cc1c110946af53900904e84dbc309fcef15ea060c667070e5e0310891606df151609ff609bcc6125c6043c35119b25df78b4d5ca61ab6492753cc5e5b32e044fce0aeb0442464f36298add254e9fb6505fa4cddae1cf7
-# e2 = 0x17b3937cec3ca5fdddad8db29c6dc4efae1408bf5b4aa2ff602112c50f302e9698c79c7ab79fef0210c621dcc218d91d358b7f93a978c4e3f2b982794697c4797cef89189d1464ed1c767bf72433092922352885f8e355952c558ad2c9ade58a19375ddc5dcf3f9fa28c68a5cff158734d94224b85f77bd939133f39ab7884ece61d9fb3496373008827c2ae694dfe7da08eee348ef99c3a6737a4b088b62978cf209ef3d1140a30d42872615b94378108266e3d344caf51b497a585a4b5ef8619cc46959bad9b89f59f36175fbf9b64363443f3f7743896c72a198decedf89c518fa07b1d401d0359578a4926b7d67de86232ee24751f17dafbc749c0783b33
-# e3 = 0x5647c4490bda9e7e497651551600572c5ef4e2d889b9b1ba0e9a493660497e10877e975c01da9aebae5e3ba9aad976a1a783b39191e8fd799689dfa26b069264d60543602d514ac412ac75d827d67c78ad544bda633f0fa69fb5bbc37e0f6b95714576ff53bae3f7f991d143a4b1e841730d5d580d4effeb8fb02e8b3c3c9a1f1899d2eb411ce37f16d30cfa1f7af7322be4f42f5d012f484a1181fa4aa0b5f420a472030a5c08c80bff76ab82ef5768bfd495abcdc5f22aae1891561322dfb28ff63c4e467411c8b73c11d64b05f411e2a1de0c7754c6a62d1f72cded9e2592ccc21be3fce4ea6f083a617a246fd3fe464ef2487adbfabfb628c882ea991675
-# c = 0x45f2ee650d622d1e0f0e2e2e861001e9866c541f9f1dd2ec1dec18194f8b7224914916ecd68bbc74b28a000d2664e671586aed63b54c0928a939caf28d39eeba03c0ce3afcf2cdc5805e8e2792d76e88545aa4dee11078ba1e2e5b56ee23d58e443d7aff180d4e7463ae66ea8e96e0c8d4e1443e7664b99599af14e591e28cf2f833bd30b44b89c396b5fc1ee81ea3f7bc08dab426b1871eb66829c81d57e2ebf5c7a3e9c593ce496f0b0c4237906b019ae75ca551d6b0b1adfe64958c2ead6c39e517eb75eaf4b4d72402bea40f043cf0a80317aa2f1a996c727e195e15f903c0cac618f668af1015ee479d1c7b1c1b370fd4a5a76f5bf295e6bd7d0f4ae56f
-# v0 = 0x2c77a013f2595a90c4e10a53a0f863d02b361c7407dad7d59db7c98df427da00c8d8627dbaef9557279ca31227cdb402d2d2
-# l0 = 0x3dbabf6ea5b801221c283bd234f04264d292c8f3048c8b59c21e003cda983a3a41e4392c6ea77a706631de60d261f2b367027e037d37fda5a13a8e01b2c6c0f48a3112315cffe7420a50a3ebada09aba61f8e6da793654a467b9f780c20c5085012e064ab9205c076073b4fb4895e01d0d568fd5c30159879180093855d39d5548a1389a94f57c680c
-</code></pre>
-<p>细节处就不说了，通过代码可以得到下列关系：</p>
-<p>$e1d1\equiv1mod phi $</p>
-<p>$e2d2\equiv1mod phi $</p>
-<p>$e3d3\equiv1mod phi$ </p>
-<p>$ l_{0} &#x3D; d1-d2 $</p>
-<p>由$l_{0}$猜测从e1和e2两行关系入手，推导如下：</p>
-<p>$e1d1&#x3D;e2d2&#x3D;e2(d1-l_{0})&#x3D;e2d1-e2l_{0}$</p>
-<p>$\Rightarrow (e1-e2)d1+e2l_{0} \equiv 0modphi$，两边同乘e1（凑出e1*d1）</p>
-<p>$\Rightarrow (e1-e2)e1d1+e1e2l_{0} \equiv 0modphi$，化简</p>
-<p>$\Rightarrow e1-e2+e1e2l_{0} \equiv0modphi&#x3D;kphi$</p>
-<p>在扩大域$kphi$上有，$e3d^{‘}_{3} \equiv 1mod(kphi)$</p>
-<p>又有$c\equiv m^{e3}modn \Rightarrow c^{d^{‘}_{3}} \equiv m^{1+k^{‘}kphi}&#x3D;m^{1+k^{‘’}phi} \equiv mmodn$</p>
-<p>解题代码：</p>
-<pre><code class="python">n = ...
-e1 = ...
-e2 = ...
-e3 = ...
-c = ...
-v0 = ...
-l0 = ...
-
-kphi = e1 - e2 +e1*e2*l0
-d3 = invert(e3,kphi)
-m = pow(c,d3,n)
-print(long_to_bytes(m))
-</code></pre>
+        <h3 id="离散对数问题"><a href="#离散对数问题" class="headerlink" title="离散对数问题"></a>离散对数问题</h3><p>离散对数问题是指给定一个有限群G（一般是乘法群或加法群）及其生成元g，以及另一个元素y，求解离散对数x，使得$g^x &#x3D; y(mod p)$。其中，p是一个素数，称为模数。</p>
+<h3 id="Pohlig-Hellman算法"><a href="#Pohlig-Hellman算法" class="headerlink" title="Pohlig-Hellman算法"></a>Pohlig-Hellman算法</h3><h4 id="思想"><a href="#思想" class="headerlink" title="思想"></a>思想</h4><p>Pohlig-Hellman算法是一种适用于大素数模数情况下的离散对数问题求解算法。该算法的基本思想是将模数分解成若干个质因子，然后对每个质因子分别求解离散对数，最后使用中国剩余定理合并结果。</p>
+<h4 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h4><ol>
+<li>将模数p分解成若干个质因子的乘积：$p &#x3D; p_1^{k_1} * p_2^{k_2} * … * p_m^{k_m}$。</li>
+<li>对于每个质因子$p_i$，使用小费马定理将原问题转化为模$p_i^{k_i}$意义下的离散对数问题。</li>
+<li>对于每个模$p_i^{k_i}$，使用指数为2的幂次试除法（也称为Hensel lifting）求解离散对数。</li>
+<li>使用中国剩余定理合并每个模$p_i^{k_i}$意义下的离散对数。</li>
+</ol>
+<p>Pohlig-Hellman算法的时间复杂度为$O(sqrt(p)log(p))$，其中p为模数。</p>
+<h3 id="Baby-Step-Giant-Step（BSGS）算法"><a href="#Baby-Step-Giant-Step（BSGS）算法" class="headerlink" title="Baby Step Giant Step（BSGS）算法"></a>Baby Step Giant Step（BSGS）算法</h3><h4 id="思想-1"><a href="#思想-1" class="headerlink" title="思想"></a>思想</h4><p>SGS算法是一种适用于小素数模数情况下的离散对数问题求解算法。该算法的基本思想是通过预处理出一个哈希表，然后进行查表操作来求解离散对数。</p>
+<h4 id="实现过程-1"><a href="#实现过程-1" class="headerlink" title="实现过程"></a>实现过程</h4><ol>
+<li>确定一个合适的底数$g$。</li>
+<li>预处理出一个哈希表，表中存储了所有可能的$g^j mod p$的取值和对应的j值。</li>
+<li>枚举x的取值，计算$a  g^{(-bx)} mod p$的值，并在哈希表中查找对应的j值。</li>
+<li>根据哈希表中查找到的j值和枚举得到的x值计算出离散对数$x$。</li>
+</ol>
+<p>BSGS算法的时间复杂度为$O(sqrt(p))$。</p>
+<p>这两个算法均可以在多项式时间内解决离散对数问题。</p>
+<p>在多项式时间内解决问题是指算法的时间复杂度是一个多项式函数，即算法的运行时间与输入规模的某个多项式函数成正比。在计算机科学中，多项式时间复杂度的算法被认为是高效的算法，因为随着输入规模的增加，算法的运行时间不会呈指数级增长。因此，如果一个算法可以在多项式时间内解决一个问题，那么它就被认为是高效的。</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 1666739907@qq.com </span>

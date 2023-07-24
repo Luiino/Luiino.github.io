@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>运算域扩大问题 | Luino&#39;s Bold</title>
-  <meta name="keywords" content=" 运算域扩大 ">
-  <meta name="description" content="运算域扩大问题 | Luino&#39;s Bold">
+  <title>Pollards-rho-algorithm学习记录 | Luino&#39;s Bold</title>
+  <meta name="keywords" content=" Pollard&#39;s rho algorithm ">
+  <meta name="description" content="Pollards-rho-algorithm学习记录 | Luino&#39;s Bold">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="离散对数问题离散对数问题是指给定一个有限群G（一般是乘法群或加法群）及其生成元g，以及另一个元素y，求解离散对数x，使得$g^x &#x3D; y(mod p)$。其中，p是一个素数，称为模数。 Pohlig-Hellman算法思想Pohlig-Hellman算法是一种适用于大素数模数情况下的离散对数问题求解算法。该算法的基本思想是将模数分解成若干个质因子，然后对每个质因子分别求解离散对数，最后使">
 <meta property="og:type" content="article">
@@ -362,9 +362,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-运算域扩大问题" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Pollards-rho-algorithm学习记录" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">运算域扩大问题</h1>
+        <h1 class="article-title">Pollards-rho-algorithm学习记录</h1>
     
     <div class="article-meta">
         
@@ -382,19 +382,19 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color1">运算域扩大</a>
+            <a class="color4">Pollard&#39;s rho algorithm</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2023-04-29 15:27:09'>2023-03-10 17:43</time>
+            Created At : <time class="date" title='Updated At: 2023-04-29 20:02:43'>2023-04-29 15:24</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:514</span>
+        <span>Count:1.1k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -413,7 +413,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%9C%E7%94%A8"><span class="toc-text">作用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E6%80%9D%E6%83%B3"><span class="toc-text">相关思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%98%E4%BD%93"><span class="toc-text">变体</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E4%BE%8B%E9%A2%98"><span class="toc-text">相关例题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -429,96 +429,108 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>s上次的黄河流域赛遇到了一道需要将运算域扩大的问题。这种情况在第二届“长城杯”网络安全大赛中的RSA也出现了。</p>
-<p>题目源码：</p>
-<pre><code class="python">from Crypto.Util.number import bytes_to_long, getPrime, isPrime
-import win32gui,PIL,numpy,operator,pymouse
-from Crypto.Random import random
-from random import getrandbits
-from sympy.ntheory.residue_ntheory import nthroot_mod
-from sympy import nextprime
-from secret import flag
-
-def get_primes(m):
-    p = getPrime(Bits)
-    pl = p &amp; int(&#39;f&#39;*(m//4), 16)#p&amp;(2**(200)-1)
-    q = (getrandbits(Bits - m) &lt;&lt; m)^^pl#rand+p的低200bit
-    while not isPrime(q):
-        q = (getrandbits(Bits - m) &lt;&lt; m)^^pl
-    return (p, q)
-
-def get_key(p, q, delta, beta, Bits):
-    phi = (p - 1) * (q - 1)
-    d1 = getPrime(floor(2 * Bits * delta))
-    e1 = inverse_mod(d1, phi)
-    d2 = nextprime(d1 ^^ getrandbits(floor(2 * Bits * beta)))
-    e2 = inverse_mod(d2, phi)
-    d3 = getPrime(floor(2 * Bits * delta))
-    e3 = inverse_mod(d3, phi)
-    return (e1, e2, e3, d1, d2, d3)
-
-    
-if __name__ == &#39;__main__&#39;:
-    Bits = 1024 
-    alpha = 0.098
-    delta = 0.536
-    beta = delta
-    gamma = 1
-    m = floor(2 * alpha * Bits)#200bit&lt;n^(1/4)
-
-    p, q = get_primes(m)
-    n = p * q
-    assert n % 2^3 == 1
-    u0 = nthroot_mod(n, 2, 2^m, all_roots=False)
-    v0 = (2*u0 + ((n - u0^2) * inverse_mod(u0, 2^(2*m)) % 2^(2*m)))
-    e1, e2, e3, d1, d2, d3 = get_key(p, q, delta, beta, Bits)
-
-    flag = bytes_to_long(flag)
-    c = pow(flag, e3, n)
-    l0 = d1 - d2
-
-    print(f&#39;N = &#123;hex(n)&#125;&#39;)
-    print(f&#39;e1 = &#123;hex(e1)&#125;&#39;)
-    print(f&#39;e2 = &#123;hex(e2)&#125;&#39;)
-    print(f&#39;e3 = &#123;hex(e3)&#125;&#39;)
-    print(f&#39;c = &#123;hex(c)&#125;&#39;)
-    print(f&#39;v0 = &#123;hex(v0)&#125;&#39;)
-    print(f&#39;l0 = &#123;hex(l0)&#125;&#39;)
-
-# N = 0x62c048bc886075bffb9ad01255786dd8ef2480ba510f13689c1e84ffaaf21dfb5695a4d83f4ba22093bdd75bfc8f5979185d29724ecccf045e1857b1b2a4757dd82dc44318c054c9fce9bc451e6beecb97bbda6562420fc8c295521c5455443413f90403cf1af6271fb6d2d54378b86ced18ae6844a877890ea853a215880a09c68c517a75c1183c067b706ce630f3f0913591f7354cfa60c8f6b7ab2f15e466a1ea6e8034417a5fc3c11b8ba746596c22c734b09257e9a6fb18358738d416eda0ba0e7b028dd2d550b1e018b180916ac25f47910657a5db2410946c0593b7e23ed1659a811083f363ad4eb65642091a040befbd643089bbee376634d2394d11
-# e1 = 0x124241a12ea2be53f9b9b1fd92e10d089cfa32aa07e6c2cace848aaa6c73ff06d4c6c92b7d1f29160b2eef95a5f580915d3f15c0ea23975cbadfe8347a10daab2bd0827d7e909b329ec53c5eb306f0a5125b3817e7ea0c15b2317a46c36c4f34fc626dadc6c769bcc7be18ddf7954fae8dde3fd4ce3c5146c019bdb0d9552af1dc9ef7186e06b1d59e763fb05c7cd21fbb3f509fee52d4e24921ebfa76bb8302ea6760e92606e440907cc1c110946af53900904e84dbc309fcef15ea060c667070e5e0310891606df151609ff609bcc6125c6043c35119b25df78b4d5ca61ab6492753cc5e5b32e044fce0aeb0442464f36298add254e9fb6505fa4cddae1cf7
-# e2 = 0x17b3937cec3ca5fdddad8db29c6dc4efae1408bf5b4aa2ff602112c50f302e9698c79c7ab79fef0210c621dcc218d91d358b7f93a978c4e3f2b982794697c4797cef89189d1464ed1c767bf72433092922352885f8e355952c558ad2c9ade58a19375ddc5dcf3f9fa28c68a5cff158734d94224b85f77bd939133f39ab7884ece61d9fb3496373008827c2ae694dfe7da08eee348ef99c3a6737a4b088b62978cf209ef3d1140a30d42872615b94378108266e3d344caf51b497a585a4b5ef8619cc46959bad9b89f59f36175fbf9b64363443f3f7743896c72a198decedf89c518fa07b1d401d0359578a4926b7d67de86232ee24751f17dafbc749c0783b33
-# e3 = 0x5647c4490bda9e7e497651551600572c5ef4e2d889b9b1ba0e9a493660497e10877e975c01da9aebae5e3ba9aad976a1a783b39191e8fd799689dfa26b069264d60543602d514ac412ac75d827d67c78ad544bda633f0fa69fb5bbc37e0f6b95714576ff53bae3f7f991d143a4b1e841730d5d580d4effeb8fb02e8b3c3c9a1f1899d2eb411ce37f16d30cfa1f7af7322be4f42f5d012f484a1181fa4aa0b5f420a472030a5c08c80bff76ab82ef5768bfd495abcdc5f22aae1891561322dfb28ff63c4e467411c8b73c11d64b05f411e2a1de0c7754c6a62d1f72cded9e2592ccc21be3fce4ea6f083a617a246fd3fe464ef2487adbfabfb628c882ea991675
-# c = 0x45f2ee650d622d1e0f0e2e2e861001e9866c541f9f1dd2ec1dec18194f8b7224914916ecd68bbc74b28a000d2664e671586aed63b54c0928a939caf28d39eeba03c0ce3afcf2cdc5805e8e2792d76e88545aa4dee11078ba1e2e5b56ee23d58e443d7aff180d4e7463ae66ea8e96e0c8d4e1443e7664b99599af14e591e28cf2f833bd30b44b89c396b5fc1ee81ea3f7bc08dab426b1871eb66829c81d57e2ebf5c7a3e9c593ce496f0b0c4237906b019ae75ca551d6b0b1adfe64958c2ead6c39e517eb75eaf4b4d72402bea40f043cf0a80317aa2f1a996c727e195e15f903c0cac618f668af1015ee479d1c7b1c1b370fd4a5a76f5bf295e6bd7d0f4ae56f
-# v0 = 0x2c77a013f2595a90c4e10a53a0f863d02b361c7407dad7d59db7c98df427da00c8d8627dbaef9557279ca31227cdb402d2d2
-# l0 = 0x3dbabf6ea5b801221c283bd234f04264d292c8f3048c8b59c21e003cda983a3a41e4392c6ea77a706631de60d261f2b367027e037d37fda5a13a8e01b2c6c0f48a3112315cffe7420a50a3ebada09aba61f8e6da793654a467b9f780c20c5085012e064ab9205c076073b4fb4895e01d0d568fd5c30159879180093855d39d5548a1389a94f57c680c
-</code></pre>
-<p>细节处就不说了，通过代码可以得到下列关系：</p>
-<p>$e1d1\equiv1mod phi $</p>
-<p>$e2d2\equiv1mod phi $</p>
-<p>$e3d3\equiv1mod phi$ </p>
-<p>$ l_{0} &#x3D; d1-d2 $</p>
-<p>由$l_{0}$猜测从e1和e2两行关系入手，推导如下：</p>
-<p>$e1d1&#x3D;e2d2&#x3D;e2(d1-l_{0})&#x3D;e2d1-e2l_{0}$</p>
-<p>$\Rightarrow (e1-e2)d1+e2l_{0} \equiv 0modphi$，两边同乘e1（凑出e1*d1）</p>
-<p>$\Rightarrow (e1-e2)e1d1+e1e2l_{0} \equiv 0modphi$，化简</p>
-<p>$\Rightarrow e1-e2+e1e2l_{0} \equiv0modphi&#x3D;kphi$</p>
-<p>在扩大域$kphi$上有，$e3d^{‘}_{3} \equiv 1mod(kphi)$</p>
-<p>又有$c\equiv m^{e3}modn \Rightarrow c^{d^{‘}_{3}} \equiv m^{1+k^{‘}kphi}&#x3D;m^{1+k^{‘’}phi} \equiv mmodn$</p>
-<p>解题代码：</p>
+        <h4 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h4><p>一种能快速找到大整数的一个非1、非自身的因子（也称非平凡因子）的算法。对于目前我所涉及的邻域来说，或许是用于RSA中N的分解。</p>
+<h4 id="相关思想"><a href="#相关思想" class="headerlink" title="相关思想"></a>相关思想</h4><p>设分解$n，n&#x3D;pq$，$q为n的非平凡因子$。这时我们需要一个用于生成伪随机数列的模$n$的多项式，设为：$g(x) \equiv x^2 + 1 (mod n)，x_1 &#x3D; g(x)，x_2 &#x3D; g(g(x))……$</p>
+<p>可以知道，由于$n和初始值x$的存在，这个数列会不断重复某个子序列，可以举几个小的数验证。这种循环的结构即产生了$\rho$算法。</p>
+<p>这里引用大佬的：</p>
+<p>$Floyd’s cycle-finding algorithm$发现：设立两个节点，$i，j$，在每一步中，$i$每次移动一个节点，$j$每次移动两个节点，然后检查$gcd(x_i−x_j,n)$是否$≠1$，如果不等于，那么$gcd$的结果便是$p$。并且，这也意味着序列$x_k(modp)$也会重复。这是因为，如果$x_i \equiv x_j (modp)$, 那么$x_i与x_j$之间的差必然是p的倍数。同时，这也说明，$gcd(x_i−x_j，n)$不等于1的结果无论如何最终都会到来，但是可能是n自己，此时，代表$Pollard’s ρ algorithm$失败了，可以使用不同的起始值，再次运算。</p>
+<p>在这个伪随机数列中，利用Floyd的循环检测算法的思想找出$p$来，当然也有可能失败，代码如下：</p>
 <pre><code class="python">n = ...
-e1 = ...
-e2 = ...
-e3 = ...
-c = ...
-v0 = ...
-l0 = ...
+def mapx(x):
+    x = (x*x+1)%n
+    return x
 
-kphi = e1 - e2 +e1*e2*l0
-d3 = invert(e3,kphi)
-m = pow(c,d3,n)
-print(long_to_bytes(m))
+def pollard_rho (x1,x2):
+    while True:
+        x1 = mapx(x1)
+        x2 = mapx(mapx(x2))
+        p = gcd(x1-x2,n) #这里我用的gmpy2库里的函数
+        if (p == n):
+            print(&quot;fail&quot;)
+            return
+        elif (p!=1):
+            print(&quot;p: &quot;+str(p))
+            print(&quot;q: &quot;+str(n/p))
+            break
 </code></pre>
+<p>可以随机选个$n$来测试一下，例如$n &#x3D; 160$，当我们选取不同的初始值，时会产生不同的结果（前提是选的n有不同的因子组合）：</p>
+<pre><code class="python">pollard_rho(1, 1)
+pollard_rho(2, 1)
+pollard_rho(4, 3)
+#输出结果
+p: 32
+q: 5.0
+fail
+p: 4
+q: 40.0
+</code></pre>
+<h4 id="变体"><a href="#变体" class="headerlink" title="变体"></a>变体</h4><p>用相关的 Brent’s cycle finding method取代了 Floyd’s cycle-finding algorithm，使用了不同的循环检测方法，同样引用大佬的：</p>
+<p>如果 $gcd(a,n)&gt;1$，那么$gcd(ab,n)&gt;1$（b为任意正整数）。所以，取代$Floyd’s cycle-finding algorithm$的每一步都检查$gcd(a,n)$，他定义了一个$z，z&#x3D;(x_2−x_3(x_3−x_5……(x_{101}−x_{201}(modn)$即每一百步才检查一次$gcd(x_i−x_j,n)$，这么作主要是为了加速结果。 但有时它可能会引入重复因子导致算法失败，例如当n是一个正方形时。 但是</p>
+<p>说不定哪次题目就用了变体。</p>
+<h4 id="相关例题"><a href="#相关例题" class="headerlink" title="相关例题"></a>相关例题</h4><pre><code class="python">from Crypto.Util.number import getPrime, isPrime
+flag = &#39;BCNS&#123;***************&#125;&#39;
+nbits = 2048
+gbits = 1000
+g = getPrime(int(gbits))
+while True:
+    a = getPrime(int(nbits * 0.5) - gbits)
+    p = 2 * g * a + 1
+    if isPrime(p):
+        break
+
+while True:
+    b = getPrime(int(nbits * 0.5) - gbits)
+    q = 2 * g * b + 1
+    if p != q and isPrime(q):
+        break
+N = p * q
+e = 65537
+
+def str2int(s):
+    return int(s.encode(&#39;hex&#39;), 16)
+
+with open(&#39;pubkey.txt&#39;, &#39;w&#39;) as f:
+    f.write(str(e) + &#39;\n&#39;)
+    f.write(str(N) + &#39;\n&#39;)
+
+plain = str2int(flag)
+
+c = pow(plain, e, N)
+with open(&#39;cipher.txt&#39;, &#39;w&#39;) as f:
+    f.write(hex(c))
+</code></pre>
+<p>需要引入相关论文$FURTHER \space ATTACKS \space ON \space SERVER-AIDED \space RSA \space CRYPTOSYSTEMS$：</p>
+<p><a target="_blank" rel="noopener" href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.33.1333&rep=rep1&type=pdf"><a target="_blank" rel="noopener" href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.33.1333&rep=rep1&type=pdf">download (psu.edu)</a></a></p>
+<p>条件：$当N&#x3D;pq(N≥512bit),其中，(p−1)和(q−1)有一个大的公因数β$ ，在论文中提到的第一个攻击阶段：运用$Pollard’s \space ρ methods$ ，其中用于取伪随机值的maps函数为$ g(x)&#x3D;x^{N−1}+3(modN)$</p>
+<p>$通过分析p、q的生成过程，可以知道p、q有因子2g$，所以运用$Pollard’s \space ρ methods$分解n：</p>
+<pre><code class="python">def mapx(x):
+    x = (pow(x,n-1,n)+3) % n
+    return x
+
+def pollard_rho (x1,x2):
+    while True:
+        x1 = mapx(x1)
+        x2 = mapx(mapx(x2))
+        p = gcd(x1-x2,n)
+        if (p == n):
+            print &quot;fail&quot;
+            return
+        elif (p!=1):
+            print(&quot;p: &quot;+str(p))
+            print(&quot;q: &quot;+str(n/p))
+            break
+
+def main():
+    pollard_rho(1,1)#初始点从1开始
+    return 
+
+n = ...        
+main()
+</code></pre>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>学到了RSA中能分解n的又一种方法！！！所以碰到n正常思路走不通的时候，可以尝试走这一条路。</p>
+<p>参考：</p>
+<p><a target="_blank" rel="noopener" href="https://jayxv.github.io/2019/11/11/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8B%E6%B5%85%E6%9E%90Pollard's%20rho%20algorithm%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/">[密码学学习笔记 之 浅析Pollard’s rho algorithm及其应用 | Van1sh的小屋 (jayxv.github.io)](https://jayxv.github.io/2019/11/11/密码学学习笔记之浅析Pollard's rho algorithm及其应用/)</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/267884783"><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/267884783">算法学习笔记(55): Pollard-Rho算法 - 知乎 (zhihu.com)</a></a></p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 1666739907@qq.com </span>

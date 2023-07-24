@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>运算域扩大问题 | Luino&#39;s Bold</title>
-  <meta name="keywords" content=" 运算域扩大 ">
-  <meta name="description" content="运算域扩大问题 | Luino&#39;s Bold">
+  <title>Wiener-attack | Luino&#39;s Bold</title>
+  <meta name="keywords" content=" Wiener Attack ">
+  <meta name="description" content="Wiener-attack | Luino&#39;s Bold">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="离散对数问题离散对数问题是指给定一个有限群G（一般是乘法群或加法群）及其生成元g，以及另一个元素y，求解离散对数x，使得$g^x &#x3D; y(mod p)$。其中，p是一个素数，称为模数。 Pohlig-Hellman算法思想Pohlig-Hellman算法是一种适用于大素数模数情况下的离散对数问题求解算法。该算法的基本思想是将模数分解成若干个质因子，然后对每个质因子分别求解离散对数，最后使">
 <meta property="og:type" content="article">
@@ -362,9 +362,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-运算域扩大问题" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Wiener-attack" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">运算域扩大问题</h1>
+        <h1 class="article-title">Wiener-attack</h1>
     
     <div class="article-meta">
         
@@ -382,19 +382,19 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color1">运算域扩大</a>
+            <a class="color4">Wiener Attack</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2023-04-29 15:27:09'>2023-03-10 17:43</time>
+            Created At : <time class="date" title='Updated At: 2023-04-29 15:27:37'>2022-11-19 16:08</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:514</span>
+        <span>Count:937</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -413,7 +413,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BF%9E%E5%88%86%E6%95%B0"><span class="toc-text">连分数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%A7%E8%87%B4%E5%86%85%E5%AE%B9"><span class="toc-text">大致内容</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -429,95 +429,76 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>s上次的黄河流域赛遇到了一道需要将运算域扩大的问题。这种情况在第二届“长城杯”网络安全大赛中的RSA也出现了。</p>
-<p>题目源码：</p>
-<pre><code class="python">from Crypto.Util.number import bytes_to_long, getPrime, isPrime
-import win32gui,PIL,numpy,operator,pymouse
-from Crypto.Random import random
-from random import getrandbits
-from sympy.ntheory.residue_ntheory import nthroot_mod
-from sympy import nextprime
-from secret import flag
-
-def get_primes(m):
-    p = getPrime(Bits)
-    pl = p &amp; int(&#39;f&#39;*(m//4), 16)#p&amp;(2**(200)-1)
-    q = (getrandbits(Bits - m) &lt;&lt; m)^^pl#rand+p的低200bit
-    while not isPrime(q):
-        q = (getrandbits(Bits - m) &lt;&lt; m)^^pl
-    return (p, q)
-
-def get_key(p, q, delta, beta, Bits):
-    phi = (p - 1) * (q - 1)
-    d1 = getPrime(floor(2 * Bits * delta))
-    e1 = inverse_mod(d1, phi)
-    d2 = nextprime(d1 ^^ getrandbits(floor(2 * Bits * beta)))
-    e2 = inverse_mod(d2, phi)
-    d3 = getPrime(floor(2 * Bits * delta))
-    e3 = inverse_mod(d3, phi)
-    return (e1, e2, e3, d1, d2, d3)
-
-    
-if __name__ == &#39;__main__&#39;:
-    Bits = 1024 
-    alpha = 0.098
-    delta = 0.536
-    beta = delta
-    gamma = 1
-    m = floor(2 * alpha * Bits)#200bit&lt;n^(1/4)
-
-    p, q = get_primes(m)
-    n = p * q
-    assert n % 2^3 == 1
-    u0 = nthroot_mod(n, 2, 2^m, all_roots=False)
-    v0 = (2*u0 + ((n - u0^2) * inverse_mod(u0, 2^(2*m)) % 2^(2*m)))
-    e1, e2, e3, d1, d2, d3 = get_key(p, q, delta, beta, Bits)
-
-    flag = bytes_to_long(flag)
-    c = pow(flag, e3, n)
-    l0 = d1 - d2
-
-    print(f&#39;N = &#123;hex(n)&#125;&#39;)
-    print(f&#39;e1 = &#123;hex(e1)&#125;&#39;)
-    print(f&#39;e2 = &#123;hex(e2)&#125;&#39;)
-    print(f&#39;e3 = &#123;hex(e3)&#125;&#39;)
-    print(f&#39;c = &#123;hex(c)&#125;&#39;)
-    print(f&#39;v0 = &#123;hex(v0)&#125;&#39;)
-    print(f&#39;l0 = &#123;hex(l0)&#125;&#39;)
-
-# N = 0x62c048bc886075bffb9ad01255786dd8ef2480ba510f13689c1e84ffaaf21dfb5695a4d83f4ba22093bdd75bfc8f5979185d29724ecccf045e1857b1b2a4757dd82dc44318c054c9fce9bc451e6beecb97bbda6562420fc8c295521c5455443413f90403cf1af6271fb6d2d54378b86ced18ae6844a877890ea853a215880a09c68c517a75c1183c067b706ce630f3f0913591f7354cfa60c8f6b7ab2f15e466a1ea6e8034417a5fc3c11b8ba746596c22c734b09257e9a6fb18358738d416eda0ba0e7b028dd2d550b1e018b180916ac25f47910657a5db2410946c0593b7e23ed1659a811083f363ad4eb65642091a040befbd643089bbee376634d2394d11
-# e1 = 0x124241a12ea2be53f9b9b1fd92e10d089cfa32aa07e6c2cace848aaa6c73ff06d4c6c92b7d1f29160b2eef95a5f580915d3f15c0ea23975cbadfe8347a10daab2bd0827d7e909b329ec53c5eb306f0a5125b3817e7ea0c15b2317a46c36c4f34fc626dadc6c769bcc7be18ddf7954fae8dde3fd4ce3c5146c019bdb0d9552af1dc9ef7186e06b1d59e763fb05c7cd21fbb3f509fee52d4e24921ebfa76bb8302ea6760e92606e440907cc1c110946af53900904e84dbc309fcef15ea060c667070e5e0310891606df151609ff609bcc6125c6043c35119b25df78b4d5ca61ab6492753cc5e5b32e044fce0aeb0442464f36298add254e9fb6505fa4cddae1cf7
-# e2 = 0x17b3937cec3ca5fdddad8db29c6dc4efae1408bf5b4aa2ff602112c50f302e9698c79c7ab79fef0210c621dcc218d91d358b7f93a978c4e3f2b982794697c4797cef89189d1464ed1c767bf72433092922352885f8e355952c558ad2c9ade58a19375ddc5dcf3f9fa28c68a5cff158734d94224b85f77bd939133f39ab7884ece61d9fb3496373008827c2ae694dfe7da08eee348ef99c3a6737a4b088b62978cf209ef3d1140a30d42872615b94378108266e3d344caf51b497a585a4b5ef8619cc46959bad9b89f59f36175fbf9b64363443f3f7743896c72a198decedf89c518fa07b1d401d0359578a4926b7d67de86232ee24751f17dafbc749c0783b33
-# e3 = 0x5647c4490bda9e7e497651551600572c5ef4e2d889b9b1ba0e9a493660497e10877e975c01da9aebae5e3ba9aad976a1a783b39191e8fd799689dfa26b069264d60543602d514ac412ac75d827d67c78ad544bda633f0fa69fb5bbc37e0f6b95714576ff53bae3f7f991d143a4b1e841730d5d580d4effeb8fb02e8b3c3c9a1f1899d2eb411ce37f16d30cfa1f7af7322be4f42f5d012f484a1181fa4aa0b5f420a472030a5c08c80bff76ab82ef5768bfd495abcdc5f22aae1891561322dfb28ff63c4e467411c8b73c11d64b05f411e2a1de0c7754c6a62d1f72cded9e2592ccc21be3fce4ea6f083a617a246fd3fe464ef2487adbfabfb628c882ea991675
-# c = 0x45f2ee650d622d1e0f0e2e2e861001e9866c541f9f1dd2ec1dec18194f8b7224914916ecd68bbc74b28a000d2664e671586aed63b54c0928a939caf28d39eeba03c0ce3afcf2cdc5805e8e2792d76e88545aa4dee11078ba1e2e5b56ee23d58e443d7aff180d4e7463ae66ea8e96e0c8d4e1443e7664b99599af14e591e28cf2f833bd30b44b89c396b5fc1ee81ea3f7bc08dab426b1871eb66829c81d57e2ebf5c7a3e9c593ce496f0b0c4237906b019ae75ca551d6b0b1adfe64958c2ead6c39e517eb75eaf4b4d72402bea40f043cf0a80317aa2f1a996c727e195e15f903c0cac618f668af1015ee479d1c7b1c1b370fd4a5a76f5bf295e6bd7d0f4ae56f
-# v0 = 0x2c77a013f2595a90c4e10a53a0f863d02b361c7407dad7d59db7c98df427da00c8d8627dbaef9557279ca31227cdb402d2d2
-# l0 = 0x3dbabf6ea5b801221c283bd234f04264d292c8f3048c8b59c21e003cda983a3a41e4392c6ea77a706631de60d261f2b367027e037d37fda5a13a8e01b2c6c0f48a3112315cffe7420a50a3ebada09aba61f8e6da793654a467b9f780c20c5085012e064ab9205c076073b4fb4895e01d0d568fd5c30159879180093855d39d5548a1389a94f57c680c
+        <h5 id="连分数"><a href="#连分数" class="headerlink" title="连分数"></a><strong>连分数</strong></h5><p>形如：$a1+\frac{b1}{a2+\frac{b2}{a3+\frac{b3}{a4+…}}}$，$a_{n}$和$b_{n}$可取任意实数、复数。如果项数有限，则可以写成[$a_{1}$,$a_{2}$,$a_{3}$,$a_{4}$,…$a_{n}$]。</p>
+<p>举例说明：把$\frac{61}{21}$写成连分数形式：</p>
+<p>$2+\frac{1}{1+\frac{1}{9+\frac{1}{2}}}$ &#x3D; [2,1,9,2]</p>
+<h5 id="大致内容"><a href="#大致内容" class="headerlink" title="大致内容"></a><strong>大致内容</strong></h5><p>如果满足：d&lt;$\frac{1}{3}n^{\frac{1}{4}}$，那么一种基于连分数(一个数论当中的问题)的特殊攻击类型就可以危害 RSA 的安全。此时需要满足：q&lt;p&lt;2q。</p>
+<p><strong>思路</strong></p>
+<p>在rsa加密里头，有e<em>d $\equiv $ 1mod$\varphi (n)$，进一步有e</em>d &#x3D; 1+k*$\varphi (n)$，两边同除以d*$\varphi (n)$，并进行移位得到：</p>
+<p>$\frac{e}{\varphi(n)} - \frac{k}{d} &#x3D; \frac{1}{d\varphi(n)}$</p>
+<p>又$\varphi (n)$ &#x3D; p*q - p - q + 1 &#x3D; n - (p+q) + 1$\approx$n（因为p、q非常大，n&gt;&gt;(p+q)）</p>
+<p> $\frac{e}{\varphi(n)} - \frac{k}{d} &#x3D; \frac{1}{d\varphi(n)} \approx $$\frac{e}{n} - \frac{k}{d} &#x3D; \frac{1}{d\varphi(n)}$ </p>
+<p>$d\varphi(n)$很大，倒数就非常小，故$\frac{e}{n}和\frac{k}{d}$相差很小，$\frac{e}{n}比\frac{k}{d}稍大些$，因为e和n是给出的，故我们可以通过计算，$\frac{e}{n}$的连分数展开，依次算出每一个渐进分数。$\frac{e}{n}比\frac{k}{d}大$，所以$\frac{e}{n}$的渐进分数覆盖了$\frac{k}{d}$。说明$\frac{e}{n}$的渐进分数里有等于$\frac{k}{d}$的分数。</p>
+<p>举例说明：假设某个渐进分数$\frac{a}{b}$成立，则k&#x3D;a，d&#x3D;b，代回e<em>d &#x3D; 1+k</em>$\varphi (n)$，就能够解出$\varphi (n)$来（设为y），可以列出一个表达式：n - (p+q) + 1 &#x3D; y，n是已知的，把(p+q)当整体。所以(p+q)就能解出来，又n &#x3D; pq也是已知的，通过韦达定理，有方程：$x^{2}$ - (p+q)*x+pq &#x3D; 0，解方程就得到了p和q。</p>
+<p>难点在于用脚本实现求解连分数，借鉴代码(doge)</p>
+<p>例题：</p>
+<pre><code class="python">n = 12238605063252292170613110607692779326628090745751955692266649177882959231822580682548279800443278979485092243645806337103841086023159482786712759291169541633901936290854044069486201989034158882661270017305064348254800318759062921744741432214818915527537124001063995865927527037625277330117588414586505635959411443039463168463608235165929831344586283875119363703480280602514451713723663297066810128769907278246434745483846869482536367912810637275405943566734099622063142293421936734750356828712268385319217225803602442033960930413469179550331907541244416573641309943913383658451409219852933526106735587605884499707827
+e = 11850552481503020257392808424743510851763548184936536180317707155841959788151862976445957810691568475609821000653594584717037528429828330763571556164988619635320288125983463358648887090031957900011546300841211712664477474767941406651977784177969001025954167441377912326806132232375497798238928464025466905201977180541053129691501120197010080001677260814313906843670652972019631997467352264392296894192998971542816081534808106792758008676039929763345402657578681818891775091140555977382868531202964486261123748663752490909455324860302967636149379567988941803701512680099398021640317868259975961261408500449965277690517
+c = 9472193174575536616954091686751964873836697237500198884451530469300324470671555310791335185133679697207007374620225900775502162690848135615431624557389304657410880981454777737587420426091879654002644281066474715074536611611252677882396384453641127487515845176069574754606670518031472235144795376526854484442135299818868525539923568705203042265537204111153151119105287648912908771710419648445826883069030285651763726003413418764301988228077415599665616637501056116290476861280240577145515875430665394216054222788697052979429015400411487342877096677666406389711074591330476335174211990429870900468249946600544116793793
 </code></pre>
-<p>细节处就不说了，通过代码可以得到下列关系：</p>
-<p>$e1d1\equiv1mod phi $</p>
-<p>$e2d2\equiv1mod phi $</p>
-<p>$e3d3\equiv1mod phi$ </p>
-<p>$ l_{0} &#x3D; d1-d2 $</p>
-<p>由$l_{0}$猜测从e1和e2两行关系入手，推导如下：</p>
-<p>$e1d1&#x3D;e2d2&#x3D;e2(d1-l_{0})&#x3D;e2d1-e2l_{0}$</p>
-<p>$\Rightarrow (e1-e2)d1+e2l_{0} \equiv 0modphi$，两边同乘e1（凑出e1*d1）</p>
-<p>$\Rightarrow (e1-e2)e1d1+e1e2l_{0} \equiv 0modphi$，化简</p>
-<p>$\Rightarrow e1-e2+e1e2l_{0} \equiv0modphi&#x3D;kphi$</p>
-<p>在扩大域$kphi$上有，$e3d^{‘}_{3} \equiv 1mod(kphi)$</p>
-<p>又有$c\equiv m^{e3}modn \Rightarrow c^{d^{‘}_{3}} \equiv m^{1+k^{‘}kphi}&#x3D;m^{1+k^{‘’}phi} \equiv mmodn$</p>
-<p>解题代码：</p>
-<pre><code class="python">n = ...
-e1 = ...
-e2 = ...
-e3 = ...
-c = ...
-v0 = ...
-l0 = ...
+<p>e很大，这是关键特征，解密脚本：</p>
+<pre><code class="python">from gmpy2 import *
+from Crypto.Util.number import *
 
-kphi = e1 - e2 +e1*e2*l0
-d3 = invert(e3,kphi)
-m = pow(c,d3,n)
-print(long_to_bytes(m))
+# numerator(n):分子, denominator(d)：分母
+def t_cf(n, d):  # 将分数 x/y 转为连分数的形式
+    res = []
+    while d:
+        res.append(n // d)
+        n, d = d, n % d
+    return res
+
+
+def cf(sub_res):  # 得到渐进分数的分母和分子
+    n, d = 1, 0
+    for i in sub_res[::-1]:  # 从后面往前循环
+        d, n = n, i * n + d
+    return d, n
+
+
+def list_fraction(x, y):  # 列出每个渐进分数
+    res = t_cf(x, y)
+    res = list(map(cf, (res[0:i] for i in range(1, len(res)))))  # 将连分数的结果逐一截取以求渐进分数
+    return res
+
+
+def get_pq(a, b, c):  # 由p+q和pq的值通过维达定理来求解p和q(解二元一次方程)
+    par = isqrt(b * b - 4 * a * c)  # 由上述可得，开根号一定是整数，因为有解
+    x1, x2 = (-b + par) // (2 * a), (-b - par) // (2 * a)
+    return x1, x2
+
+
+def wienerAttack(e, n):
+    for (d, k) in list_fraction(e, n):  # 用一个for循环来注意试探e/n的连续函数的渐进分数，直到找到一个满足条件的渐进分数
+        if k == 0:  # 可能会出现连分数的第一个为0的情况，排除
+            continue
+        if (e * d - 1) % k != 0:  # ed=1 (mod φ(n)) 因此如果找到了d的话，(ed-1)会整除φ(n),也就是存在k使得(e*d-1)//k=φ(n)
+            continue
+        phi = (e * d - 1) // k  # 这个结果就是 φ(n)
+        px, qy = get_pq(1, n - phi + 1, n)
+        if px * qy == n:
+            p, q = abs(int(px)), abs(int(qy))  # 可能会得到两个负数，负负得正未尝不会出现
+            d = invert(e, (p - 1) * (q - 1))  # 求ed=1 (mod  φ(n))的结果，也就是e关于 φ(n)的乘法逆元d
+            return d
+    print(&quot;求解d失败&quot;)
+
+
+n = 12238605063252292170613110607692779326628090745751955692266649177882959231822580682548279800443278979485092243645806337103841086023159482786712759291169541633901936290854044069486201989034158882661270017305064348254800318759062921744741432214818915527537124001063995865927527037625277330117588414586505635959411443039463168463608235165929831344586283875119363703480280602514451713723663297066810128769907278246434745483846869482536367912810637275405943566734099622063142293421936734750356828712268385319217225803602442033960930413469179550331907541244416573641309943913383658451409219852933526106735587605884499707827
+e = 11850552481503020257392808424743510851763548184936536180317707155841959788151862976445957810691568475609821000653594584717037528429828330763571556164988619635320288125983463358648887090031957900011546300841211712664477474767941406651977784177969001025954167441377912326806132232375497798238928464025466905201977180541053129691501120197010080001677260814313906843670652972019631997467352264392296894192998971542816081534808106792758008676039929763345402657578681818891775091140555977382868531202964486261123748663752490909455324860302967636149379567988941803701512680099398021640317868259975961261408500449965277690517
+c = 9472193174575536616954091686751964873836697237500198884451530469300324470671555310791335185133679697207007374620225900775502162690848135615431624557389304657410880981454777737587420426091879654002644281066474715074536611611252677882396384453641127487515845176069574754606670518031472235144795376526854484442135299818868525539923568705203042265537204111153151119105287648912908771710419648445826883069030285651763726003413418764301988228077415599665616637501056116290476861280240577145515875430665394216054222788697052979429015400411487342877096677666406389711074591330476335174211990429870900468249946600544116793793
+d = wienerAttack(e, n)
+
+print(long_to_bytes(pow(c,d,n)))
 </code></pre>
 
       
