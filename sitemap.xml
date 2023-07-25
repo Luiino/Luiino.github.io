@@ -56,15 +56,6 @@
   </url>
   
   <url>
-    <loc>http://example.com/2023/04/29/%E8%A7%A3%E5%86%B3%E7%A6%BB%E6%95%A3%E5%AF%B9%E6%95%B0%E9%97%AE%E9%A2%98/</loc>
-    
-    <lastmod>2023-04-29</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://example.com/2023/04/29/Pollards-rho-algorithm%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</loc>
     
     <lastmod>2023-04-29</lastmod>
@@ -125,13 +116,6 @@
   
   <url>
     <loc>http://example.com/tags/Python%E7%9F%A9%E9%98%B5/</loc>
-    <lastmod>2023-07-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://example.com/tags/%E7%A6%BB%E6%95%A3%E5%AF%B9%E6%95%B0/</loc>
     <lastmod>2023-07-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
