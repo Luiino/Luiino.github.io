@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Pollards-rho-algorithm学习记录 | Luino&#39;s Bold</title>
-  <meta name="keywords" content=" Pollard&#39;s rho algorithm ">
-  <meta name="description" content="Pollards-rho-algorithm学习记录 | Luino&#39;s Bold">
+  <title>多项式RSA中phi_n求解 | Luino&#39;s Bold</title>
+  <meta name="keywords" content=" 多项式RSA ">
+  <meta name="description" content="多项式RSA中phi_n求解 | Luino&#39;s Bold">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="离散对数问题离散对数问题是指给定一个有限群G（一般是乘法群或加法群）及其生成元g，以及另一个元素y，求解离散对数x，使得$g^x &#x3D; y(mod p)$。其中，p是一个素数，称为模数。 Pohlig-Hellman算法思想Pohlig-Hellman算法是一种适用于大素数模数情况下的离散对数问题求解算法。该算法的基本思想是将模数分解成若干个质因子，然后对每个质因子分别求解离散对数，最后使">
 <meta property="og:type" content="article">
@@ -432,9 +432,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-Pollards-rho-algorithm学习记录" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-多项式RSA中phi-n求解" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">Pollards-rho-algorithm学习记录</h1>
+        <h1 class="article-title">多项式RSA中phi_n求解</h1>
     
     <div class="article-meta">
         
@@ -452,19 +452,19 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color4">Pollard&#39;s rho algorithm</a>
+            <a class="color2">多项式RSA</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2023-04-29 20:02:43'>2023-04-29 15:24</time>
+            Created At : <time class="date" title='Updated At: 2023-04-29 21:48:19'>2023-01-18 16:12</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:1.1k</span>
+        <span>Count:2.6k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -483,7 +483,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%9C%E7%94%A8"><span class="toc-text">作用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E6%80%9D%E6%83%B3"><span class="toc-text">相关思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%98%E4%BD%93"><span class="toc-text">变体</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E4%BE%8B%E9%A2%98"><span class="toc-text">相关例题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol>
+        
     
 <style>
     .left-col .switch-btn,
@@ -499,108 +499,100 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h4><p>一种能快速找到大整数的一个非1、非自身的因子（也称非平凡因子）的算法。对于目前我所涉及的邻域来说，或许是用于RSA中N的分解。</p>
-<h4 id="相关思想"><a href="#相关思想" class="headerlink" title="相关思想"></a>相关思想</h4><p>设分解$n，n&#x3D;pq$，$q为n的非平凡因子$。这时我们需要一个用于生成伪随机数列的模$n$的多项式，设为：$g(x) \equiv x^2 + 1 (mod n)，x_1 &#x3D; g(x)，x_2 &#x3D; g(g(x))……$</p>
-<p>可以知道，由于$n和初始值x$的存在，这个数列会不断重复某个子序列，可以举几个小的数验证。这种循环的结构即产生了$\rho$算法。</p>
-<p>这里引用大佬的：</p>
-<p>$Floyd’s cycle-finding algorithm$发现：设立两个节点，$i，j$，在每一步中，$i$每次移动一个节点，$j$每次移动两个节点，然后检查$gcd(x_i−x_j,n)$是否$≠1$，如果不等于，那么$gcd$的结果便是$p$。并且，这也意味着序列$x_k(modp)$也会重复。这是因为，如果$x_i \equiv x_j (modp)$, 那么$x_i与x_j$之间的差必然是p的倍数。同时，这也说明，$gcd(x_i−x_j，n)$不等于1的结果无论如何最终都会到来，但是可能是n自己，此时，代表$Pollard’s ρ algorithm$失败了，可以使用不同的起始值，再次运算。</p>
-<p>在这个伪随机数列中，利用Floyd的循环检测算法的思想找出$p$来，当然也有可能失败，代码如下：</p>
-<pre><code class="python">n = ...
-def mapx(x):
-    x = (x*x+1)%n
-    return x
+        <p>新知：在常规RSA解密里，欧拉函数$\phi(n)&#x3D;(p-1)*(q-1)$，该式成立的原因是对于素数x，其欧拉函数$\phi(x)&#x3D;x-1$。对于一个多项式p(x)来说$\phi(p(x))&#x3D;x-1$显然就不成立了。通过欧拉函数的定义我们可以知道，一个数x的欧拉函数等于小于或等于x的正整数中与x互素的数的个数。那对于对于多项式p(x)，不算上0，所有长度为n的多项式都与p(x)互素，如此，$\phi(p(x))&#x3D;2^n-1$</p>
+<p>看一道题，来自buu的**[watevrCTF 2019]Swedish RSA**，题目（我加了一些注释）：</p>
+<pre><code class="python">flag = bytearray(raw_input())
+#bytearray字节数组
+flag = list(flag)
+length = len(flag)
+bits = 16
 
-def pollard_rho (x1,x2):
+## Prime for Finite Field.
+#有限域的素数
+p = random_prime(2^bits-1, False, 2^(bits-1))
+
+file_out = open(&quot;downloads/polynomial_rsa.txt&quot;, &quot;w&quot;)
+file_out.write(&quot;Prime: &quot; + str(p) + &quot;\n&quot;)
+
+## Univariate Polynomial Ring in y over Finite Field of size p
+#大小为p的有限域上y中的单变量多项式环
+R.&lt;y&gt; = PolynomialRing(GF(p))
+
+## Analogous to the primes in Z
+def gen_irreducable_poly(deg):
     while True:
-        x1 = mapx(x1)
-        x2 = mapx(mapx(x2))
-        p = gcd(x1-x2,n) #这里我用的gmpy2库里的函数
-        if (p == n):
-            print(&quot;fail&quot;)
-            return
-        elif (p!=1):
-            print(&quot;p: &quot;+str(p))
-            print(&quot;q: &quot;+str(n/p))
-            break
-</code></pre>
-<p>可以随机选个$n$来测试一下，例如$n &#x3D; 160$，当我们选取不同的初始值，时会产生不同的结果（前提是选的n有不同的因子组合）：</p>
-<pre><code class="python">pollard_rho(1, 1)
-pollard_rho(2, 1)
-pollard_rho(4, 3)
-#输出结果
-p: 32
-q: 5.0
-fail
-p: 4
-q: 40.0
-</code></pre>
-<h4 id="变体"><a href="#变体" class="headerlink" title="变体"></a>变体</h4><p>用相关的 Brent’s cycle finding method取代了 Floyd’s cycle-finding algorithm，使用了不同的循环检测方法，同样引用大佬的：</p>
-<p>如果 $gcd(a,n)&gt;1$，那么$gcd(ab,n)&gt;1$（b为任意正整数）。所以，取代$Floyd’s cycle-finding algorithm$的每一步都检查$gcd(a,n)$，他定义了一个$z，z&#x3D;(x_2−x_3(x_3−x_5……(x_{101}−x_{201}(modn)$即每一百步才检查一次$gcd(x_i−x_j,n)$，这么作主要是为了加速结果。 但有时它可能会引入重复因子导致算法失败，例如当n是一个正方形时。 但是</p>
-<p>说不定哪次题目就用了变体。</p>
-<h4 id="相关例题"><a href="#相关例题" class="headerlink" title="相关例题"></a>相关例题</h4><pre><code class="python">from Crypto.Util.number import getPrime, isPrime
-flag = &#39;BCNS&#123;***************&#125;&#39;
-nbits = 2048
-gbits = 1000
-g = getPrime(int(gbits))
-while True:
-    a = getPrime(int(nbits * 0.5) - gbits)
-    p = 2 * g * a + 1
-    if isPrime(p):
-        break
+        out = R.random_element(degree=deg)
+        if out.is_irreducible():
+            return out
 
-while True:
-    b = getPrime(int(nbits * 0.5) - gbits)
-    q = 2 * g * b + 1
-    if p != q and isPrime(q):
-        break
-N = p * q
+
+## Polynomial &quot;primes&quot;
+P = gen_irreducable_poly(ZZ.random_element(length, 2*length))
+Q = gen_irreducable_poly(ZZ.random_element(length, 2*length))
+
+## Public exponent key
 e = 65537
 
-def str2int(s):
-    return int(s.encode(&#39;hex&#39;), 16)
+## Modulus
+N = P*Q
+file_out.write(&quot;Modulus: &quot; + str(N) + &quot;\n&quot;)
 
-with open(&#39;pubkey.txt&#39;, &#39;w&#39;) as f:
-    f.write(str(e) + &#39;\n&#39;)
-    f.write(str(N) + &#39;\n&#39;)
+## Univariate Quotient Polynomial Ring in x over Finite Field of size 659 with modulus N(x)
+S.&lt;x&gt; = R.quotient(N)
 
-plain = str2int(flag)
+## Encrypt
+m = S(flag)
+c = m^e
 
-c = pow(plain, e, N)
-with open(&#39;cipher.txt&#39;, &#39;w&#39;) as f:
-    f.write(hex(c))
+file_out.write(&quot;Ciphertext: &quot; + str(c))
+file_out.close()
 </code></pre>
-<p>需要引入相关论文$FURTHER \space ATTACKS \space ON \space SERVER-AIDED \space RSA \space CRYPTOSYSTEMS$：</p>
-<p><a target="_blank" rel="noopener" href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.33.1333&rep=rep1&type=pdf"><a target="_blank" rel="noopener" href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.33.1333&rep=rep1&type=pdf">download (psu.edu)</a></a></p>
-<p>条件：$当N&#x3D;pq(N≥512bit),其中，(p−1)和(q−1)有一个大的公因数β$ ，在论文中提到的第一个攻击阶段：运用$Pollard’s \space ρ methods$ ，其中用于取伪随机值的maps函数为$ g(x)&#x3D;x^{N−1}+3(modN)$</p>
-<p>$通过分析p、q的生成过程，可以知道p、q有因子2g$，所以运用$Pollard’s \space ρ methods$分解n：</p>
-<pre><code class="python">def mapx(x):
-    x = (pow(x,n-1,n)+3) % n
-    return x
-
-def pollard_rho (x1,x2):
-    while True:
-        x1 = mapx(x1)
-        x2 = mapx(mapx(x2))
-        p = gcd(x1-x2,n)
-        if (p == n):
-            print &quot;fail&quot;
-            return
-        elif (p!=1):
-            print(&quot;p: &quot;+str(p))
-            print(&quot;q: &quot;+str(n/p))
-            break
-
-def main():
-    pollard_rho(1,1)#初始点从1开始
-    return 
-
-n = ...        
-main()
+<pre><code class="python">Prime: 43753
+Modulus: 34036*y^177 + 23068*y^176 + 13147*y^175 + 36344*y^174 + 10045*y^173 + 41049*y^172 + 17786*y^171 + 16601*y^170 + 7929*y^169 + 37570*y^168 + 990*y^167 + 9622*y^166 + 39273*y^165 + 35284*y^164 + 15632*y^163 + 18850*y^162 + 8800*y^161 + 33148*y^160 + 12147*y^159 + 40487*y^158 + 6407*y^157 + 34111*y^156 + 8446*y^155 + 21908*y^154 + 16812*y^153 + 40624*y^152 + 43506*y^151 + 39116*y^150 + 33011*y^149 + 23914*y^148 + 2210*y^147 + 23196*y^146 + 43359*y^145 + 34455*y^144 + 17684*y^143 + 25262*y^142 + 982*y^141 + 24015*y^140 + 27968*y^139 + 37463*y^138 + 10667*y^137 + 39519*y^136 + 31176*y^135 + 27520*y^134 + 32118*y^133 + 8333*y^132 + 38945*y^131 + 34713*y^130 + 1107*y^129 + 43604*y^128 + 4433*y^127 + 18110*y^126 + 17658*y^125 + 32354*y^124 + 3219*y^123 + 40238*y^122 + 10439*y^121 + 3669*y^120 + 8713*y^119 + 21027*y^118 + 29480*y^117 + 5477*y^116 + 24332*y^115 + 43480*y^114 + 33406*y^113 + 43121*y^112 + 1114*y^111 + 17198*y^110 + 22829*y^109 + 24424*y^108 + 16523*y^107 + 20424*y^106 + 36206*y^105 + 41849*y^104 + 3584*y^103 + 26500*y^102 + 31897*y^101 + 34640*y^100 + 27449*y^99 + 30962*y^98 + 41434*y^97 + 22125*y^96 + 24314*y^95 + 3944*y^94 + 18400*y^93 + 38476*y^92 + 28904*y^91 + 27936*y^90 + 41867*y^89 + 25573*y^88 + 25659*y^87 + 33443*y^86 + 18435*y^85 + 5934*y^84 + 38030*y^83 + 17563*y^82 + 24086*y^81 + 36782*y^80 + 20922*y^79 + 38933*y^78 + 23448*y^77 + 10599*y^76 + 7156*y^75 + 29044*y^74 + 23605*y^73 + 7657*y^72 + 28200*y^71 + 2431*y^70 + 3860*y^69 + 23259*y^68 + 14590*y^67 + 33631*y^66 + 15673*y^65 + 36049*y^64 + 29728*y^63 + 22413*y^62 + 18602*y^61 + 18557*y^60 + 23505*y^59 + 17642*y^58 + 12595*y^57 + 17255*y^56 + 15316*y^55 + 8948*y^54 + 38*y^53 + 40329*y^52 + 9823*y^51 + 5798*y^50 + 6379*y^49 + 8662*y^48 + 34640*y^47 + 38321*y^46 + 18760*y^45 + 13135*y^44 + 15926*y^43 + 34952*y^42 + 28940*y^41 + 13558*y^40 + 42579*y^39 + 38015*y^38 + 33788*y^37 + 12381*y^36 + 195*y^35 + 13709*y^34 + 31500*y^33 + 32994*y^32 + 30486*y^31 + 40414*y^30 + 2578*y^29 + 30525*y^28 + 43067*y^27 + 6195*y^26 + 36288*y^25 + 23236*y^24 + 21493*y^23 + 15808*y^22 + 34500*y^21 + 6390*y^20 + 42994*y^19 + 42151*y^18 + 19248*y^17 + 19291*y^16 + 8124*y^15 + 40161*y^14 + 24726*y^13 + 31874*y^12 + 30272*y^11 + 30761*y^10 + 2296*y^9 + 11017*y^8 + 16559*y^7 + 28949*y^6 + 40499*y^5 + 22377*y^4 + 33628*y^3 + 30598*y^2 + 4386*y + 23814
+Ciphertext: 5209*x^176 + 10881*x^175 + 31096*x^174 + 23354*x^173 + 28337*x^172 + 15982*x^171 + 13515*x^170 + 21641*x^169 + 10254*x^168 + 34588*x^167 + 27434*x^166 + 29552*x^165 + 7105*x^164 + 22604*x^163 + 41253*x^162 + 42675*x^161 + 21153*x^160 + 32838*x^159 + 34391*x^158 + 832*x^157 + 720*x^156 + 22883*x^155 + 19236*x^154 + 33772*x^153 + 5020*x^152 + 17943*x^151 + 26967*x^150 + 30847*x^149 + 10306*x^148 + 33966*x^147 + 43255*x^146 + 20342*x^145 + 4474*x^144 + 3490*x^143 + 38033*x^142 + 11224*x^141 + 30565*x^140 + 31967*x^139 + 32382*x^138 + 9759*x^137 + 1030*x^136 + 32122*x^135 + 42614*x^134 + 14280*x^133 + 16533*x^132 + 32676*x^131 + 43070*x^130 + 36009*x^129 + 28497*x^128 + 2940*x^127 + 9747*x^126 + 22758*x^125 + 16615*x^124 + 14086*x^123 + 13038*x^122 + 39603*x^121 + 36260*x^120 + 32502*x^119 + 17619*x^118 + 17700*x^117 + 15083*x^116 + 11311*x^115 + 36496*x^114 + 1300*x^113 + 13601*x^112 + 43425*x^111 + 10376*x^110 + 11551*x^109 + 13684*x^108 + 14955*x^107 + 6661*x^106 + 12674*x^105 + 21534*x^104 + 32132*x^103 + 34135*x^102 + 43684*x^101 + 837*x^100 + 29311*x^99 + 4849*x^98 + 26632*x^97 + 26662*x^96 + 10159*x^95 + 32657*x^94 + 12149*x^93 + 17858*x^92 + 35805*x^91 + 19391*x^90 + 30884*x^89 + 42039*x^88 + 17292*x^87 + 4694*x^86 + 1497*x^85 + 1744*x^84 + 31071*x^83 + 26246*x^82 + 24402*x^81 + 22068*x^80 + 39263*x^79 + 23703*x^78 + 21484*x^77 + 12241*x^76 + 28821*x^75 + 32886*x^74 + 43075*x^73 + 35741*x^72 + 19936*x^71 + 37219*x^70 + 33411*x^69 + 8301*x^68 + 12949*x^67 + 28611*x^66 + 42654*x^65 + 6910*x^64 + 18523*x^63 + 31144*x^62 + 21398*x^61 + 36298*x^60 + 27158*x^59 + 918*x^58 + 38601*x^57 + 4269*x^56 + 5699*x^55 + 36444*x^54 + 34791*x^53 + 37978*x^52 + 32481*x^51 + 8039*x^50 + 11012*x^49 + 11454*x^48 + 30450*x^47 + 1381*x^46 + 32403*x^45 + 8202*x^44 + 8404*x^43 + 37648*x^42 + 43696*x^41 + 34237*x^40 + 36490*x^39 + 41423*x^38 + 35792*x^37 + 36950*x^36 + 31086*x^35 + 38970*x^34 + 12439*x^33 + 7963*x^32 + 16150*x^31 + 11382*x^30 + 3038*x^29 + 20157*x^28 + 23531*x^27 + 32866*x^26 + 5428*x^25 + 21132*x^24 + 13443*x^23 + 28909*x^22 + 42716*x^21 + 6567*x^20 + 24744*x^19 + 8727*x^18 + 14895*x^17 + 28172*x^16 + 30903*x^15 + 26608*x^14 + 27314*x^13 + 42224*x^12 + 42551*x^11 + 37726*x^10 + 11203*x^9 + 36816*x^8 + 5537*x^7 + 20301*x^6 + 17591*x^5 + 41279*x^4 + 7999*x^3 + 33753*x^2 + 34551*x + 9659
 </code></pre>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>学到了RSA中能分解n的又一种方法！！！所以碰到n正常思路走不通的时候，可以尝试走这一条路。</p>
-<p>参考：</p>
-<p><a target="_blank" rel="noopener" href="https://jayxv.github.io/2019/11/11/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8B%E6%B5%85%E6%9E%90Pollard's%20rho%20algorithm%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/">[密码学学习笔记 之 浅析Pollard’s rho algorithm及其应用 | Van1sh的小屋 (jayxv.github.io)](https://jayxv.github.io/2019/11/11/密码学学习笔记之浅析Pollard's rho algorithm及其应用/)</a></p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/267884783"><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/267884783">算法学习笔记(55): Pollard-Rho算法 - 知乎 (zhihu.com)</a></a></p>
+<p>在多项式环上分解N：</p>
+<pre><code class="python">R.&lt;y&gt; = PolynomialRing(GF(43753))
+N = R(&quot;...&quot;)
+print(factor(N))
+</code></pre>
+<pre><code class="python">(34036) * (y^65 + 39688*y^64 + 22199*y^63 + 41942*y^62 + 7803*y^61 + 19710*y^60 + 14794*y^59 + 41388*y^58 + 2418*y^57 + 19208*y^56 + 39941*y^55 + 36392*y^54 + 19813*y^53 + 33864*y^52 + 29099*y^51 + 15484*y^50 + 27185*y^49 + 27721*y^48 + 31508*y^47 + 19404*y^46 + 10134*y^45 + 43481*y^44 + 3899*y^43 + 32849*y^42 + 3534*y^41 + 32086*y^40 + 14221*y^39 + 42982*y^38 + 1403*y^37 + 1619*y^36 + 36054*y^35 + 33615*y^34 + 6628*y^33 + 31709*y^32 + 6968*y^31 + 28517*y^30 + 12938*y^29 + 21124*y^28 + 10400*y^27 + 28889*y^26 + 7273*y^25 + 36442*y^24 + 14935*y^23 + 29365*y^22 + 4869*y^21 + 43562*y^20 + 6435*y^19 + 4403*y^18 + 32311*y^17 + 7575*y^16 + 28199*y^15 + 28065*y^14 + 23870*y^13 + 37314*y^12 + 15299*y^11 + 7082*y^10 + 36230*y^9 + 18367*y^8 + 12531*y^7 + 25906*y^6 + 26878*y^5 + 43073*y^4 + 11582*y^3 + 4482*y^2 + 35044*y + 31388) * (y^112 + 31097*y^111 + 15815*y^110 + 17170*y^109 + 43684*y^108 + 16873*y^107 + 17269*y^106 + 10853*y^105 + 10690*y^104 + 24864*y^103 + 10224*y^102 + 28704*y^101 + 16049*y^100 + 1154*y^99 + 40034*y^98 + 29922*y^97 + 27404*y^96 + 32514*y^95 + 40962*y^94 + 32858*y^93 + 36590*y^92 + 41302*y^91 + 20803*y^90 + 43521*y^89 + 13746*y^88 + 19857*y^87 + 21539*y^86 + 36888*y^85 + 16032*y^84 + 35825*y^83 + 24705*y^82 + 31143*y^81 + 22088*y^80 + 6686*y^79 + 37947*y^78 + 5661*y^77 + 29405*y^76 + 36071*y^75 + 35492*y^74 + 28985*y^73 + 36015*y^72 + 24095*y^71 + 34920*y^70 + 6615*y^69 + 9606*y^68 + 4255*y^67 + 22981*y^66 + 3910*y^65 + 23897*y^64 + 22711*y^63 + 23350*y^62 + 7969*y^61 + 8558*y^60 + 8001*y^59 + 8431*y^58 + 3314*y^57 + 23364*y^56 + 39391*y^55 + 32722*y^54 + 2543*y^53 + 22196*y^52 + 24189*y^51 + 19420*y^50 + 10649*y^49 + 19070*y^48 + 23863*y^47 + 19597*y^46 + 39699*y^45 + 7620*y^44 + 25067*y^43 + 29912*y^42 + 14998*y^41 + 14492*y^40 + 31322*y^39 + 43145*y^38 + 32006*y^37 + 38976*y^36 + 32534*y^35 + 6972*y^34 + 37351*y^33 + 30104*y^32 + 6032*y^31 + 33729*y^30 + 27110*y^29 + 5268*y^28 + 2974*y^27 + 2985*y^26 + 31610*y^25 + 28364*y^24 + 34924*y^23 + 17414*y^22 + 28813*y^21 + 43680*y^20 + 32175*y^19 + 18248*y^18 + 25171*y^17 + 31185*y^16 + 30125*y^15 + 36836*y^14 + 7218*y^13 + 11292*y^12 + 31123*y^11 + 40360*y^10 + 34093*y^9 + 39606*y^8 + 2788*y^7 + 27277*y^6 + 21835*y^5 + 1331*y^4 + 32614*y^3 + 25020*y^2 + 20981*y + 12108)
+</code></pre>
+<p>分解为65次的多项式P(y)和112次的多项式Q(y)，按上面提到的，求出$\phi(N)&#x3D;(43753^{65}-1)*(43753^{112}-1)$，$\phi(N)有了，d就能求了$：</p>
+<pre><code class="python">e = 65537
+phi_n = (43753^65-1)*(43753^112-1)
+d = invert(e, phi)
+</code></pre>
+<p>由于d十分大的缘故，用sage求m&#x3D;pow(c,d,n)求不出来了，这里需要用到快速幂算法：</p>
+<pre><code class="python">R.&lt;y&gt; = PolynomialRing(GF(43753))
+res = R(&quot;1&quot;) 
+while True:
+    if d % 2 == 1:
+        res = res * c % n
+        d = d - 1
+    c = (c * c) % n
+    d = d / 2
+    if d == 0:
+        break
+print(c)
+</code></pre>
+<p>得到：</p>
+<pre><code class="python">&quot;125*y^62 + 111*y^61 + 114*y^60 + 117*y^59 + 53*y^58 + 51*y^57 + 51*y^56 + 100*y^55 + 106*y^54 + 110*y^53 + 102*y^52 + 106*y^51 + 100*y^50 + 104*y^49 + 101*y^48 + 117*y^47 + 52*y^46 + 52*y^45 + 57*y^44 + 48*y^43 + 50*y^42 + 107*y^41 + 35*y^40 + 101*y^39 + 114*y^38 + 117*y^37 + 99*y^36 + 101*y^35 + 115*y^34 + 110*y^33 + 105*y^32 + 95*y^31 + 116*y^30 + 117*y^29 + 98*y^28 + 95*y^27 + 110*y^26 + 117*y^25 + 102*y^24 + 95*y^23 + 115*y^22 + 105*y^21 + 95*y^20 + 97*y^19 + 101*y^18 + 107*y^17 + 105*y^16 + 95*y^15 + 109*y^14 + 111*y^13 + 114*y^12 + 102*y^11 + 95*y^10 + 65*y^9 + 83*y^8 + 82*y^7 + 123*y^6 + 114*y^5 + 118*y^4 + 101*y^3 + 116*y^2 + 97*y + 119&quot;
+</code></pre>
+<p>提取每一项的系数转ASCII码：</p>
+<pre><code class="python">c = &#39;125*y^62 + 111*y^61 + 114*y^60 + 117*y^59 + 53*y^58 + 51*y^57 + 51*y^56 + 100*y^55 + 106*y^54 + 110*y^53 + 102*y^52 + 106*y^51 + 100*y^50 + 104*y^49 + 101*y^48 + 117*y^47 + 52*y^46 + 52*y^45 + 57*y^44 + 48*y^43 + 50*y^42 + 107*y^41 + 35*y^40 + 101*y^39 + 114*y^38 + 117*y^37 + 99*y^36 + 101*y^35 + 115*y^34 + 110*y^33 + 105*y^32 + 95*y^31 + 116*y^30 + 117*y^29 + 98*y^28 + 95*y^27 + 110*y^26 + 117*y^25 + 102*y^24 + 95*y^23 + 115*y^22 + 105*y^21 + 95*y^20 + 97*y^19 + 101*y^18 + 107*y^17 + 105*y^16 + 95*y^15 + 109*y^14 + 111*y^13 + 114*y^12 + 102*y^11 + 95*y^10 + 65*y^9 + 83*y^8 + 82*y^7 + 123*y^6 + 114*y^5 + 118*y^4 + 101*y^3 + 116*y^2 + 97*y + 119&#39;
+c = c.split(&#39;+&#39;)
+flag = &#39;&#39;
+for i in c:
+    flag += chr(int(i.split(&#39;*&#39;)[0]))
+print(flag)
+
+#这里发现flag是翻转了，用切片再转一下就好
+print(&#39;&#125;oru533djnfjdheu44902k#erucesni_tub_nuf_si_aeki_morf_ASR&#123;rvetaw&#39;[::-1])
+</code></pre>
+<p>思路参考：</p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/4545"><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/4545">基于多项式的RSA - 先知社区 (aliyun.com)</a></a></p>
+<p><a target="_blank" rel="noopener" href="http://t.csdn.cn/2xUb2">http://t.csdn.cn/2xUb2</a></p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 1666739907@qq.com </span>

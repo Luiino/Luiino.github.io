@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Pollards-rho-algorithm学习记录 | Luino&#39;s Bold</title>
-  <meta name="keywords" content=" Pollard&#39;s rho algorithm ">
-  <meta name="description" content="Pollards-rho-algorithm学习记录 | Luino&#39;s Bold">
+  <title>ctfShow愚人杯 | Luino&#39;s Bold</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="ctfShow愚人杯 | Luino&#39;s Bold">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="离散对数问题离散对数问题是指给定一个有限群G（一般是乘法群或加法群）及其生成元g，以及另一个元素y，求解离散对数x，使得$g^x &#x3D; y(mod p)$。其中，p是一个素数，称为模数。 Pohlig-Hellman算法思想Pohlig-Hellman算法是一种适用于大素数模数情况下的离散对数问题求解算法。该算法的基本思想是将模数分解成若干个质因子，然后对每个质因子分别求解离散对数，最后使">
 <meta property="og:type" content="article">
@@ -432,9 +432,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-Pollards-rho-algorithm学习记录" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-ctfShow愚人杯" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">Pollards-rho-algorithm学习记录</h1>
+        <h1 class="article-title">ctfShow愚人杯</h1>
     
     <div class="article-meta">
         
@@ -444,27 +444,20 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="Crypto学习记录">Crypto学习记录</a>
+            <a  data-rel="Match">Match</a>
             
         </span>
         
         
-        <span class="tag">
-            <i class="iconfont icon-tag"></i>
-            
-            <a class="color4">Pollard&#39;s rho algorithm</a>
-            
-        </span>
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2023-04-29 21:49:48'>2023-04-09 15:47</time>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2023-04-29 20:02:43'>2023-04-29 15:24</time>
-        
-    </div>
-    <div class="article-meta">
-        
-        <span>Count:1.1k</span>
+        <span>Count:1.3k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -483,7 +476,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%9C%E7%94%A8"><span class="toc-text">作用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E6%80%9D%E6%83%B3"><span class="toc-text">相关思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%98%E4%BD%93"><span class="toc-text">变体</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E4%BE%8B%E9%A2%98"><span class="toc-text">相关例题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%A7%E7%89%9B%E7%9A%84%E5%AF%86%E7%A0%81"><span class="toc-text">大牛的密码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#comedy"><span class="toc-text">comedy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#easy-xor"><span class="toc-text">easy_xor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ecc-mini"><span class="toc-text">ecc_mini</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -499,108 +492,241 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h4><p>一种能快速找到大整数的一个非1、非自身的因子（也称非平凡因子）的算法。对于目前我所涉及的邻域来说，或许是用于RSA中N的分解。</p>
-<h4 id="相关思想"><a href="#相关思想" class="headerlink" title="相关思想"></a>相关思想</h4><p>设分解$n，n&#x3D;pq$，$q为n的非平凡因子$。这时我们需要一个用于生成伪随机数列的模$n$的多项式，设为：$g(x) \equiv x^2 + 1 (mod n)，x_1 &#x3D; g(x)，x_2 &#x3D; g(g(x))……$</p>
-<p>可以知道，由于$n和初始值x$的存在，这个数列会不断重复某个子序列，可以举几个小的数验证。这种循环的结构即产生了$\rho$算法。</p>
-<p>这里引用大佬的：</p>
-<p>$Floyd’s cycle-finding algorithm$发现：设立两个节点，$i，j$，在每一步中，$i$每次移动一个节点，$j$每次移动两个节点，然后检查$gcd(x_i−x_j,n)$是否$≠1$，如果不等于，那么$gcd$的结果便是$p$。并且，这也意味着序列$x_k(modp)$也会重复。这是因为，如果$x_i \equiv x_j (modp)$, 那么$x_i与x_j$之间的差必然是p的倍数。同时，这也说明，$gcd(x_i−x_j，n)$不等于1的结果无论如何最终都会到来，但是可能是n自己，此时，代表$Pollard’s ρ algorithm$失败了，可以使用不同的起始值，再次运算。</p>
-<p>在这个伪随机数列中，利用Floyd的循环检测算法的思想找出$p$来，当然也有可能失败，代码如下：</p>
-<pre><code class="python">n = ...
-def mapx(x):
-    x = (x*x+1)%n
-    return x
-
-def pollard_rho (x1,x2):
-    while True:
-        x1 = mapx(x1)
-        x2 = mapx(mapx(x2))
-        p = gcd(x1-x2,n) #这里我用的gmpy2库里的函数
-        if (p == n):
-            print(&quot;fail&quot;)
-            return
-        elif (p!=1):
-            print(&quot;p: &quot;+str(p))
-            print(&quot;q: &quot;+str(n/p))
-            break
+        <h3 id="大牛的密码"><a href="#大牛的密码" class="headerlink" title="大牛的密码"></a>大牛的密码</h3><pre><code class="python">from Crypto.Util.number import *
+from flag import flag
+from Crypto.Util.Padding import pad
+from random import *
+def s_box(a):
+    box=[i for i in range(a)]
+    shuffle(box)
+    return box
+BLOCK=16
+flag=pad(flag,BLOCK)
+S_BOX=s_box(len(flag))
+m=[i for i in flag]
+def swap(a,b):
+    tmp = a
+    a = b
+    b = tmp
+def encrypt1(m):
+    enc=[m[i:i+BLOCK] for i in range(0,len(m),BLOCK)]
+    for i in enc:
+        for j in range(BLOCK):
+            aa=j*7%BLOCK
+            swap(i[j],i[aa])
+def encrypt2(m):
+    for i in range(16):
+        m=[m[i] for i in S_BOX]
+    return m
+encrypt1(m)
+c=encrypt2(m)
+print(S_BOX)
+print(c)
+&#39;&#39;&#39;
+[9, 31, 32, 38, 20, 1, 22, 4, 8, 2, 11, 21, 7, 18, 46, 23, 34, 3, 19, 12, 45, 30, 27, 37, 5, 47, 28, 36, 0, 43, 39, 10, 29, 14, 40, 24, 33, 16, 17, 6, 42, 15, 26, 41, 44, 25, 35, 13]
+[99, 111, 102, 11, 107, 49, 11, 53, 121, 48, 114, 117, 11, 95, 112, 95, 109, 115, 11, 95, 101, 95, 119, 117, 79, 123, 111, 48, 110, 95, 121, 116, 121, 125, 116, 11, 119, 11, 97, 67, 11, 11, 11, 11, 11, 99, 110, 104]
+&#39;&#39;&#39;
 </code></pre>
-<p>可以随机选个$n$来测试一下，例如$n &#x3D; 160$，当我们选取不同的初始值，时会产生不同的结果（前提是选的n有不同的因子组合）：</p>
-<pre><code class="python">pollard_rho(1, 1)
-pollard_rho(2, 1)
-pollard_rho(4, 3)
-#输出结果
-p: 32
-q: 5.0
-fail
-p: 4
-q: 40.0
-</code></pre>
-<h4 id="变体"><a href="#变体" class="headerlink" title="变体"></a>变体</h4><p>用相关的 Brent’s cycle finding method取代了 Floyd’s cycle-finding algorithm，使用了不同的循环检测方法，同样引用大佬的：</p>
-<p>如果 $gcd(a,n)&gt;1$，那么$gcd(ab,n)&gt;1$（b为任意正整数）。所以，取代$Floyd’s cycle-finding algorithm$的每一步都检查$gcd(a,n)$，他定义了一个$z，z&#x3D;(x_2−x_3(x_3−x_5……(x_{101}−x_{201}(modn)$即每一百步才检查一次$gcd(x_i−x_j,n)$，这么作主要是为了加速结果。 但有时它可能会引入重复因子导致算法失败，例如当n是一个正方形时。 但是</p>
-<p>说不定哪次题目就用了变体。</p>
-<h4 id="相关例题"><a href="#相关例题" class="headerlink" title="相关例题"></a>相关例题</h4><pre><code class="python">from Crypto.Util.number import getPrime, isPrime
-flag = &#39;BCNS&#123;***************&#125;&#39;
-nbits = 2048
-gbits = 1000
-g = getPrime(int(gbits))
-while True:
-    a = getPrime(int(nbits * 0.5) - gbits)
-    p = 2 * g * a + 1
-    if isPrime(p):
-        break
+<p>swap函数实际上没发挥作用，可以试一下：</p>
+<pre><code class="python">def swap(a,b):
+    tmp = a
+    a = b
+    b = tmp
+def text(x,y):
+    print(x,y)
+    swap(x,y)
+    print(x,y)
 
-while True:
-    b = getPrime(int(nbits * 0.5) - gbits)
-    q = 2 * g * b + 1
-    if p != q and isPrime(q):
-        break
-N = p * q
+x = 3
+y = 4
+text(x,y)
+print(x,y)
+#均输出3 4
+</code></pre>
+<p>所以直接对encrypt2逆就行：</p>
+<pre><code class="python">S_box = [9, 31, 32, 38, 20, 1, 22, 4, 8, 2, 11, 21, 7, 18, 46, 23, 34, 3, 19, 12, 45, 30, 27, 37, 5, 47, 28, 36, 0, 43, 39, 10, 29, 14, 40, 24, 33, 16, 17, 6, 42, 15, 26, 41, 44, 25, 35, 13]
+c = [99, 111, 102, 11, 107, 49, 11, 53, 121, 48, 114, 117, 11, 95, 112, 95, 109, 115, 11, 95, 101, 95, 119, 117, 79, 123, 111, 48, 110, 95, 121, 116, 121, 125, 116, 11, 119, 11, 97, 67, 11, 11, 11, 11, 11, 99, 110, 104]
+
+enc = [0]*len(c)
+for x in range(16):
+    for i in range(len(S_box)):
+        enc[S_box[i]] = c[i]
+    c = enc
+    enc = [0]*len(c)
+
+for i in c:
+    print(chr(i),end=&quot;&quot;)
+#ctfshow&#123;y0u_c5n_make_y0u1_own_CryptO&#125;
+</code></pre>
+<h3 id="comedy"><a href="#comedy" class="headerlink" title="comedy"></a>comedy</h3><pre><code class="python">import gmpy2, libnum
+from secret import flag1, flag2
+
+m = libnum.s2n(flag1)
+assert m.bit_length() &lt; 200
+B = gmpy2.next_prime(libnum.s2n(flag2))
+A = (2022 - 2023 * m) % B
+leak = pow(2, 2023, B)
+print(A)
+print(leak)
+# 493275281479560936332761096886786925792234184811353209227551802099268192839677496844153534128991899414803550843408607188612593757622064753867565869035222715177143938385039508273050267347710495512806264863554858016145161165422812554800693811328453743229819656381224407015421235005940088439590887928051969351426291843586132741521121351667152673680122929827805479163871436776753859965413192837591532468372
+# 238829196127128263156194898141748280130190920343265228257398802867203846004703877952990524473329125233083096275276064071930416561616135910190674099345267027039386328203653489152769309498199556401574021633071022874689081585677578010276529507102304828451681000682208089162940529052283763507244593173690786957816545746540436261888398732172965945762569416702401859253725696471593023885944262561159982327952
+</code></pre>
+<p>两种方法，方法一：</p>
+<p>通过A &#x3D; (2022 - 2023 * m) % B可以知道B的位数是大于A的位数的（A的位数为1334），所以仅有200位的m对B来说几乎可以忽略，且$2022-2023*m$为负数，因此变形为：</p>
+<p>$A &#x3D; 2022-2023m+B \Rightarrow B-A &#x3D; 2023m-2022$，A、B是相近的。</p>
+<p>再由$leak &#x3D; pow(2, 2023, B)，kB &#x3D; 2^{2023}-leak \Rightarrow k &#x3D; \frac {2^{2023}-leak}{B} &#x3D; \frac {2^{2023}-leak}{A}$，</p>
+<p>注意正负号的问题。</p>
+<p>通过这个等式求B就能解出m了：</p>
+<pre><code class="python">A = 493275281479560936332761096886786925792234184811353209227551802099268192839677496844153534128991899414803550843408607188612593757622064753867565869035222715177143938385039508273050267347710495512806264863554858016145161165422812554800693811328453743229819656381224407015421235005940088439590887928051969351426291843586132741521121351667152673680122929827805479163871436776753859965413192837591532468372
+leak = 238829196127128263156194898141748280130190920343265228257398802867203846004703877952990524473329125233083096275276064071930416561616135910190674099345267027039386328203653489152769309498199556401574021633071022874689081585677578010276529507102304828451681000682208089162940529052283763507244593173690786957816545746540436261888398732172965945762569416702401859253725696471593023885944262561159982327952
+
+B = (pow(2,2023)-leak) // ((pow(2,2023)-leak) // A)
+m = (B - A + 2022) // 2023
+print(m)
+print(long_to_bytes(m)+long_to_bytes(B))
+</code></pre>
+<p>方法二：</p>
+<p>$leak &#x3D; pow(2, 2023, B) \Rightarrow k*b&#x3D;2^{2023}-leak$</p>
+<p>$A &#x3D; (2022 - 2023m) mod B \Rightarrow kB &#x3D; A+2023m-2022$</p>
+<p>以$kB为域，求解方程A+2023m-2022$：</p>
+<pre><code class="python">A = 493275281479560936332761096886786925792234184811353209227551802099268192839677496844153534128991899414803550843408607188612593757622064753867565869035222715177143938385039508273050267347710495512806264863554858016145161165422812554800693811328453743229819656381224407015421235005940088439590887928051969351426291843586132741521121351667152673680122929827805479163871436776753859965413192837591532468372
+leak = 238829196127128263156194898141748280130190920343265228257398802867203846004703877952990524473329125233083096275276064071930416561616135910190674099345267027039386328203653489152769309498199556401574021633071022874689081585677578010276529507102304828451681000682208089162940529052283763507244593173690786957816545746540436261888398732172965945762569416702401859253725696471593023885944262561159982327952
+
+kb = 2**2023 - leak
+
+P.&lt;x&gt; = PolynomialRing(Zmod(kb))
+f = A + 2023 * x - 2022
+roots = f.monic().small_roots(X=2 ^ 200, beta=0.4)
+m = roots[0]
+B = f(m)
+
+print(long_to_bytes(m) + long_to_bytes(B))
+#ctfshow&#123;UNKNOWN_MODULUS_T0_BR1NG_L3UGHTER_AND_J@Y_TO_TH3_W0RLD&#125;
+</code></pre>
+<h3 id="easy-xor"><a href="#easy-xor" class="headerlink" title="easy_xor"></a>easy_xor</h3><pre><code class="python">from Crypto.Util.number import *
+from secret import flag
+
+assert len(flag[8:-1])==23
+m = bytes_to_long(flag)
+p = getPrime(1024)
+q = getPrime(1024)
+n = p*q
 e = 65537
-
-def str2int(s):
-    return int(s.encode(&#39;hex&#39;), 16)
-
-with open(&#39;pubkey.txt&#39;, &#39;w&#39;) as f:
-    f.write(str(e) + &#39;\n&#39;)
-    f.write(str(N) + &#39;\n&#39;)
-
-plain = str2int(flag)
-
-c = pow(plain, e, N)
-with open(&#39;cipher.txt&#39;, &#39;w&#39;) as f:
-    f.write(hex(c))
+c1 = m^p
+c2 = pow(m,e,n)
+print(f&#39;c1 = &#123;c1&#125;&#39;)
+print(f&#39;c2 = &#123;c2&#125;&#39;)
+print(f&#39;n = &#123;n&#125;&#39;)
+&#39;&#39;&#39;
+c1 = 151198307301713399973545627808177783191262282577048906899567665485020342464366268384613589477129150406859219553325982275344405383612415523342568367197935454935162234419239807109194526080836070453102172720442102673200212658553214847476648456720629906051324248179394810385918370092764118401652990951968387233220
+c2 = 7894512574379281106340582833782408137686355961537832816105517328532111343730615739255485918919146012721446905489729048235088965936700563973759759039693443386542070451737445467143517377017890468837697907596398070608179281207203217576205857817411996178441661371846647602166663752324880657668362355493701482869858528298247422875427747085642627978367348931707497113936723122393282697211257939351221141536029828744507560524637999804394951722319070365576391442828074457050403771353328835153787572457070779602728359333021922987279454923820866436212282592764768470608545881718922440010751845730974331917142224339664090863915
+n = 20873587976264698212013861921447267548758723109929620330136081844796427967720295581580927324390713931549639540337285515365487607593546367886570408812338077846317206794057714877394609181224434104303259411081376607299962306250984285173463537669954845497211859940191392861121877814873939865829555350848523691546006073264112091406848179785659505299775196062799482197712761744192962658799557108701192680225134300686608396391566674966897700511638643429161735764600752699251493599533703928135311599575989253347234975026924804433742500175666009324057320386262109587593814197687132304704244158862263859846356497849518103755981
+&#39;&#39;&#39;
 </code></pre>
-<p>需要引入相关论文$FURTHER \space ATTACKS \space ON \space SERVER-AIDED \space RSA \space CRYPTOSYSTEMS$：</p>
-<p><a target="_blank" rel="noopener" href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.33.1333&rep=rep1&type=pdf"><a target="_blank" rel="noopener" href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.33.1333&rep=rep1&type=pdf">download (psu.edu)</a></a></p>
-<p>条件：$当N&#x3D;pq(N≥512bit),其中，(p−1)和(q−1)有一个大的公因数β$ ，在论文中提到的第一个攻击阶段：运用$Pollard’s \space ρ methods$ ，其中用于取伪随机值的maps函数为$ g(x)&#x3D;x^{N−1}+3(modN)$</p>
-<p>$通过分析p、q的生成过程，可以知道p、q有因子2g$，所以运用$Pollard’s \space ρ methods$分解n：</p>
-<pre><code class="python">def mapx(x):
-    x = (pow(x,n-1,n)+3) % n
-    return x
+<p>$c_1 &#x3D; m \bigoplus p $，随便编个m看看位数：</p>
+<pre><code class="python">c = b&quot;ctfshow&#123;abcdefghijklmnopqrstuvw&#125;&quot;
+print(bytes_to_long(c).bit_length())
+#255
+</code></pre>
+<p>位数可以说是大差不差了，所以$c_1的高位与p的相同$，使用copper解：</p>
+<pre><code class="python">n = 20873587976264698212013861921447267548758723109929620330136081844796427967720295581580927324390713931549639540337285515365487607593546367886570408812338077846317206794057714877394609181224434104303259411081376607299962306250984285173463537669954845497211859940191392861121877814873939865829555350848523691546006073264112091406848179785659505299775196062799482197712761744192962658799557108701192680225134300686608396391566674966897700511638643429161735764600752699251493599533703928135311599575989253347234975026924804433742500175666009324057320386262109587593814197687132304704244158862263859846356497849518103755981
+c1 = 151198307301713399973545627808177783191262282577048906899567665485020342464366268384613589477129150406859219553325982275344405383612415523342568367197935454935162234419239807109194526080836070453102172720442102673200212658553214847476648456720629906051324248179394810385918370092764118401652990951968387233220
 
-def pollard_rho (x1,x2):
-    while True:
-        x1 = mapx(x1)
-        x2 = mapx(mapx(x2))
-        p = gcd(x1-x2,n)
-        if (p == n):
-            print &quot;fail&quot;
-            return
-        elif (p!=1):
-            print(&quot;p: &quot;+str(p))
-            print(&quot;q: &quot;+str(n/p))
+p4 = c1 &gt;&gt; 300 &lt;&lt; 300
+PR.&lt;x&gt; = PolynomialRing(Zmod(n))
+f = x + p4
+roots = f.small_roots(X=2^300, beta=0.4)
+if roots:        
+    p = p4+int(roots[0]) 
+    print(&quot;n: &quot;+str(n))
+    print(&quot;p: &quot;+str(p))
+    print(&quot;q: &quot;+str(n//p))
+</code></pre>
+<pre><code class="python">p: 151198307301713399973545627808177783191262282577048906899567665485020342464366268384613589477129150406859219553325982275344405383612415523342568367197935454935162234419239807109194526080836070453102172720442102673200212658553214847460852578711847453220002917585398257703718559772706814411685969778039384808889
+q: 138054376062635694915086418886453465665768025801737649544228871881593344677210971372037454304349232263758231557875602849595669813224972600445750315510602198944307489874579256775934881073232401059932558896153129338214973126954953220540176740524331286201822240648611598820456813823721825014692448715872634683829
+</code></pre>
+<p>后面就是基础部分了，就不贴了，解出flag为：</p>
+<pre><code class="python">b&#39;ctfshow&#123;m_xor_p_but_coppersmith&#125;&#39;
+</code></pre>
+<h3 id="ecc-mini"><a href="#ecc-mini" class="headerlink" title="ecc_mini"></a>ecc_mini</h3><pre><code class="python">#sage
+from Crypto.Util.number import *
+from secret import flag
+flag=bytes_to_long(flag)
+a =getPrime(256)
+b =getPrime(256)
+p =getPrime(256)
+m1=int(str(flag)[:5])-4585
+m2=int(str(flag)[5:])
+#EllipticCurve([a1, a2, a3, a4, a6]) -- y^2+(a1)xy+(a3)y=x^3+(a2)x^2+(a4)x+(a6)
+E = EllipticCurve(GF(p), [a, b])
+X=E.lift_x(m1)
+Y=7*X
+m = E.random_point()
+G = E.random_point()
+k = getPrime(256)
+K = k * G
+r = getPrime(256)
+c1 = m + r * K
+c2 = r * G
+w2=m[0]*m2
+print(f&quot;p = &#123;p&#125;&quot;)
+print(f&quot;a = &#123;a&#125;&quot;)
+print(f&quot;b = &#123;b&#125;&quot;)
+print(f&quot;k = &#123;k&#125;&quot;)
+print(f&quot;E = &#123;E&#125;&quot;)
+print(f&#39;Y = &#123;Y&#125;&#39;)
+print(f&quot;c1 = &#123;c1&#125;&quot;)
+print(f&quot;c2 = &#123;c2&#125;&quot;)
+print(f&quot;w2 = &#123;w2&#125;&quot;)
+&#39;&#39;&#39;
+p = 71397796933602469825964946338224836258949974632540581233301840806613437378503
+a = 106105288190268015217241182934677375171023341761047638573248022053052499733117
+b = 76170541771321874396004434442157725545076211607587599314450304327736999807927
+k = 58155941823118858940343657716409231510854647214870891375273032214774400828217
+E = Elliptic Curve defined by y^2 = x^3 + 34707491256665545391276236596452538912073367128507057339946181246439062354614*x + 4772744837719404570039488103932889286126236975047018081148463521123562429424 over Finite Field of size 71397796933602469825964946338224836258949974632540581233301840806613437378503
+Y = (33237936857741483513705672980652927705102229733798436323453609986072499230366 : 52619411226266177137991318059937693955038910547834999771526408984808553907338 : 1)
+c1 = (37414446283406201193977113266234367761786780230360175925999700345196415953455 : 17037724145039910971426670298726906655653040365428438334942732090559637519851 : 1)
+c2 = (60560423732267272277570046154733119097475794979191838027420415113112056962844 : 54372226143125971429691267751299496959531971082475860532181772357190222938465 : 1)
+w2 = 16315249811700998894876359855091105114973337718373913477026230968747515636405
+&#39;&#39;&#39;
+</code></pre>
+<p>学了个大概，搞懂了一点，但还是不够，只能说目前能看懂大佬的wp。</p>
+<p>m被分成了两部分，第一部分比较短。所以分别进行求解。</p>
+<pre><code class="python">E = EllipticCurve(GF(p), [a, b])
+X=E.lift_x(m1)
+Y=7*X
+#在椭圆上找到一点，该点的x坐标等于m1
+</code></pre>
+<p>Y是知道的，但椭圆里不存在除法，没法直接求，但又考虑到m1就5位数，直接爆破：</p>
+<pre><code class="python">import tqdm
+
+p = 71397796933602469825964946338224836258949974632540581233301840806613437378503
+a = 106105288190268015217241182934677375171023341761047638573248022053052499733117
+b = 76170541771321874396004434442157725545076211607587599314450304327736999807927
+E = EllipticCurve(GF(p), [a, b])
+
+for m1 in range(10000, 99999):
+    try:
+        X = E.lift_x(m1 - 4585)
+        Y = 7 * X
+        if Y[0] == 33237936857741483513705672980652927705102229733798436323453609986072499230366:
+            print(m1)
             break
-
-def main():
-    pollard_rho(1,1)#初始点从1开始
-    return 
-
-n = ...        
-main()
+    except:
+        pass
+# 62428
 </code></pre>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>学到了RSA中能分解n的又一种方法！！！所以碰到n正常思路走不通的时候，可以尝试走这一条路。</p>
-<p>参考：</p>
-<p><a target="_blank" rel="noopener" href="https://jayxv.github.io/2019/11/11/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8B%E6%B5%85%E6%9E%90Pollard's%20rho%20algorithm%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/">[密码学学习笔记 之 浅析Pollard’s rho algorithm及其应用 | Van1sh的小屋 (jayxv.github.io)](https://jayxv.github.io/2019/11/11/密码学学习笔记之浅析Pollard's rho algorithm及其应用/)</a></p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/267884783"><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/267884783">算法学习笔记(55): Pollard-Rho算法 - 知乎 (zhihu.com)</a></a></p>
+<p>第二部分可以得到下面的关系：</p>
+<p>$c_1 &#x3D; m + rK$</p>
+<p>$K &#x3D; kG$</p>
+<p>$c_2 &#x3D; rG$</p>
+<p>$\Rightarrow m &#x3D; c_1-rK &#x3D; c_1-rkG &#x3D; c_1-kc_2$</p>
+<pre><code>m = c1 - k*c2
+#且又有w2 = m[0]*m2 
+m2 = (w2 * inverse_mod(m[0], p))%p
+#7196365442241205186856420688221367789171469258517476477
+</code></pre>
+<p>最后进行拼接就ok。</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 1666739907@qq.com </span>

@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Pollards-rho-algorithm学习记录 | Luino&#39;s Bold</title>
-  <meta name="keywords" content=" Pollard&#39;s rho algorithm ">
-  <meta name="description" content="Pollards-rho-algorithm学习记录 | Luino&#39;s Bold">
+  <title>2023红明谷-Crypto | Luino&#39;s Bold</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="2023红明谷-Crypto | Luino&#39;s Bold">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="离散对数问题离散对数问题是指给定一个有限群G（一般是乘法群或加法群）及其生成元g，以及另一个元素y，求解离散对数x，使得$g^x &#x3D; y(mod p)$。其中，p是一个素数，称为模数。 Pohlig-Hellman算法思想Pohlig-Hellman算法是一种适用于大素数模数情况下的离散对数问题求解算法。该算法的基本思想是将模数分解成若干个质因子，然后对每个质因子分别求解离散对数，最后使">
 <meta property="og:type" content="article">
@@ -432,9 +432,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-Pollards-rho-algorithm学习记录" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-2023红明谷-Crypto" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">Pollards-rho-algorithm学习记录</h1>
+        <h1 class="article-title">2023红明谷-Crypto</h1>
     
     <div class="article-meta">
         
@@ -444,27 +444,20 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="Crypto学习记录">Crypto学习记录</a>
+            <a  data-rel="Match">Match</a>
             
         </span>
         
         
-        <span class="tag">
-            <i class="iconfont icon-tag"></i>
-            
-            <a class="color4">Pollard&#39;s rho algorithm</a>
-            
-        </span>
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2023-04-29 21:50:00'>2023-04-20 14:42</time>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2023-04-29 20:02:43'>2023-04-29 15:24</time>
-        
-    </div>
-    <div class="article-meta">
-        
-        <span>Count:1.1k</span>
+        <span>Count:772</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -483,7 +476,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%9C%E7%94%A8"><span class="toc-text">作用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E6%80%9D%E6%83%B3"><span class="toc-text">相关思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%98%E4%BD%93"><span class="toc-text">变体</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E4%BE%8B%E9%A2%98"><span class="toc-text">相关例题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#It-Takes-Two"><span class="toc-text">It Takes Two!</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -499,108 +492,143 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h4><p>一种能快速找到大整数的一个非1、非自身的因子（也称非平凡因子）的算法。对于目前我所涉及的邻域来说，或许是用于RSA中N的分解。</p>
-<h4 id="相关思想"><a href="#相关思想" class="headerlink" title="相关思想"></a>相关思想</h4><p>设分解$n，n&#x3D;pq$，$q为n的非平凡因子$。这时我们需要一个用于生成伪随机数列的模$n$的多项式，设为：$g(x) \equiv x^2 + 1 (mod n)，x_1 &#x3D; g(x)，x_2 &#x3D; g(g(x))……$</p>
-<p>可以知道，由于$n和初始值x$的存在，这个数列会不断重复某个子序列，可以举几个小的数验证。这种循环的结构即产生了$\rho$算法。</p>
-<p>这里引用大佬的：</p>
-<p>$Floyd’s cycle-finding algorithm$发现：设立两个节点，$i，j$，在每一步中，$i$每次移动一个节点，$j$每次移动两个节点，然后检查$gcd(x_i−x_j,n)$是否$≠1$，如果不等于，那么$gcd$的结果便是$p$。并且，这也意味着序列$x_k(modp)$也会重复。这是因为，如果$x_i \equiv x_j (modp)$, 那么$x_i与x_j$之间的差必然是p的倍数。同时，这也说明，$gcd(x_i−x_j，n)$不等于1的结果无论如何最终都会到来，但是可能是n自己，此时，代表$Pollard’s ρ algorithm$失败了，可以使用不同的起始值，再次运算。</p>
-<p>在这个伪随机数列中，利用Floyd的循环检测算法的思想找出$p$来，当然也有可能失败，代码如下：</p>
-<pre><code class="python">n = ...
-def mapx(x):
-    x = (x*x+1)%n
-    return x
+        <h3 id="It-Takes-Two"><a href="#It-Takes-Two" class="headerlink" title="It Takes Two!"></a>It Takes Two!</h3><pre><code class="python">from sage.all import *
+from Crypto.Util.number import *
+from os import urandom
+from secret import flag
 
-def pollard_rho (x1,x2):
-    while True:
-        x1 = mapx(x1)
-        x2 = mapx(mapx(x2))
-        p = gcd(x1-x2,n) #这里我用的gmpy2库里的函数
-        if (p == n):
-            print(&quot;fail&quot;)
-            return
-        elif (p!=1):
-            print(&quot;p: &quot;+str(p))
-            print(&quot;q: &quot;+str(n/p))
-            break
+n = 16
+bound = 2 ^ 15
+
+A = [ZZ.random_element(-bound, bound) for _ in range(n * n)]
+A = Matrix(ZZ, n, n, A)
+
+B = [ZZ.random_element(-bound, bound) for _ in range(n * n)]
+B = Matrix(ZZ, n, n, B)
+
+res = []
+for i in range(5):
+    bound = 2 ^ 15
+    S = [ZZ.random_element(-bound, bound) for _ in range(n * n)]
+    S = Matrix(ZZ, n, n, S)
+
+    tmp = []
+    for i in range(0, 60):
+        S = S * A + B
+        bound = 2 ^ (int(S[0, 0]).bit_length())
+        if i % 3 == 2:
+            tmp.append(Matrix(ZZ, n, n, [ZZ.random_element(-bound, bound) for _ in range(n * n)]))
+            continue
+        tmp.append(S)
+    res.append(tmp)
+
+e = A.LLL().determinant()
+
+p = getPrime(512)
+q = getPrime(512)
+n = p * q
+m = bytes_to_long(urandom(int(n).bit_length() // 8 - len(flag) - 1) + flag)
+c = pow(m, e, n)
+h1 = pow(p + q, e, n)
+h2 = pow(p - q, e, n)
+
+f = open(&#39;双人成行.txt&#39;, &#39;w&#39;)
+f.writelines(str(res) + &#39;\n&#39;)
+f.writelines(str(n) + &#39;\n&#39;)
+f.writelines(str(c) + &#39;\n&#39;)
+f.writelines(str(h1) + &#39;\n&#39;)
+f.writelines(str(h2) + &#39;\n&#39;)
+f.close()
 </code></pre>
-<p>可以随机选个$n$来测试一下，例如$n &#x3D; 160$，当我们选取不同的初始值，时会产生不同的结果（前提是选的n有不同的因子组合）：</p>
-<pre><code class="python">pollard_rho(1, 1)
-pollard_rho(2, 1)
-pollard_rho(4, 3)
-#输出结果
-p: 32
-q: 5.0
-fail
-p: 4
-q: 40.0
+<p>先利用res中S和A、B矩阵的关系解出A来，进一步求e：</p>
+<p>$S_2 &#x3D; S_1A + B$</p>
+<p>$S_5 &#x3D; S_4A + B$</p>
+<p>$相减\Rightarrow A &#x3D; (S_4-S_1)^{-1}(S_5-S_2)$</p>
+<p>（$S_3$是未知的）这里我搞不懂怎么从文本给的数据里进行转换，总不能一个一个手动换吧。</p>
+<p>参考大佬的做法：</p>
+<pre><code class="python">with open(&#39;C:\\Users\\lenovo\\Desktop\\双人成行.txt&#39;, &#39;r&#39;) as f:
+    s = f.read()
+s = s.replace(&#39;[&#39;,&#39; &#39;).replace(&#39;\n&#39;,&#39;&#39;).replace(&#39;]&#39;,&#39; &#39;).replace(&#39;,&#39;,&#39; &#39;)
+res = []
+num = &#39;&#39;
+for i in s:
+    if i == &#39; &#39; and num != &#39;&#39;:
+        res.append(int(num))
+        num = &#39;&#39;
+        continue
+    if i == &#39; &#39; and num == &#39;&#39;:
+        continue
+    else:
+        num += i
+
+s1 = res[:256]
+s2 = res[256:512]
+s4 = res[768:1024]
+s5 = res[1024:1280]
+print(res_S1)
+print(res_S2)
+print(res_S4)
+print(res_S5)
+
+#sage
+S1 = Matrix(ZZ,16,16,s1)
+S2 = Matrix(ZZ,16,16,s2)
+S4 = Matrix(ZZ,16,16,s4)
+S5 = Matrix(ZZ,16,16,s5)
+A = (S4-S1).inverse()*(S5-S2)
+e = A.LLL().determinant()
+print(e)
+#183183094232895496570030296666322746922054965594187733500344545328263827233
 </code></pre>
-<h4 id="变体"><a href="#变体" class="headerlink" title="变体"></a>变体</h4><p>用相关的 Brent’s cycle finding method取代了 Floyd’s cycle-finding algorithm，使用了不同的循环检测方法，同样引用大佬的：</p>
-<p>如果 $gcd(a,n)&gt;1$，那么$gcd(ab,n)&gt;1$（b为任意正整数）。所以，取代$Floyd’s cycle-finding algorithm$的每一步都检查$gcd(a,n)$，他定义了一个$z，z&#x3D;(x_2−x_3(x_3−x_5……(x_{101}−x_{201}(modn)$即每一百步才检查一次$gcd(x_i−x_j,n)$，这么作主要是为了加速结果。 但有时它可能会引入重复因子导致算法失败，例如当n是一个正方形时。 但是</p>
-<p>说不定哪次题目就用了变体。</p>
-<h4 id="相关例题"><a href="#相关例题" class="headerlink" title="相关例题"></a>相关例题</h4><pre><code class="python">from Crypto.Util.number import getPrime, isPrime
-flag = &#39;BCNS&#123;***************&#125;&#39;
-nbits = 2048
-gbits = 1000
-g = getPrime(int(gbits))
-while True:
-    a = getPrime(int(nbits * 0.5) - gbits)
-    p = 2 * g * a + 1
-    if isPrime(p):
-        break
+<p>接着运用二项式定理，通过h1和h2推p、q：</p>
+<p>$h_1 &#x3D; p^e+q^e +k_1n$</p>
+<p>$h_2 &#x3D; p^e-q^e + k_2n$</p>
+<p>$\Rightarrow h_1+h_2 &#x3D; 2p^e mod n$</p>
+<p>故$p &#x3D; gcd(h1+h2,n)$。接着解RSA，发现$gcd(e,(p-1)*(q-1)) &#x3D;&#x3D; 21$，做过e与$\phi(n)$不互素的，但这里似乎是新的类型，值得记录。</p>
+<p>先除公因数21，再在有限域开方。</p>
+<pre><code class="python">#sage
+def decrypt(p, q, e, c):
+    res = []
+    R.&lt; x &gt; = Zmod(p)[]
+    f = x ^ e - c
+    f = f.monic()
+    res1 = f.roots()
 
-while True:
-    b = getPrime(int(nbits * 0.5) - gbits)
-    q = 2 * g * b + 1
-    if p != q and isPrime(q):
-        break
-N = p * q
-e = 65537
+    R.&lt; x &gt; = Zmod(q)[]
+    f = x ^ e - c
+    f = f.monic()
+    res2 = f.roots()
 
-def str2int(s):
-    return int(s.encode(&#39;hex&#39;), 16)
+    for i in res1:
+        for j in res2:
+            m = CRT(int(i[0]), int(j[0]), p, q)
+            res.append(m)
+    return res
+n = 126930298936285661712486297662920895162569606037310367763354747221281175771655642407136326621695910623038808779778530112406355314071209370688157872928010633181351390724545013677593062556323119308457918805555312069055604237211117650220178416298165021603211366843640334616217695418858036626587483782452105122653
+c = 113627841667808982839757084973426219545127121566516056267404541633803040730885409234473068650543791446730694746311695177758797711077000091232969424826171863685060090359260225102836081852105845748467870581394884564134418376982186965340367386781824886506478939204791426457255483148486730526127180397268053506840
+h1 = 87021607670080656750728189202811647321664825322085967432146885995538140004901574830625347954724344331514731852873721100175299656618161173874818773415684739773055620673258848991693719847569489515642296650035465632567910004553054397894647697286044465567405142149926303968235362573821060105908856127568162452912
+h2 = 70528801000055618659638315463133504198238507722722570127215098017082205934290867816695737682738831717228470799826957490782948760796844881508632060312080331264474968266753069687287034453036854258618280625776346633340081217397502423530180647548747144401922660710323623212890923488339464759360304751017490144695
+e = 183183094232895496570030296666322746922054965594187733500344545328263827233
+p = gcd(h1+h2,n)
+q = n // p
+phi_n = (p-1)*(q-1)
+d = inverse_mod(e//21, phi_n)
+m = pow(c,d,n)
 
-with open(&#39;pubkey.txt&#39;, &#39;w&#39;) as f:
-    f.write(str(e) + &#39;\n&#39;)
-    f.write(str(N) + &#39;\n&#39;)
-
-plain = str2int(flag)
-
-c = pow(plain, e, N)
-with open(&#39;cipher.txt&#39;, &#39;w&#39;) as f:
-    f.write(hex(c))
+flag = decrypt(p, q, 21, m)
 </code></pre>
-<p>需要引入相关论文$FURTHER \space ATTACKS \space ON \space SERVER-AIDED \space RSA \space CRYPTOSYSTEMS$：</p>
-<p><a target="_blank" rel="noopener" href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.33.1333&rep=rep1&type=pdf"><a target="_blank" rel="noopener" href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.33.1333&rep=rep1&type=pdf">download (psu.edu)</a></a></p>
-<p>条件：$当N&#x3D;pq(N≥512bit),其中，(p−1)和(q−1)有一个大的公因数β$ ，在论文中提到的第一个攻击阶段：运用$Pollard’s \space ρ methods$ ，其中用于取伪随机值的maps函数为$ g(x)&#x3D;x^{N−1}+3(modN)$</p>
-<p>$通过分析p、q的生成过程，可以知道p、q有因子2g$，所以运用$Pollard’s \space ρ methods$分解n：</p>
-<pre><code class="python">def mapx(x):
-    x = (pow(x,n-1,n)+3) % n
-    return x
-
-def pollard_rho (x1,x2):
-    while True:
-        x1 = mapx(x1)
-        x2 = mapx(mapx(x2))
-        p = gcd(x1-x2,n)
-        if (p == n):
-            print &quot;fail&quot;
-            return
-        elif (p!=1):
-            print(&quot;p: &quot;+str(p))
-            print(&quot;q: &quot;+str(n/p))
-            break
-
-def main():
-    pollard_rho(1,1)#初始点从1开始
-    return 
-
-n = ...        
-main()
+<p>因为我在kali上用的sage，还没安转字节串的函数（准确的说我没有仔细了解过，只顾着用了），只能把m存下来，在py上运行了，很蠢的做法：</p>
+<pre><code class="python">flag = [...]
+for i in flag:
+    m = long_to_bytes(i)
+    if b&#39;flag&#39; in m:
+        print(m)
+#flag&#123;5a6814eb-8848-11ed-aee3-d812656dd8d8&#125;
 </code></pre>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>学到了RSA中能分解n的又一种方法！！！所以碰到n正常思路走不通的时候，可以尝试走这一条路。</p>
-<p>参考：</p>
-<p><a target="_blank" rel="noopener" href="https://jayxv.github.io/2019/11/11/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8B%E6%B5%85%E6%9E%90Pollard's%20rho%20algorithm%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/">[密码学学习笔记 之 浅析Pollard’s rho algorithm及其应用 | Van1sh的小屋 (jayxv.github.io)](https://jayxv.github.io/2019/11/11/密码学学习笔记之浅析Pollard's rho algorithm及其应用/)</a></p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/267884783"><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/267884783">算法学习笔记(55): Pollard-Rho算法 - 知乎 (zhihu.com)</a></a></p>
+<p>另外一种做法是用AMM算法，还没学过，待补充。。。</p>
+<p>大佬写的更详细：</p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/I2ENVoCVXeXiX95Js-OpbA"><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/I2ENVoCVXeXiX95Js-OpbA">2023红明谷-WriteUp (qq.com)</a></a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41626232/article/details/130244091"><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41626232/article/details/130244091">(3条消息) 2023第三届红明谷CTF Crypto_无趣的浅的博客-CSDN博客</a></a></p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 1666739907@qq.com </span>
