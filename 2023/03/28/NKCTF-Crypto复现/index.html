@@ -1,0 +1,1911 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>NKCTF--Crypto复现 | Luino&#39;s Bold</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="NKCTF--Crypto复现 | Luino&#39;s Bold">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="原理大佬讲的够清楚了，直接上题 flag &#x3D; &quot;flag&amp;#123;xxxxxxxxxxxxxxxx&amp;#125;&quot; assert flag.startswith(&quot;flag&amp;#123;&quot;) assert flag.endswith(&quot;&amp;#125;&quot;) assert len(flag)&#x3D;&#x3D;14  def lfsr(R,mask):">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LFSR记录">
+<meta property="og:url" content="http://example.com/2023/07/20/LFSR%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="Luino&#39;s Bold">
+<meta property="og:description" content="原理大佬讲的够清楚了，直接上题 flag &#x3D; &quot;flag&amp;#123;xxxxxxxxxxxxxxxx&amp;#125;&quot; assert flag.startswith(&quot;flag&amp;#123;&quot;) assert flag.endswith(&quot;&amp;#125;&quot;) assert len(flag)&#x3D;&#x3D;14  def lfsr(R,mask):">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-07-20T05:13:17.000Z">
+<meta property="article:modified_time" content="2023-07-20T05:48:57.253Z">
+<meta property="article:author" content="Luino">
+<meta property="article:tag" content="LFSR">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.jpg"/>
+</a>
+<div class="author">
+    <span>Luino</span>
+</div>
+
+<div class="icon">
+    
+        
+            <a title="rss"
+               href="/atom.xml"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-rss"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="github"
+               href="https://github.com/Luiino"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-github"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            <a title="csdn"
+               href="https://blog.csdn.net/Luiino"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-csdn"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+    
+        
+    
+        
+            <a title="email"
+               href="mailto:1666739907@qq.com"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-email"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="qq"
+               href="http://wpa.qq.com/msgrd?v=3&uin=1666739907&site=qq&menu=yes"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-qq"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+    
+        
+    
+</div>
+
+
+
+    <a class="more-menus">更多菜单</a>
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="All">All
+            
+                <small>(47)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                
+    <li>
+        <div data-rel="Match">
+            
+            Match
+            <small>(21)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="Crypto学习记录">
+            
+            Crypto学习记录
+            <small>(19)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="Python">
+            
+            Python
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="Crypto">
+            
+            Crypto
+            <small>(4)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="Reverse">
+            
+            Reverse
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+                <a class="dynamic-menu "
+                   target="_blank"
+                        
+                   href="https://github.com/Luiino">github</a>
+        
+    </div>
+    <div>
+        
+            <a class="about  site_url"
+               
+               href="/about">About</a>
+        
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="47">
+<input type="hidden" id="yelog_site_word_count" value="63.2k">
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>差分攻击</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>多项式环</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>多项式RSA</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>费马小定理</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>流密码</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>日常刷题</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>运算域扩大</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>AMM</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Coppersmith</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Crypto日常刷题</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Crypto题目记录</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Diffie-Hellman</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>DSA</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ECC</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Lattices</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>LCG</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>LFSR</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>MT19937</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Pollard's rho algorithm</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Python格式</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Python矩阵</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Reverse日常刷题</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>RSA</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Wiener Attack</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/07/20/LFSR%E8%AE%B0%E5%BD%95/"
+           data-tag="LFSR"
+           data-author="" >
+            <span class="post-title" title="LFSR记录">LFSR记录</span>
+            <span class="post-date" title="2023-07-20 13:13:17">2023/07/20</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/07/17/MT19937%E4%BC%AA%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95/"
+           data-tag="MT19937"
+           data-author="" >
+            <span class="post-title" title="MT19937伪随机数生成算法">MT19937伪随机数生成算法</span>
+            <span class="post-date" title="2023-07-17 10:17:50">2023/07/17</span>
+        </a>
+        
+        
+        <a  class="All Python "
+           href="/2023/07/14/%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%AA%E7%BC%A9%E8%BF%9B%E9%97%AE%E9%A2%98/"
+           data-tag="Python格式"
+           data-author="" >
+            <span class="post-title" title="记录一个缩进问题">记录一个缩进问题</span>
+            <span class="post-date" title="2023-07-14 10:07:34">2023/07/14</span>
+        </a>
+        
+        
+        <a  class="All Reverse "
+           href="/2023/07/13/Buuctf-Re%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%88%E4%B8%80%EF%BC%89/"
+           data-tag="Reverse日常刷题"
+           data-author="" >
+            <span class="post-title" title="Buuctf-Re记录">Buuctf-Re记录</span>
+            <span class="post-date" title="2023-07-13 10:50:05">2023/07/13</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/07/11/SCTF2023/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="SCTF2023">SCTF2023</span>
+            <span class="post-date" title="2023-07-11 19:31:34">2023/07/11</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/06/14/%E8%AE%B0%E4%B8%80%E9%81%93%E4%B8%8E%E5%A4%9A%E9%A1%B9%E5%BC%8F%E7%8E%AF%E6%9C%89%E5%85%B3%E7%9A%84%E9%A2%98/"
+           data-tag="多项式环"
+           data-author="" >
+            <span class="post-title" title="记一道与多项式环有关的题">记一道与多项式环有关的题</span>
+            <span class="post-date" title="2023-06-14 21:18:55">2023/06/14</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/06/13/%E5%AE%89%E6%B4%B5%E6%9D%AF2023Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="安洵杯2023Crypto">安洵杯2023Crypto</span>
+            <span class="post-date" title="2023-06-13 23:23:55">2023/06/13</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/06/08/CISCN2023-badkey1/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="CISCN2023-badkey1">CISCN2023-badkey1</span>
+            <span class="post-date" title="2023-06-08 19:06:13">2023/06/08</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/06/05/2023%E5%B9%B4%E7%AC%AC%E4%B8%89%E5%B1%8A%E9%99%95%E8%A5%BF%E7%9C%81%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="2023年第三届陕西省大学生网络安全技能大赛-Crypto">2023年第三届陕西省大学生网络安全技能大赛-Crypto</span>
+            <span class="post-date" title="2023-06-05 09:54:15">2023/06/05</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/05/29/%E4%BB%8E%E4%B8%80%E9%81%93%E9%A2%98%E4%BA%86%E8%A7%A3hnp%E9%97%AE%E9%A2%98%E5%92%8CDSA%E5%8A%A0%E5%AF%86/"
+           data-tag="DSA"
+           data-author="" >
+            <span class="post-title" title="从一道题了解hnp问题和DSA加密">从一道题了解hnp问题和DSA加密</span>
+            <span class="post-date" title="2023-05-29 10:19:44">2023/05/29</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/05/28/%E6%A0%BC%E5%AF%86%E7%A0%81%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/"
+           data-tag="Lattices"
+           data-author="" >
+            <span class="post-title" title="格密码学习之路">格密码学习之路</span>
+            <span class="post-date" title="2023-05-28 17:00:27">2023/05/28</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/05/25/NEEPUCTF-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="NEEPUCTF-Crypto">NEEPUCTF-Crypto</span>
+            <span class="post-date" title="2023-05-25 09:50:35">2023/05/25</span>
+        </a>
+        
+        
+        <a  class="All Crypto "
+           href="/2023/05/22/%E6%97%A5%E5%B8%B8%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%88%E4%BA%8C%EF%BC%89/"
+           data-tag="Crypto日常刷题"
+           data-author="" >
+            <span class="post-title" title="日常刷题记录（二）">日常刷题记录（二）</span>
+            <span class="post-date" title="2023-05-22 21:56:18">2023/05/22</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/05/22/2023DASCTF7%E6%9C%88%E8%B5%9B%E5%A4%8D%E7%8E%B0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="2023DASCTF7月赛复现">2023DASCTF7月赛复现</span>
+            <span class="post-date" title="2023-05-22 10:06:17">2023/05/22</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/05/22/2023%E5%B9%B4%E6%98%A5%E7%A7%8B%E6%9D%AF%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E8%81%94%E8%B5%9B-%E6%98%A5%E5%AD%A3%E8%B5%9B-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="2023年春秋杯网络安全联赛-春季赛-Crypto">2023年春秋杯网络安全联赛-春季赛-Crypto</span>
+            <span class="post-date" title="2023-05-22 10:06:17">2023/05/22</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/05/22/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A22023/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="巅峰极客2023">巅峰极客2023</span>
+            <span class="post-date" title="2023-05-22 10:06:17">2023/05/22</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/05/20/%E4%B8%80%E9%81%93%E4%B8%8E%E6%B5%81%E5%AF%86%E7%A0%81%E7%9B%B8%E5%85%B3%E7%9A%84%E9%A2%98/"
+           data-tag="流密码"
+           data-author="" >
+            <span class="post-title" title="一道与流密码相关的题">一道与流密码相关的题</span>
+            <span class="post-date" title="2023-05-20 14:46:31">2023/05/20</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/05/15/LitCTF2023-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="LitCTF2023-Crypto">LitCTF2023-Crypto</span>
+            <span class="post-date" title="2023-05-15 10:18:24">2023/05/15</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/05/08/DASCTF-Apr-2023-X-SU%E6%88%98%E9%98%9F2023%E5%BC%80%E5%B1%80%E4%B9%8B%E6%88%98-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="DASCTF-Apr-2023-X-SU战队2023开局之战-Crypto">DASCTF-Apr-2023-X-SU战队2023开局之战-Crypto</span>
+            <span class="post-date" title="2023-05-08 10:38:14">2023/05/08</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/05/01/%E5%88%9D%E8%AF%86%E5%B7%AE%E5%88%86%E6%94%BB%E5%87%BB/"
+           data-tag="差分攻击"
+           data-author="" >
+            <span class="post-title" title="初识差分攻击">初识差分攻击</span>
+            <span class="post-date" title="2023-05-01 17:17:47">2023/05/01</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/05/01/Diffie-Hellman%E5%AF%86%E9%92%A5%E4%BA%A4%E6%8D%A2%E7%AE%97%E6%B3%95/"
+           data-tag="Diffie-Hellman"
+           data-author="" >
+            <span class="post-title" title="Diffie-Hellman密钥交换算法">Diffie-Hellman密钥交换算法</span>
+            <span class="post-date" title="2023-05-01 14:50:29">2023/05/01</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/04/30/ECC%E4%BE%8B%E9%A2%98%E5%88%86%E6%9E%90/"
+           data-tag="ECC"
+           data-author="" >
+            <span class="post-title" title="ECC例题分析">ECC例题分析</span>
+            <span class="post-date" title="2023-04-30 14:19:32">2023/04/30</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/04/29/Pollards-rho-algorithm%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/"
+           data-tag="Pollard&#39;s rho algorithm"
+           data-author="" >
+            <span class="post-title" title="Pollards-rho-algorithm学习记录">Pollards-rho-algorithm学习记录</span>
+            <span class="post-date" title="2023-04-29 15:24:06">2023/04/29</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/04/27/LCG%E7%AE%97%E6%B3%95/"
+           data-tag="LCG"
+           data-author="" >
+            <span class="post-title" title="LCG算法">LCG算法</span>
+            <span class="post-date" title="2023-04-27 20:18:47">2023/04/27</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/04/26/e%E4%B8%8Ephi%E4%B8%8D%E4%BA%92%E7%B4%A0%E4%BE%8B%E9%A2%98/"
+           data-tag="AMM"
+           data-author="" >
+            <span class="post-title" title="e与phi不互素例题">e与phi不互素例题</span>
+            <span class="post-date" title="2023-04-26 20:00:24">2023/04/26</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/04/24/HDCTF2023-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="HDCTF2023-Crypto">HDCTF2023-Crypto</span>
+            <span class="post-date" title="2023-04-24 20:30:08">2023/04/24</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/04/20/2023%E7%BA%A2%E6%98%8E%E8%B0%B7-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="2023红明谷-Crypto">2023红明谷-Crypto</span>
+            <span class="post-date" title="2023-04-20 14:42:27">2023/04/20</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/04/19/GDOUCTF2023-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="GDOUCTF2023-Crypto">GDOUCTF2023-Crypto</span>
+            <span class="post-date" title="2023-04-19 19:44:33">2023/04/19</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/04/15/NSSCTF-Round-11-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="NSSCTF-Round#11-Crypto">NSSCTF-Round#11-Crypto</span>
+            <span class="post-date" title="2023-04-15 19:37:51">2023/04/15</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/04/09/ctfShow%E6%84%9A%E4%BA%BA%E6%9D%AF/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="ctfShow愚人杯">ctfShow愚人杯</span>
+            <span class="post-date" title="2023-04-09 15:47:16">2023/04/09</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/03/28/NKCTF-Crypto%E5%A4%8D%E7%8E%B0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="NKCTF--Crypto复现">NKCTF--Crypto复现</span>
+            <span class="post-date" title="2023-03-28 19:32:15">2023/03/28</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/03/23/RSA%E4%B8%ADe%E4%B8%8En%E7%9A%84%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0%E4%B8%8D%E4%BA%92%E7%B4%A0/"
+           data-tag="RSA"
+           data-author="" >
+            <span class="post-title" title="RSA中e与n的欧拉函数不互素">RSA中e与n的欧拉函数不互素</span>
+            <span class="post-date" title="2023-03-23 19:53:13">2023/03/23</span>
+        </a>
+        
+        
+        <a  class="All Crypto "
+           href="/2023/03/18/%E6%97%A5%E5%B8%B8%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%88%E4%B8%80%EF%BC%89/"
+           data-tag="日常刷题"
+           data-author="" >
+            <span class="post-title" title="日常刷题记录（一）">日常刷题记录（一）</span>
+            <span class="post-date" title="2023-03-18 16:27:04">2023/03/18</span>
+        </a>
+        
+        
+        <a  class="All Crypto "
+           href="/2023/03/15/coppersmith%E4%BE%8B%E9%A2%98/"
+           data-tag="Coppersmith"
+           data-author="" >
+            <span class="post-title" title="coppersmith例题">coppersmith例题</span>
+            <span class="post-date" title="2023-03-15 18:44:22">2023/03/15</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/03/11/%E5%BC%BA%E7%BD%91%E6%9D%AF2019%20Copperstudy/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Coppersmith例题">Coppersmith例题</span>
+            <span class="post-date" title="2023-03-11 19:18:36">2023/03/11</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/03/11/Coppersmith%E6%94%BB%E5%87%BB/"
+           data-tag="Coppersmith"
+           data-author="" >
+            <span class="post-title" title="Coppersmith攻击">Coppersmith攻击</span>
+            <span class="post-date" title="2023-03-11 16:44:48">2023/03/11</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/03/10/%E8%BF%90%E7%AE%97%E5%9F%9F%E6%89%A9%E5%A4%A7%E9%97%AE%E9%A2%98/"
+           data-tag="运算域扩大"
+           data-author="" >
+            <span class="post-title" title="运算域扩大问题">运算域扩大问题</span>
+            <span class="post-date" title="2023-03-10 17:43:07">2023/03/10</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/03/06/%E9%BB%84%E6%B2%B3%E6%B5%81%E5%9F%9F%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E6%8C%91%E6%88%98%E8%B5%9B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="黄河流域网络安全挑战赛">黄河流域网络安全挑战赛</span>
+            <span class="post-date" title="2023-03-06 21:28:39">2023/03/06</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/02/28/2023-HSCSEC-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="2023-HSCSEC-Crypto">2023-HSCSEC-Crypto</span>
+            <span class="post-date" title="2023-02-28 20:48:27">2023/02/28</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/01/18/%E5%A4%9A%E9%A1%B9%E5%BC%8FRSA%E4%B8%ADphi-n%E6%B1%82%E8%A7%A3/"
+           data-tag="多项式RSA"
+           data-author="" >
+            <span class="post-title" title="多项式RSA中phi_n求解">多项式RSA中phi_n求解</span>
+            <span class="post-date" title="2023-01-18 16:12:59">2023/01/18</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/01/18/Hgame2023%E5%A4%8D%E7%8E%B0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Hgame2023复现">Hgame2023复现</span>
+            <span class="post-date" title="2023-01-18 10:55:26">2023/01/18</span>
+        </a>
+        
+        
+        <a  class="All Python "
+           href="/2023/01/13/Python%E7%9F%A9%E9%98%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/"
+           data-tag="Python矩阵"
+           data-author="" >
+            <span class="post-title" title="Python矩阵学习记录">Python矩阵学习记录</span>
+            <span class="post-date" title="2023-01-13 10:50:28">2023/01/13</span>
+        </a>
+        
+        
+        <a  class="All Crypto "
+           href="/2022/12/20/%E5%AF%86%E7%A0%81%E9%A2%98%E8%AE%B0%E5%BD%95/"
+           data-tag="Crypto题目记录"
+           data-author="" >
+            <span class="post-title" title="密码题记录">密码题记录</span>
+            <span class="post-date" title="2022-12-20 19:45:24">2022/12/20</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2022/11/26/RSA%E9%A2%98%E5%9E%8B%E6%80%BB%E7%BB%93/"
+           data-tag="RSA"
+           data-author="" >
+            <span class="post-title" title="RSA题型总结">RSA题型总结</span>
+            <span class="post-date" title="2022-11-26 20:51:47">2022/11/26</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2022/11/24/%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86/"
+           data-tag="费马小定理"
+           data-author="" >
+            <span class="post-title" title="费马小定理">费马小定理</span>
+            <span class="post-date" title="2022-11-24 21:42:31">2022/11/24</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2022/11/19/Wiener-attack/"
+           data-tag="Wiener Attack"
+           data-author="" >
+            <span class="post-title" title="Wiener-attack">Wiener-attack</span>
+            <span class="post-date" title="2022-11-19 16:08:03">2022/11/19</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2022/11/05/DASCTF-X-GFCTF-2022%E5%8D%81%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="DASCTF X GFCTF 2022十月挑战赛--Crypto">DASCTF X GFCTF 2022十月挑战赛--Crypto</span>
+            <span class="post-date" title="2022-11-05 20:12:10">2022/11/05</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-NKCTF-Crypto复现" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">NKCTF--Crypto复现</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="Match">Match</a>
+            
+        </span>
+        
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2023-07-20 15:16:54'>2023-03-28 19:32</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>Count:5.3k</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            Views 👀 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#baby-RSA"><span class="toc-text">baby_RSA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ezRSA"><span class="toc-text">ezRSA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ezMath"><span class="toc-text">ezMath</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ez-polynomial"><span class="toc-text">ez_polynomial</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#eZ-Bl%E2%8A%95ck"><span class="toc-text">eZ_Bl⊕ck</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#easy-high"><span class="toc-text">easy_high</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#complex-matrix"><span class="toc-text">complex_matrix</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ez-LargeCG"><span class="toc-text">ez_LargeCG</span></a></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>还是一如既往的菜，没啥长进啊。题目肯定是不算难的，但就是不会，还是太懒了，抓紧学起来！</p>
+<h3 id="baby-RSA"><a href="#baby-RSA" class="headerlink" title="baby_RSA"></a>baby_RSA</h3><pre><code class="python">from Crypto.Util.number import *
+nbit = 512
+flag=&#39;****************************&#39;
+
+p=getPrime(nbit)
+q=getPrime(nbit)
+e=65537
+n=p*q
+m= bytes_to_long(bytes(flag.encode()))
+P = pow(m,p,n)
+Q = pow(m,q,n)
+N=P*Q
+phi_N=(P-1)*(Q-1)
+d=inverse(e,phi_N)
+dP=d%(P-1)
+print(&#39;n = &#39;,n)
+print(&#39;N = &#39;,N)
+print(&#39;dP = &#39;,dP)
+
+
+n =  114101396033690088275999670914803472451228154227614098210572767821433470213124900655723605426526569384342101959232900145334500170690603208327913698128445002527020347955300595384752458477749198178791196660625870659540794807018881780680683388008090434114437818447523471527878292741702348454486217652394664664641
+N =  1159977299277711167607914893426674454199208605107323826176606074354449015203832606569051328721360397610665453513201486235549374869954501563523028914285006850687275382822302821825953121223999268058107278346499657597050468069712686559045712946025472616754027552629008516489090871415609098178522863027127254404804829735621706042266140637592206366042515190385496909533329383212542170504864473944657824502882014292528444918055958758310544435120502872883857209880723535754528096143707324179005292445100655695427777453144657819474805882956064292780031599790769618615908501966912635232746588639924772530057835864082951499028
+dP =  33967356791272818610254738927769774016289590226681637441101504040121743937150259930712897925893431093938385216227201268238374281750681609796883676743311872905933219290266120756315613501614208779063819499785817502677885240656957036398336462000771885589364702443157120609506628895933862241269347200444629283263
+</code></pre>
+<p>看到出现了dp，套个dp的爆破脚本解出P、Q来：</p>
+<pre><code class="python">for i in range(1,e):
+    if (dP*e-1)%i == 0:
+        if (N%((dP*e-1)//i+1)) == 0:
+            P = (dP*e-1)//i+1
+            Q = N // P
+            print(P)
+            print(Q)
+#P = 37269067352457630263351774206178494913957088859822110344334922741582406663357663275001777826744534556652993452577088773275825539553907027527722045884489297259984687894496505265384077983882580247333972954704644517469999916574893996324149548980338301147983367163067556434434982470623587914250041142380667816331
+#Q = 31124398373258967647259273958463995255448332282733968391096762136494537693158180734634142626374694999391960402681114664140356232930100613919064790135723294710984789809295862966052914533841176463683069225072916170624016363164528353386087305805869313783193076760778433672011918504199905552973276891160558444988
+</code></pre>
+<p>然后根据题目得到下面两个关系式：</p>
+<p>$P \equiv m^p \space mod \space n$</p>
+<p>$Q \equiv m^q \space mod \space n$</p>
+<p>各种推导，但我这个数学思维就是不行，没推出来。</p>
+<p>$把n拆开，并利用费马小定理，m^{p-1} \equiv 1mod p（根本没想到，还是不熟悉），分别得到：$</p>
+<p>$P \equiv m^p \space mod \space p<br>\equiv mm^{p-1} \space mod \space p \equiv m \space mod \space p\Rightarrow P &#x3D; m + k_1 p $</p>
+<p>$同理，Q \equiv m^q \space mod \space q \equiv m \space mod \space q \Rightarrow Q &#x3D; m + k_2q  $<br>$两式子相乘$</p>
+<p>$ \Rightarrow PQ &#x3D; m^2 + (k_1p+k_2q)m + kn $<br>$\Rightarrow PQ \equiv -m^2 + (P+Q)m \space mod \space n $</p>
+<p>$我想知道为什么m^2前面带了负号。\<br>这里(k_1p+k_2q) \approx (P+Q)$</p>
+<p>然后构造多项式直接求解m：</p>
+<pre><code class="python">P = ...
+Q = ...
+n = ...
+
+R.&lt;m&gt; = Zmod(n)[]
+f = -m**2+(P+Q)*m-P*Q#这里的加减号不能错了
+m = f.monic().small_roots()
+&#39;&#39;&#39;
+#或者这样构造
+PR.&lt;m&gt; = PolynomialRing(Zmod(n))
+&#39;&#39;&#39;
+
+print(m)
+#m = 152099310694956022622926857538598513541723670773227126074246760446874272165452073476477
+#显然p、q是远大于m的，这就是为什么上面的推导可以近似等于
+#print(long_to_bytes(m))
+#b&#39;NKCTF&#123;Th1S_a_babyRSA_y0u_are_tql!!!&#125;&#39;
+</code></pre>
+<h3 id="ezRSA"><a href="#ezRSA" class="headerlink" title="ezRSA"></a>ezRSA</h3><pre><code class="python">from Crypto.Util.number import *
+from secret import flag
+
+m1 = bytes_to_long(flag[:len(flag)//3])
+m2 = bytes_to_long(flag[len(flag)//3:])
+
+def gen():
+    prime_list  = []
+    for i in range(4):
+        prime_list.append(getPrime(512))
+    return sorted(prime_list)
+
+prime_list = gen()
+p,q,r,t = prime_list[0],prime_list[3],prime_list[1],prime_list[2]
+e = 65537
+n = p*q*r*t
+phi = (p-1)*(q-1)*(r-1)*(t-1)
+c1 = pow(m1,e,p*q)
+p1 = getPrime(512)
+q1 = getPrime(512)
+N = p1*q1
+c2 = pow(m2,p1,N)
+c3 = pow(m2,q1,N)
+print(f&#39;n = &#123;n&#125;&#39;)
+print(f&#39;phi = &#123;phi&#125;&#39;)
+print(f&#39;c1 = &#123;c1&#125;&#39;)
+print(f&#39;N = &#123;N&#125;&#39;)
+print(f&#39;c2 = &#123;c2&#125;&#39;)
+print(f&#39;c3 = &#123;c3&#125;&#39;)
+
+&#39;&#39;&#39;
+n = 8836130216343708623415307573630337110573363595188748983290313549413242332143945452914800845282478216810685733227137911630239808895196748125078747600505626165666334675100147790578546682128517668100858766784733351894480181877144793496927464058323582165412552970999921215333509253052644024478417393146000490808639363681195799826541558906527985336104761974023394438549055804234997654701266967731137282297623426318212701157416397999108259257077847307874122736921265599854976855949680133804464839768470200425669609996841568545945133611190979810786943246285103031363790663362165522662820344917056587244701635831061853354597
+phi = 8836130216343708623415307573630337110573363595188748983290313549413242332143945452914800845282478216810685733227137911630239808895196748125078747600505622503351461565956106005118029537938273153581675065762015952483687057805462728186901563990429998916382820576211887477098611684072561849314986341226981300596338314989867731725668312057134075244816223120038573374383949718714549930261073576391501671722900294331289082826058292599838631513746370889828026039555245672195833927609280773258978856664434349221972568651378808050580665443131001632395175205804045958846124475183825589672204752895252723130454951830966138888560
+c1 = 78327207863361017953496121356221173288422862370301396867341957979087627011991738176024643637029313969241151622985226595093079857523487726626882109114134910056673489916408854152274726721451884257677533593174371742411008169082367666168983943358876017521749198218529804830864940274185360506199116451280975188409
+N = 157202814866563156513184271957553223260772141845129283711146204376449001653397810781717934720804041916333174673656579086498762693983380365527400604554663873045166444369504886603233275868192688995284322277504050322927511160583280269073338415758019142878016084536129741435221345599028001581385308324407324725353
+c2 = 63355788175487221030596314921407476078592001060627033831694843409637965350474955727383434406640075122932939559532216639739294413008164038257338675094324172634789610307227365830016457714456293397466445820352804725466971828172010276387616894829328491068298742711984800900411277550023220538443014162710037992032
+c3 = 9266334096866207047544089419994475379619964393206968260875878305040712629590906330073542575719856965053269812924808810766674072615270535207284077081944428011398767330973702305174973148018082513467080087706443512285098600431136743009829009567065760786940706627087366702015319792328141978938111501345426931078
+&#39;&#39;&#39;
+</code></pre>
+<p>n由四个大素数组成，加密只使用p和q，给了n、e、phi的值，在佬的提示下找了个know_phi的脚本，这里不贴了github上有，解出四个因数来，注意选择最小的和最大的作为p、q：</p>
+<pre><code class="python">p = 8420341711111386139826589531912136886697864041156239432418101990860951057225344962981814097328105109563572968937589482777359728076364540186966659710593563
+q = 10834231423967940002221004300639472879422266804796466209639481015717927053785699849888626682293072249949761634253205413288361321778947376683555990557548843
+</code></pre>
+<p>进一步解出m1来：</p>
+<pre><code class="python">b&#39;NKCTF&#123;it_i5_e45y_th4t_Kn0wn&#39;
+</code></pre>
+<p>接下来由题可以得到两个式子：</p>
+<p>$c2 \equiv m_2^{p_1} \space mod \space N $<br>$c3 \equiv m_2^{q_1} \space mod \space N $<br>$非常之熟悉吧，和上面的baby一模一样，同理推导 $<br>$c2 &#x3D; m_2 + k_1p_1 $<br>$c3 &#x3D; m_2 + k_2q_1 $<br>$\Rightarrow c2c3 &#x3D; -m_2^2+(c2+c3)m \space mod \space N$</p>
+<p>就是因为这部分，导致两道题都没能做出来😥</p>
+<pre><code class="python">R.&lt;m&gt; = Zmod(N)[]
+#或者PR.&lt;m&gt; = PolynomialRing(Zmod(N))
+f = -m**2+(c2+c3)*m-c2*c3
+m = f.monic().small_roots(X=2^432,beta = 0.5,epsilon=0.01)
+#X=2^432，前面求出m1，求得位数为215，所以m2的位数430，但为什么设为432
+print(m)
+
+#m = 4134704395865052635910135198384991632904826868184178486449854532897025132606910716694129086727413635889097150181468673789907726717
+#print(long_to_bytes(m))
+#b&#39;_phi_4nd_N_dec0mp0ses_N_w1th_th3_s4m3_c0mm0n_n_but_pq&#125;&#39;
+</code></pre>
+<p>综上，flag：</p>
+<pre><code class="python">NKCTF&#123;it_i5_e45y_th4t_Kn0wn_phi_4nd_N_dec0mp0ses_N_w1th_th3_s4m3_c0mm0n_n_but_pq&#125;
+</code></pre>
+<p>解释：epsilon&#x3D;0.01，表示小根搜索算法中搜索到的所有小根的误差上界为 $\epsilon$。也就是说，如果 $r$ 是 $m(x)$ 在模 $X$ 意义下的一个小根，那么 $|r| &lt; X^{1&#x2F;2} \cdot \epsilon$。</p>
+<h3 id="ezMath"><a href="#ezMath" class="headerlink" title="ezMath"></a>ezMath</h3><pre><code class="python">from Crypto.Util.number import getPrime, bytes_to_long
+from secret import BITS, hints, flag
+
+p = getPrime(BITS)
+q = getPrime(BITS)
+n = p * q
+print(f&#39;n = &#123;n&#125;&#39;)
+
+e = 0x10001
+c = pow(bytes_to_long(flag), e, n)
+print(f&#39;c = &#123;c&#125;&#39;)
+
+print(&#39;Give you some boring pows:&#39;)
+for i in range(len(hints)):
+    print(hints[i])
+&#39;&#39;&#39;
+n = 369520637995317866367336688225182965061898803879373674073832046072914710171302486913303917853881549637806426191970292829598855375370563396182543413674021955181862907847280705741114636854238746612618069619482248639049407507041667720977392421249242597197448360531895206645794505182208390084734779667749657408715621
+c = 324131338592233305486487416176106472248153652884280898177125443926549710357763331715045582842045967830200123100144721322509500306940560917086108978796500145618443920020112366546853892387011738997522207752873944151628204886591075864677988865335625452099668804529484866900390927644093597772065285222172136374562043
+Give you some boring pows:
+...
+&#39;&#39;&#39;
+</code></pre>
+<p>给了n、c、e以及一大堆的等式，不知道怎么利用。</p>
+<p>看了佬们的wp后，发现其实还是跟推导有关😔</p>
+<p>从给的数据里选择两组，两组满足底数相同，结果为平方关系，如下面这组：</p>
+<pre><code class="python">pow(6,141997416965295486849546892322458652502850390670128808480582247784728456230996812361056958004801816363393016360646922983916999235770803618904474553309200419301820603229504955218189709387942156848904968053547462302189568831762401075340100029630332409419313772378068180267756675141584884876543484516408660699471038, n) = 9
+pow(6,163378867981477210016607618217525067516899896304907822758749135410592905658324027908854458465871295591148114728316034699358213461728042658497873130073105697195541220650688132150216266657024774867846925219967805863946774978900772828496605795631400777090954141000078238226487076065753781167791598816872139973922682, n) = 3
+</code></pre>
+<p>进行推导：</p>
+<p>$a^{e_1} \equiv a^{2e_2} \space mod \space n  \Rightarrow a^{2e_2-e_1} \equiv 1 \space mod \space n $<br>$由欧拉定理，a^{\phi(n)} \equiv 1 \space mod \space n<br>\Rightarrow 2e_2-e_1 &#x3D; k \phi(n) $<br> $这里带上k（有点疑惑）$</p>
+<p>多找几组，对$2*e_2-e_1$部分求gcd得到$\phi(n)$。</p>
+<pre><code class="python">pow(5,159624441075769368394142197503800917105605266793330527400563601282696932962732683048452274321445695181246055818189076528484173940458256745774766217433996778905066039826859919029954611118842967545793750205189398662362981005947945407568116603784658538931110792205205160154125544664182868277733116044735541284338342, n) = 9
+pow(5,172192380036714150788905270808196199818277334366508682218739812159577144024191963252552116624193235000074634457087111471641800814071769221933018962135503876997163938949365614056098717522475180216291316295788774044033481065993544994610614082708563841846852650913646728169671510827052772868386414581035580266356334, n) = 3
+
+pow(7,156359509651684605051402965560382969488421316701585527115005130492947292379802933549188085059602557600903593831240316597311439285149968787780538126741092612405335349622445040578126369183536683733294143156965518222696624206221060030916594302284630706642066420353822195108928341123726471513256217857861184609387726, n) = 9
+pow(7,170559914324671769117535654836487226009685359320636182075960576764702323732727088502920021993271666209903403463612731506055433486417625242935904916789051793747298593847158174830184596554822038310041512771676833824200302666130102306284852931958549925702330464987955245647072909056824574486147965487598401928881026, n) = 3
+</code></pre>
+<pre><code class="python">e = 0x10001
+n = ...
+c = ...
+
+e1 = [..., ..., ...]
+e2 = [..., ..., ...]
+
+res = []
+for i in range(3):
+    res.append(2*e2[i]-e1[i])
+phi1 = gcd(res[0],res[1])
+phi2 = gcd(phi1,res[2])
+
+d = inverse(e,phi2)
+m = pow(c,d,n)
+print(long_to_bytes(m))
+</code></pre>
+<p>我验证了一下，如果只用两组e1和e2，也能得到flag，多用几组或许能更准确？</p>
+<h3 id="ez-polynomial"><a href="#ez-polynomial" class="headerlink" title="ez_polynomial"></a>ez_polynomial</h3><pre><code class="python">#sage
+from Crypto.Util.number import *
+flag = list(bytearray(&#39;&#39;))
+p = getPrime(16)
+R.&lt;y&gt; = PolynomialRing(GF(p))
+while True:
+    P1 = R.random_element(degree=(ZZ.random_element(len(flag), 2*len(flag))))
+    Q1 = R.random_element(degree=(ZZ.random_element(len(flag), 2*len(flag))))
+    if P1.is_irreducible() and Q1.is_irreducible():
+        P = P1
+        Q = Q1
+        break
+e = 65537
+N = P*Q
+S.&lt;x&gt; = R.quotient(N)
+c = S(flag) ^ e
+print(&quot;P:&quot; + str(p) + &quot;\n&quot;)
+print(&quot;N:&quot; + str(N) + &quot;\n&quot;)
+print(&quot;C:&quot; + str(c))
+
+#P:40031
+#N:24096*y^93 + 38785*y^92 + 17489*y^91 + 9067*y^90 + 1034*y^89 + 6534*y^88 + 35818*y^87 + 22046*y^86 + 12887*y^85 + 445*y^84 + 26322*y^83 + 37045*y^82 + 4486*y^81 + 3503*y^80 + 1184*y^79 + 38471*y^78 + 8012*y^77 + 36561*y^76 + 19429*y^75 + 35227*y^74 + 10813*y^73 + 26341*y^72 + 29474*y^71 + 2059*y^70 + 16068*y^69 + 31597*y^68 + 14685*y^67 + 9266*y^66 + 31019*y^65 + 6171*y^64 + 385*y^63 + 28986*y^62 + 9912*y^61 + 10632*y^60 + 33741*y^59 + 12634*y^58 + 21179*y^57 + 35548*y^56 + 17894*y^55 + 7152*y^54 + 9440*y^53 + 4004*y^52 + 2600*y^51 + 12281*y^50 + 22*y^49 + 17314*y^48 + 32694*y^47 + 7693*y^46 + 6567*y^45 + 19897*y^44 + 27329*y^43 + 8799*y^42 + 36348*y^41 + 33963*y^40 + 23730*y^39 + 27685*y^38 + 29037*y^37 + 14622*y^36 + 29608*y^35 + 39588*y^34 + 23294*y^33 + 757*y^32 + 20140*y^31 + 19511*y^30 + 1469*y^29 + 3898*y^28 + 6630*y^27 + 19610*y^26 + 11631*y^25 + 7188*y^24 + 11683*y^23 + 35611*y^22 + 37286*y^21 + 32139*y^20 + 20296*y^19 + 36426*y^18 + 25340*y^17 + 36204*y^16 + 37787*y^15 + 31256*y^14 + 505*y^13 + 27508*y^12 + 20885*y^11 + 32037*y^10 + 31236*y^9 + 7929*y^8 + 27195*y^7 + 28980*y^6 + 11863*y^5 + 16025*y^4 + 16389*y^3 + 570*y^2 + 36547*y + 10451
+#C:3552*x^92 + 6082*x^91 + 25295*x^90 + 35988*x^89 + 26052*x^88 + 16987*x^87 + 12854*x^86 + 25117*x^85 + 25800*x^84 + 30297*x^83 + 5589*x^82 + 23233*x^81 + 14449*x^80 + 4712*x^79 + 35719*x^78 + 1696*x^77 + 35653*x^76 + 13995*x^75 + 13715*x^74 + 4578*x^73 + 37366*x^72 + 25260*x^71 + 28865*x^70 + 36120*x^69 + 7047*x^68 + 10497*x^67 + 19160*x^66 + 17939*x^65 + 14850*x^64 + 6705*x^63 + 17805*x^62 + 30083*x^61 + 2400*x^60 + 10685*x^59 + 15272*x^58 + 2225*x^57 + 13194*x^56 + 14251*x^55 + 31016*x^54 + 10189*x^53 + 35040*x^52 + 7042*x^51 + 29206*x^50 + 39363*x^49 + 32608*x^48 + 38614*x^47 + 5528*x^46 + 20119*x^45 + 13439*x^44 + 25468*x^43 + 30056*x^42 + 19720*x^41 + 21808*x^40 + 3712*x^39 + 25243*x^38 + 10606*x^37 + 16247*x^36 + 36106*x^35 + 17287*x^34 + 36276*x^33 + 1407*x^32 + 28839*x^31 + 8459*x^30 + 38863*x^29 + 435*x^28 + 913*x^27 + 36619*x^26 + 15572*x^25 + 9363*x^24 + 36837*x^23 + 17925*x^22 + 38567*x^21 + 38709*x^20 + 13582*x^19 + 35038*x^18 + 31121*x^17 + 8933*x^16 + 1666*x^15 + 21940*x^14 + 25585*x^13 + 840*x^12 + 21938*x^11 + 20143*x^10 + 28507*x^9 + 5947*x^8 + 20289*x^7 + 32196*x^6 + 924*x^5 + 370*x^4 + 14849*x^3 + 10780*x^2 + 14035*x + 15327
+</code></pre>
+<p>唯一写出来的题，还是因为之前写过这种题，不然爆0了。。。</p>
+<p>在之前的文章里写过，相关知识不说了。</p>
+<p>sage上对N进行多项式分解得到P、Q两个多项式：</p>
+<pre><code>R.&lt;y&gt; = PolynomialRing(GF(40031))
+N = R(&quot;...&quot;)
+print(N.factor())
+</code></pre>
+<p>然后就是常规思路求d求flag：</p>
+<pre><code class="python">e = 65537
+phi_n = (40031^40-1)*(40031^53-1)
+d = inverse_mod(e, phi_n)
+flag = pow(C,d,N)
+print(flag)
+#输出：
+#125*y^32 + 83*y^31 + 109*y^30 + 97*y^29 + 51*y^28 + 114*y^27 + 100*y^26 + 95*y^25 + 116*y^24 + 117*y^23 + 66*y^22 + 95*y^21 + 103*y^20 + 110*y^19 + 49*y^18 + 104*y^17 + 116*y^16 + 48*y^15 + 110*y^14 + 95*y^13 + 51*y^12 + 86*y^11 + 97*y^10 + 72*y^9 + 95*y^8 + 101*y^7 + 87*y^6 + 123*y^5 + 70*y^4 + 84*y^3 + 67*y^2 + 75*y + 78
+</code></pre>
+<p>提取系数，转ASCII码，发现是逆序的，再倒一下就行：</p>
+<pre><code class="python">flag = &quot;...&quot;
+flag = flag.split(&#39;+&#39;)
+res = &#39;&#39;
+for i in flag:
+    res += chr(int(i.split(&#39;*&#39;)[0]))
+print(res)
+print(res[::-1])
+
+#&#125;Sma3rd_tuB_gn1ht0n_3VaH_eW&#123;FTCKN
+#NKCTF&#123;We_HaV3_n0th1ng_But_dr3amS&#125;
+</code></pre>
+<h3 id="eZ-Bl⊕ck"><a href="#eZ-Bl⊕ck" class="headerlink" title="eZ_Bl⊕ck"></a>eZ_Bl⊕ck</h3><pre><code class="python">from Crypto.Util.strxor import strxor as xor
+import os
+from secret import flag
+
+def round(s, k):
+    l, r = s[:16], s[16:]
+    l_, r_ = xor(xor(r, k), l), l
+    return l_ + r_
+
+def encode(s, k):
+    t = s
+    for i in range(8):
+        t = round(t, k[i])
+    return t
+
+r = os.urandom(32)
+print(r)
+
+key = [os.urandom(16) for _ in range(8)]
+
+print(encode(r, key))
+m = flag.strip(b&#39;NKCTF&#123;&#39;).strip(b&#39;&#125;&#39;).replace(b&#39;-&#39;,b&#39;&#39;)
+print(encode(m, key))
+
+#b&quot;t\xf7\xaa\xac\x9d\x88\xa4\x8b\x1f+pA\x84\xacHg&#39;\x07&#123;\xcc\x06\xc4i\xdd)\xda\xc9\xad\xa9\xe8\x1fi&quot;
+#b&quot;&#39;&#123;&lt;z&#125;\x91\xda\xc5\xd5S\x8b\xfa\x9f~]J\x0f\xf4\x9a\x1e\xe0\xef\x129N\xe7a\x928+\xe0\xee&quot;
+#b&#39;8\x1f&quot;\x83B4\x86)\xce\xebq3\x06\xa0w\x16U\x04M/w\xa1\x8f;)M\xdd~\x11:\xe3\xb3&#39;
+</code></pre>
+<p>不知道怎么推，块加密类的题练的少，要加强练习了。</p>
+<p>分组密码的Feistel结构，没学过。</p>
+<p>加密过程简单描述就是，将明文分组左右等长的两部分，两部分数据会经过n轮迭代，每轮迭代的规则一样，即使用相同的轮函数。且每轮迭代会使用密钥$K_i$，同样，每轮迭代使用的$K_i$也是不同的。这只是大致的过程，还有不少细节部分。</p>
+<p>Feistel结构的迭代典型次数为16，可以看到题目中是8次。</p>
+<p>通过分析可以知道，先要通过r和r与key进行加密的结果来得到key。</p>
+<p>隔了几天，回顾这道题，终于搞懂了：</p>
+<p>$首先把r的左半部分记作l_0，右半部分记作r_0，把r与key加密的结果记作enc$<br>$按照题目的推理规则可以逐步得到下面的等式：$</p>
+<p>$l_1 &#x3D; l_0 \bigoplus r_0 \bigoplus k_0$<br>$ r_1 &#x3D; l_0 $<br>$按顺序推导八轮，最终可以得到如下关系：$<br>$enc_l &#x3D; r_0 \bigoplus k_0 \bigoplus k_1 \bigoplus k_3 \bigoplus k_4 \bigoplus k_6 \bigoplus k_7 $<br>$enc_r &#x3D; r_0 \bigoplus l_0 \bigoplus k_0 \bigoplus k_2 \bigoplus k_3 \bigoplus k_5 \bigoplus k_6$<br>$推导过程我是在纸上写的，有点丑，不贴了。。。$<br>$将enc_l中的key整体记作k_l，enc_r中的key整体记作k_r，$<br>$我对于此处的理解是，并不是把k_l与题目的key的左半部分等同起来（实际也不相等）$<br>$这里的k_l只是作一个定义，因为在后面m与key进行轮加密的过程中，最终也会得到$<br>$与上面enc两行相同结构的结构（这里把m和key加密的结果记作c）：$<br>$c_l &#x3D; m_r \bigoplus k_l$<br>$c_r &#x3D; m_r \bigoplus m_l \bigoplus k_r$</p>
+<p>如此一来便能解了：</p>
+<pre><code class="python">from Crypto.Util.strxor import strxor as xor
+
+r = b&quot;t\xf7\xaa\xac\x9d\x88\xa4\x8b\x1f+pA\x84\xacHg&#39;\x07&#123;\xcc\x06\xc4i\xdd)\xda\xc9\xad\xa9\xe8\x1fi&quot;
+enc = b&quot;&#39;&#123;&lt;z&#125;\x91\xda\xc5\xd5S\x8b\xfa\x9f~]J\x0f\xf4\x9a\x1e\xe0\xef\x129N\xe7a\x928+\xe0\xee&quot;
+c = b&#39;8\x1f&quot;\x83B4\x86)\xce\xebq3\x06\xa0w\x16U\x04M/w\xa1\x8f;)M\xdd~\x11:\xe3\xb3&#39;
+
+r_l = r[:16]
+r_r = r[16:]
+enc_l = enc[:16]
+enc_r = enc[16:]
+
+key_l = xor(enc_l,r_r)
+key_r = xor(enc_r,xor(r_l,r_r))
+
+c_l = c[:16]
+c_r = c[16:]
+m_r = xor(c_l,key_l)
+m_l = xor(xor(key_r,c_r),m_r)
+
+m = m_l+m_r
+print(m)
+#b&#39;1ccd5ceec96d4caf8ce59a512b3d0655&#39;
+
+import uuid
+flag = &#39;1ccd5ceec96d4caf8ce59a512b3d0655&#39;
+print(uuid.UUID(flag))
+#1ccd5cee-c96d-4caf-8ce5-9a512b3d0655
+</code></pre>
+<p>这里uuid搞不懂。</p>
+<h3 id="easy-high"><a href="#easy-high" class="headerlink" title="easy_high"></a>easy_high</h3><pre><code class="python">from Crypto.Util.number import *
+flag = &#39;&#39;
+
+p, q = getPrime(1024), getPrime(1024)
+N = p * q
+p0 = p ^ (bytes_to_long(flag)&lt;&lt;444)
+m = bytes_to_long(flag)
+c = pow(m, 65537, N)
+print(&#39;c=&#39;,c)
+print(&#39;N=&#39;,N)
+print(&#39;p0=&#39;,p0)
+
+#c= 4881545863615247924697512170011400857004555681758106351259776881249360423774694437921554056529064037535796844084045263140567168171628832384672612945806728465127954937293787045302307135365408938448006548465000663247116917564500525499976139556325841597810084111303039525833367199565266613007333465332710833102978756654324956219855687611590278570749890543277201538208370370097424105751568285050703167350889953331829275262932104042040526209179357770495596739361176548337593674366015027648541293309465113202672923556991818236011769228078267484362980348613669012975963468592763463397575879215173972436831753615524193609612
+#N= 17192509201635459965397076685948071839556595198733884616568925970608227408244870123644193452116734188924766414178232653941867668088060274364830452998991993756231372252367134508712447410029668020439498980619263308413952840568602285764163331028384281840387206878673090608323292785024372223569438874557728414737773416206032540038861064700108597448191546413236875600906013508022023794395360001242071569785940215873854748631691555516626235191098174739613181230094797844414203694879874212340812119576042962565179579136753839946922829803044355134086779223242080575811804564731938746051591474236147749401914216734714709281349
+#p0= 149263925308155304734002881595820602641174737629551638146384199378753884153459661375931646716325020758837194837271581361322079811468970876532640273110966545339040194118880506352109559900553776706613338890047890747811129988585025948270181264314668772556874718178868209009192010129918138140332707080927643141811
+</code></pre>
+<p>基本上是分析这一行：</p>
+<pre><code class="python">p0 = p ^ (bytes_to_long(flag)&lt;&lt;444)
+</code></pre>
+<p>可以知道flag左移444位后（低位补0）与$p$异或得到$p_0$，那么$p$的低444位与$p_0$是相同的。等于是知道了p的低444位，未知位数达到580位，在之前的文章里提到，当p、q位数是1024bit时，未知位数不能超过454bit过多。所以至少还得知道p的126位才能使用copper。</p>
+<p>在p、q相近的情况下对n直接开方取高位作p的高位，但这里不成立，故行不通。</p>
+<p>另寻他路：以flag的格式，最长也就那么长，转整数后也不会很大，可以试一下：</p>
+<pre><code class="python">flag = b&quot;NKCTF&#123;ajdnaosdhiasdsfisdjdihadiasdhoadhsiodaj&#125;&quot;
+print(bytes_to_long(flag))
+res = 183876783844719951164006751402861139015367850881248806466142942786265188461121827081223474428956250940320606845
+print(res.bit_length())
+
+#367
+</code></pre>
+<p>flag是我随便打的，看到也才367位，实际肯定比这短，所以未知位数是小于454位的，故$p_0$的高位部分与p也相同，到这就可以解了。</p>
+<pre><code class="python">p_low = p0 - ((p0&gt;&gt;444)&lt;&lt;444)#低444位
+p_high = p0&gt;&gt;898 #高126位
+#未知位数恰好454位
+
+#sage
+PR.&lt;x&gt; = PolynomialRing(Zmod(N))
+f = (p_high&lt;&lt;898) + x*(2**444) + p_low
+res = f.monic().small_roots(X=2^454,beta=0.4)
+print(res)
+
+#x = 8996514515788824631645217678983870972689906544773849929777173576310649928527740139864048823998116829780535762155750526515388194925404594
+p = (p_high&lt;&lt;898) + x*(2**444) + p_low
+q = N // p
+d = inverse(e,(p-1)*(q-1))
+m = pow(c,d,N)
+
+print(long_to_bytes(m))
+#b&#39;NKCTF&#123;F10wrs_hVe_r3strDay&#125;&#39;
+</code></pre>
+<p>我看佬的脚本是使未知位数为400，我试了下最大未知位数，也能解。还有一个地方，small_roots()函数里的参数，beta&#x3D;等于0.2、0.3、0.5都不能解出来。还有如果加上epsilon&#x3D;0.02，也能解，但会比不加慢一两秒。</p>
+<p>佬的脚本里，beta等于0.2、0.3、0.4、0.5都能解，加不加epsilon也都能解。</p>
+<p>这个参数的确定我还不太理解，迟早得彻底弄清楚。</p>
+<h3 id="complex-matrix"><a href="#complex-matrix" class="headerlink" title="complex_matrix"></a>complex_matrix</h3><pre><code class="python">from Crypto.Util.number import *
+import gmpy2 as gy
+flag = &#39;&#39;
+
+
+k = 400
+p, q = getPrime(741), getPrime(741)
+N = p * q
+phi = (p-1) * (q-1)
+_flag = bytes_to_long(flag)
+p, q = getPrime(1024), getPrime(1024)
+d_array = [getPrime(k) for _ in range(4)] 
+e_array = [inverse(i, phi) for i in d_array]
+c = pow(_flag, 65537, N)
+print(&#39;N:&#39;,N)
+print(&#39;e:&#39;,e_array)
+print(&#39;c:&#39;,c)
+
+#N: 71841248095369087024928175623295380241516644434969868335504061065977014103487197287619667598363486210886674500469383623511906399909335989202774281795855975972913438448899231650449810696539722877903606541112937729384851506921675290984316325565141178015123381439392534417225128922398194700511937668809140024838070124095703585627058463137549632965723304713166804084673075651182998654091113119667582720831809458721072371364839503563819080226784026253
+#e: [65128799196671634905309494529154568614228788035735808211836905142007976099865571126946706559109393187772126407982007858423859147772762638898854472065889939549916077695303157760259717113616428849798058080633047516455513870697383339784816006154279428812359241282979297285283850338964993773227397528608557211742425548651971558377656644211835094019462699301650412862894391885325969143805924684662849869947172175608502179438901337558870349697233790535, 58756559706647121529575085912021603170286163639572075337348109911506627489265537716060463072086480156516641723700802217411122982693536541892986623158818442274840863016647800896033363360822503445344748132842451806511693779600370832206455202293028402486647422212959763287987847280322100701242139127654031151565924132562837893975505159702015125483479126108892709063135006366792197127007229210558758401679638300464111782814561428899998471531067163715, 34828685390969672139784723764579499920301439564705391196519314224159563070870933754477650614819514127121146216049444888554338415587165719098661141454627820126445291802801256297252654045398330613075575527685542980264993711077876535643646746742646371967302159565887123638001580042027272379341650995728849759541960087953160211696369079708787543303742132161742979856720539914370868829868891655221361545648778590685232034703220732697083024449894197969, 26717968456600556973167180286909817773394160817933525240720067057464671317174201540556176814203780603153696663101158205367554829261808020426363683474848952397963507069306452835776851274959389849223566030857588019845781623271395012194869024566879791449466064832273531795430185178486425688475688634844530106740480643866537205900809400383304665727460014210405339697947582657505028211149470787536144302545259243549176816653560626044921521516818788487]
+#c: 39297018404565022956251803918747154798377576057123078716166221329195959669756819453426741569480551313085435037629493881038383709458043802420338889323233368852331387845200216275712388921820794980987541224782392553528127093154957890356084331463340193478391679540506421250562554424770350351514435220782124981277580072039637811543914983033300225131364246910828188727043248991987332274929827173923543187017105236008487756190002204169623313222748976369
+</code></pre>
+<p>拓展winner攻击：</p>
+<pre><code class="python">from Crypto.Util.number import *
+debug = True
+ 
+isdigit = lambda x: ord(&#39;0&#39;) &lt;= ord(x) &lt;= ord(&#39;9&#39;)
+ 
+def my_permutations(g, n):
+    sub = []
+    res = []
+    def dfs(s, prev):
+        if len(s) == n:
+            res.append(s[::])
+        for i in g:
+            if i in s or i &lt; prev:
+                continue
+            s.append(i)
+            dfs(s, max(prev, i))
+            s.remove(i)
+    dfs(sub, 0)
+    return res
+ 
+class X3NNY(object):
+    def __init__(self, exp1, exp2):
+        self.exp1 = exp1
+        self.exp2 = exp2
+    
+    def __mul__(self, b):
+        return X3NNY(self.exp1 * b.exp1, self.exp2 * b.exp2)
+ 
+    def __repr__(self):
+        return &#39;%s = %s&#39; % (self.exp1.expand().collect_common_factors(), self.exp2)
+ 
+class X_Complex(object):
+    def __init__(self, exp):
+        i = 0
+        s = &#39;%s&#39; % exp
+        while i &lt; len(s):
+            if isdigit(s[i]):
+                num = 0
+                while i &lt; len(s) and isdigit(s[i]):
+                    num = num*10 + int(s[i])
+                    i += 1
+                if i &gt;= len(s):
+                    self.b = num
+                elif s[i] == &#39;*&#39;:
+                    self.a = num
+                    i += 2
+                elif s[i] == &#39;/&#39;:
+                    i += 1
+                    r = 0
+                    while i &lt; len(s) and isdigit(s[i]):
+                        r = r*10 + int(s[i])
+                        i += 1
+                    self.b = num/r
+            else:
+                i += 1
+        if not hasattr(self, &#39;a&#39;):
+            self.a = 1
+        if not hasattr(self, &#39;b&#39;):
+            self.b = 0
+ 
+def WW(e, d, k, g, N, s):
+    return X3NNY(e*d*g-k*N, g+k*s)
+def GG(e1, e2, d1, d2, k1, k2):
+    return X3NNY(e1*d1*k2- e2*d2*k1, k2 - k1)
+ 
+def W(i):
+    e = eval(&quot;e%d&quot; % i)
+    d = eval(&quot;d%d&quot; % i)
+    k = eval(&quot;k%d&quot; % i)
+    return WW(e, d, k, g, N, s)
+ 
+def G(i, j):
+    e1 = eval(&quot;e%d&quot; % i)
+    d1 = eval(&quot;d%d&quot; % i)
+    k1 = eval(&quot;k%d&quot; % i)
+    
+    e2 = eval(&quot;e%d&quot; % j)
+    d2 = eval(&quot;d%d&quot; % j)
+    k2 = eval(&quot;k%d&quot; % j)
+    
+    return GG(e1, e2, d1, d2, k1, k2)
+ 
+def R(e, sn): # min u max v
+    ret = X3NNY(1, 1)
+    n = max(e)
+    nn = len(e)
+    l = set(i for i in range(1, n+1))
+    d = &#39;&#39;
+    u, v = 0, 0
+    for i in e:
+        if i == 1:
+            ret *= W(1)
+            d += &#39;W(%d)&#39; % i
+            nn -= 1
+            l.remove(1)
+            u += 1
+        elif i &gt; min(l) and len(l) &gt;= 2*nn:
+            ret *= G(min(l), i)
+            nn -= 1
+            d += &#39;G(%d, %d)&#39; % (min(l), i)
+            l.remove(min(l))
+            l.remove(i)
+            v += 1
+        else:
+            ret *= W(i)
+            l.remove(i)
+            d += &#39;W(%d)&#39; % i
+            nn -= 1
+            u += 1
+    if debug:
+        print(d)
+    return ret, u/2 + (sn - v) * a
+ 
+def H(n):
+    if n == 0:
+        return [0]
+    if n == 2:
+        return [(), (1,), (2,), (1, 2)]
+    ret = []
+    for i in range(3, n+1):
+        ret.append((i,))
+        for j in range(1, i):
+            for k in my_permutations(range(1, i), j):
+                ret.append(tuple(k + [i]))
+    return H(2) + ret
+    
+def CC(exp, n):
+    cols = [0 for i in range(1&lt;&lt;n)]
+    
+    # split exp
+    texps = (&#39;%s&#39; % exp.exp1.expand()).strip().split(&#39; - &#39;)
+    ops = []
+    exps = []
+    for i in range(len(texps)):
+        if texps[i].find(&#39; + &#39;) != -1:
+            tmp = texps[i].split(&#39; + &#39;)
+            ops.append(0)
+            exps.append(tmp[0])
+            for i in range(1, len(tmp)):
+                ops.append(1)
+                exps.append(tmp[i])
+        else:
+            ops.append(0)
+            exps.append(texps[i])
+    if exps[0][0] == &#39;-&#39;:
+        for i in range(len(exps)):
+            ops[i] = 1-ops[i]
+        exps[0] = exps[0][1:]
+    else:
+        ops[0] = 1
+    # find e and N
+    l = []
+    for i in range(len(exps)):
+        tmp = 1 if ops[i] else -1
+        en = []
+        j = 0
+        while j &lt; len(exps[i]):
+            if exps[i][j] == &#39;e&#39;:
+                num = 0
+                j += 1
+                while isdigit(exps[i][j]):
+                    num = num*10 + int(exps[i][j])
+                    j += 1
+                tmp *= eval(&#39;e%d&#39; % num)
+                en.append(num)
+            elif exps[i][j] == &#39;N&#39;:
+                j += 1
+                num = 0
+                if exps[i][j] == &#39;^&#39;:
+                    j += 1
+                    while isdigit(exps[i][j]):
+                        num = num*10 + int(exps[i][j])
+                        j += 1
+                if num == 0:
+                    num = 1
+                tmp *= eval(&#39;N**%d&#39; % num)
+            else:
+                j += 1
+        if tmp == 1 or tmp == -1:
+            l.append((0, ()))
+        else:
+            l.append((tmp, tuple(sorted(en))))
+    
+    # construct h
+    mp = H(n)
+    for val, en in l:
+        cols[mp.index(en)] = val
+    # print(cols)
+    return cols
+ 
+def stirling(k):
+    return factorial(k)/(factorial(k//2)^2)
+def calcAlpha(n):
+    if n % 2 == 1:
+        fz = (2*n + 1) * 2^n - 4*n*stirling(n-1)
+        fm = (2*n - 2) * 2^n + 8*n*stirling(n-1)
+    else:
+        fz = (2*n + 1) * 2^n - (2*n + 1)*stirling(n)
+        fm = (2*n - 2) * 2^n + (4*n + 2)*stirling(n)
+    return fz/fm
+ 
+ 
+def EWA(n, elist, NN, alpha):
+    mp = H(n)
+    var(&#39;a&#39;)
+    S = [X_Complex(n*a)]
+    cols = [[1 if i == 0 else 0 for i in range(2^n)]]
+    for i in mp[1:]:
+        eL, s = R(i, n)
+        cols.append(CC(eL, n))
+        S.append(X_Complex(s))
+    
+    alphaA,alphaB = 0, 0
+    for i in S:
+        alphaA = max(i.a, alphaA)
+        alphaB = max(i.b, alphaB)
+    D = []
+    for i in range(len(S)):
+        D.append(
+            int(NN^((alphaA-S[i].a)*alpha + (alphaB - S[i].b)))
+        )
+    kw = &#123;&#39;N&#39;: NN&#125;
+    for i in range(len(elist)):
+        kw[&#39;e%d&#39; % (i+1)] = elist[i]
+    if debug:
+        print(&quot;The lattice: &quot;)
+        print(Matrix(cols).T)
+        
+        print(&quot;The matrix D: &quot;)
+        print([N^((alphaA-S[i].a)*alpha + (alphaB - S[i].b)) for i in range(len(S))])
+ 
+    B = Matrix(ZZ, Matrix(cols).T(**kw)) * diagonal_matrix(ZZ, D)
+    L = B.LLL(0.5)
+    v = Matrix(ZZ, L[0])
+    x = v * B**(-1)
+    phi = int(x[0,1]/x[0,0]*elist[0])
+    return phi
+ 
+def attack(NN, elist, alpha):
+    for i in range(1, len(elist)+1):
+        var(&quot;e%d&quot; % i)
+        var(&quot;d%d&quot; % i)
+        var(&quot;k%d&quot; % i)
+    g, N, s = var(&#39;g&#39;), var(&#39;N&#39;), var(&#39;s&#39;)
+    phi = EWA(len(elist), elist, NN, alpha)
+    return phi
+ 
+def example(N,e):
+    from Crypto.Util.number import long_to_bytes, getPrime, bytes_to_long
+    import uuid
+    def rsa(e, n):
+        m = uuid.uuid4().hex.encode()
+        c = pow(bytes_to_long(m), e, n)
+        return m.decode(), c
+#     p = getPrime(1024)
+#     q = getPrime(1024)
+    
+    # The modulus in RSA
+    NN = N
+    
+    # The exponent in RSA
+#     e = 0x10001
+#     m, c = rsa(e, NN)
+#     print(&quot;The plaintext is:&quot;, m)
+    
+    # Theoretical upper bound in paper, but it is much smaller when actual test 
+    alpha = calcAlpha(3)
+    print(&quot;Alpha: &quot;,alpha)
+    elist = e
+    phi = attack(NN, elist, alpha)
+    
+    if phi != 0:
+        print(&quot;Found Phi: &quot;, phi)
+        return phi
+ 
+N=...
+n=N
+e=[...]
+c=...
+phi=example(N,e)
+d=inverse(65537,ZZ(phi))
+long_to_bytes(ZZ(power_mod(c, d, n)))
+</code></pre>
+<h3 id="ez-LargeCG"><a href="#ez-LargeCG" class="headerlink" title="ez_LargeCG"></a>ez_LargeCG</h3><pre><code class="python">from gmpy2 import next_prime
+from Crypto.Util.number import getPrime, isPrime, bytes_to_long
+import random
+from secret import flag
+
+def init():
+    primes = []
+    p = 1
+    while len(primes) &lt; 100:
+        p = next_prime(p)
+        primes.append(int(p))
+    return primes
+
+def genMyPrimeA(bits):
+    while True:
+        g = 2
+        while g &lt; 2 ** bits:
+            g *= random.choice(primes)
+        g += 1
+        if isPrime(g):
+            return g
+
+def genMyPrimeB(bits):
+    while True:
+        g = 2
+        while g &lt; 2 ** bits:
+            g *= random.choice(primes)
+        g -= 1
+        if isPrime(g):
+            return g
+
+def gen(st, n, a, b, c, d):
+    A = [st + 2023, st + 2024, st + 2025]
+    for i in range(6**666):
+        A.append((a * A[-3] + b * A[-2] + c * A[-1] + d) % n)
+    return A
+
+primes = init()
+p1 = getPrime(256)
+print(p1)
+q1 = 1
+while p1 &gt; q1:
+    q1 = genMyPrimeA(256)
+print(q1)
+p2 = getPrime(256)
+q2 = 1
+while p2 &gt; q2:
+    q2 = genMyPrimeB(256)
+n1 = p1 * q1
+n2 = p2 * q2
+print(f&#39;n1 = &#123;n1&#125;&#39;)
+print(f&#39;n2 = &#123;n2&#125;&#39;)
+
+r = getPrime(512)
+print(f&#39;r = &#123;r&#125;&#39;)
+
+A = gen(bytes_to_long(flag), r, p1, q1, p2, q2)
+print(f&#39;A[-3] = &#123;A[-3]&#125;&#39;)
+print(f&#39;A[-2] = &#123;A[-2]&#125;&#39;)
+print(f&#39;A[-1] = &#123;A[-1]&#125;&#39;)
+
+
+# n1 = 39755206609675677517559022219519767646524455449142889144073217274247893104711318356648198334858966762944109142752432641040037415587397244438634301062818169
+# n2 = 30725253491966558227957591684441310073288683324213439179377278006583428660031769862224980605664642101191616868994066039054762100886678504154619135365646221
+# r = 7948275435515074902473978567170931671982245044864706132834233483354166398627204583162848756424199888842910697874390403881343013872330344844971750121043493
+# A[-3] = 6085327340671394838391386566774092636784105046872311226269065664501131836034666722102264842236327898770287752026397099940098916322051606027565395747098434
+# A[-2] = 1385551782355619987198268805270109182589006873371541520953112424858566073422289235930944613836387546298080386848159955053303343649615385527645536504580787
+# A[-1] = 2529291156468264643335767070801583140819639532551726975314270127875306069067016825677707064451364791677536138503947465612206191051563106705150921639560469
+</code></pre>
+<p>涉及到光滑数、矩阵快速幂。</p>
+<p>对于n1，通过分析q的生成过程，可以知道是p-1光滑；对于n2，可以知道是p+1光滑，可以分别分解得到因数：</p>
+<pre><code class="python">from gmpy2 import *
+
+def Pollard(n):
+    a=2
+    while True:
+        for i in range(2,80000):
+            a=pow(a,i,n)
+        for j in range(80000,104729+1):
+            a=pow(a,j,n)
+            if j % 15 ==0:
+                d = gcd(a-1,n)
+                if(1&lt;d&lt;n):
+                  return(d)
+        a+=1
+
+n1 = 39755206609675677517559022219519767646524455449142889144073217274247893104711318356648198334858966762944109142752432641040037415587397244438634301062818169
+q1 = Pollard(n1)
+p1 = n1 // q1
+print(p1,q1)
+#p1 = 92946439027877993602295703905130336736159270745389239059083263513478865293549 
+#q1 = 427721675251610827084310512123962488210068003845592404231631542730839819224381
+
+#p2=288551157776490110472645044398395422160196115791981535735903775378294599329633
+#q2=106481130516780473105954611077340189174861459077145246394800660809527032990637
+</code></pre>
+<pre><code class="python">def gen(st, n, a, b, c, d):
+    A = [st + 2023, st + 2024, st + 2025]
+    for i in range(6**666):
+        A.append((a * A[-3] + b * A[-2] + c * A[-1] + d) % n)
+    return A
+</code></pre>
+<p>接着通过分析gen函数，四阶LCG问题，构建矩阵：</p>
+<p>$A &#x3D;<br>\left[<br> \begin{matrix}<br>   0 &amp; 1 &amp; 0 &amp; 0 \<br>   0 &amp; 0 &amp; 1 &amp; 0 \<br>   a &amp; b &amp; c &amp; d \<br>   0 &amp; 0 &amp; 0 &amp; 1<br>  \end{matrix}<br>\right]<br>\Rightarrow A*<br>\left(<br> \begin{matrix}<br>   s_1 \<br>   s_2 \<br>   s_3 \<br>   1<br>  \end{matrix}<br>\right) &#x3D;<br>\left(<br> \begin{matrix}<br>   s_2 \<br>   s_3 \<br>   s_4 \<br>   1<br>  \end{matrix}<br>\right)$</p>
+<pre><code class="python">a = q1
+b = p1
+c = q2
+d = p2
+
+r = 7948275435515074902473978567170931671982245044864706132834233483354166398627204583162848756424199888842910697874390403881343013872330344844971750121043493
+s1 = 6085327340671394838391386566774092636784105046872311226269065664501131836034666722102264842236327898770287752026397099940098916322051606027565395747098434
+s2 = 1385551782355619987198268805270109182589006873371541520953112424858566073422289235930944613836387546298080386848159955053303343649615385527645536504580787
+s3 = 2529291156468264643335767070801583140819639532551726975314270127875306069067016825677707064451364791677536138503947465612206191051563106705150921639560469
+S = Vector(GF(r),[s1,s2,s3,1])
+A = matrix(GF(r),[[0,1,0,0],[0,0,1,0],[a,b,c,d],[0,0,0,1]])
+
+flag = A^(-6^666)*S
+
+print(long_to_bytes(ZZ(flag[0]-2023)))
+#NKCTF&#123;y0u_kN0w_r5A_&amp;_LCg_&amp;_Ma7r1X_s0_w3ll!!!&#125;
+</code></pre>
+<p>参考：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/App1eTree/p/nkctf.html#/c/subject/p/nkctf.html"><a target="_blank" rel="noopener" href="https://www.cnblogs.com/App1eTree/p/nkctf.html#/c/subject/p/nkctf.html">2023 nkctf crypto wp - App1e_Tree - 博客园 (cnblogs.com)</a></a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41626232/article/details/129801128">(1条消息) NKCTF2023 Crypto 部分wp_无趣的浅的博客-CSDN博客</a></p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 1666739907@qq.com </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+        <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="//cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<input type="hidden" id="MathJax-js"
+        value="//cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
+</input>
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2022-2023 Luino
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+<div class="mobile-menus-out" >
+
+</div>
+<div class="mobile-menus">
+    
+    
+    
+    
+    <a class="dynamic-menu " target="_blank"  href="https://github.com/Luiino">github</a>
+    
+</div>
+
+
+</html>

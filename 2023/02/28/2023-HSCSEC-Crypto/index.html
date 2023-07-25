@@ -6,17 +6,17 @@
   <meta name="keywords" content="">
   <meta name="description" content="2023-HSCSEC-Crypto | Luino&#39;s Bold">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="作用一种能快速找到大整数的一个非1、非自身的因子（也称非平凡因子）的算法。对于目前我所涉及的邻域来说，或许是用于RSA中N的分解。 相关思想设分解$n，n&#x3D;pq$，$q为n的非平凡因子$。这时我们需要一个用于生成伪随机数列的模$n$的多项式，设为：$g(x) \equiv x^2 + 1 (mod n)，x_1 &#x3D; g(x)，x_2 &#x3D; g(g(x))……$ 可以知道">
+<meta name="description" content="原理大佬讲的够清楚了，直接上题 flag &#x3D; &quot;flag&amp;#123;xxxxxxxxxxxxxxxx&amp;#125;&quot; assert flag.startswith(&quot;flag&amp;#123;&quot;) assert flag.endswith(&quot;&amp;#125;&quot;) assert len(flag)&#x3D;&#x3D;14  def lfsr(R,mask):">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Pollards-rho-algorithm学习记录">
-<meta property="og:url" content="http://example.com/2023/04/29/Pollards-rho-algorithm%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:title" content="LFSR记录">
+<meta property="og:url" content="http://example.com/2023/07/20/LFSR%E8%AE%B0%E5%BD%95/index.html">
 <meta property="og:site_name" content="Luino&#39;s Bold">
-<meta property="og:description" content="作用一种能快速找到大整数的一个非1、非自身的因子（也称非平凡因子）的算法。对于目前我所涉及的邻域来说，或许是用于RSA中N的分解。 相关思想设分解$n，n&#x3D;pq$，$q为n的非平凡因子$。这时我们需要一个用于生成伪随机数列的模$n$的多项式，设为：$g(x) \equiv x^2 + 1 (mod n)，x_1 &#x3D; g(x)，x_2 &#x3D; g(g(x))……$ 可以知道">
+<meta property="og:description" content="原理大佬讲的够清楚了，直接上题 flag &#x3D; &quot;flag&amp;#123;xxxxxxxxxxxxxxxx&amp;#125;&quot; assert flag.startswith(&quot;flag&amp;#123;&quot;) assert flag.endswith(&quot;&amp;#125;&quot;) assert len(flag)&#x3D;&#x3D;14  def lfsr(R,mask):">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-04-29T07:24:06.000Z">
-<meta property="article:modified_time" content="2023-04-29T12:02:43.693Z">
+<meta property="article:published_time" content="2023-07-20T05:13:17.000Z">
+<meta property="article:modified_time" content="2023-07-20T05:48:57.253Z">
 <meta property="article:author" content="Luino">
-<meta property="article:tag" content="Pollard&#39;s rho algorithm">
+<meta property="article:tag" content="LFSR">
 <meta name="twitter:card" content="summary">
 
 
@@ -166,7 +166,7 @@
     <li>
         <div class="all active" data-rel="All">All
             
-                <small>(10)</small>
+                <small>(47)</small>
             
         </div>
     </li>
@@ -178,7 +178,7 @@
         <div data-rel="Match">
             
             Match
-            <small>(5)</small>
+            <small>(21)</small>
         </div>
         
     </li>
@@ -193,7 +193,7 @@
         <div data-rel="Crypto学习记录">
             
             Crypto学习记录
-            <small>(4)</small>
+            <small>(19)</small>
         </div>
         
     </li>
@@ -208,6 +208,36 @@
         <div data-rel="Python">
             
             Python
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="Crypto">
+            
+            Crypto
+            <small>(4)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="Reverse">
+            
+            Reverse
             <small>(1)</small>
         </div>
         
@@ -238,8 +268,8 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="10">
-<input type="hidden" id="yelog_site_word_count" value="12.8k">
+<input type="hidden" id="yelog_site_posts_number" value="47">
+<input type="hidden" id="yelog_site_word_count" value="63.2k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -285,7 +315,27 @@
     <div class="tag-wrapper">
         
             <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>差分攻击</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>多项式环</a>
+            </li>
+        
+            <li class="article-tag-list-item">
                 <i class="iconfont icon-tag"></i><a>多项式RSA</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>费马小定理</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>流密码</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>日常刷题</a>
             </li>
         
             <li class="article-tag-list-item">
@@ -293,11 +343,67 @@
             </li>
         
             <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>AMM</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Coppersmith</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Crypto日常刷题</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Crypto题目记录</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Diffie-Hellman</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>DSA</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ECC</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Lattices</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>LCG</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>LFSR</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>MT19937</a>
+            </li>
+        
+            <li class="article-tag-list-item">
                 <i class="iconfont icon-tag"></i><a>Pollard's rho algorithm</a>
             </li>
         
             <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Python格式</a>
+            </li>
+        
+            <li class="article-tag-list-item">
                 <i class="iconfont icon-tag"></i><a>Python矩阵</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Reverse日常刷题</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>RSA</a>
             </li>
         
             <li class="article-tag-list-item">
@@ -313,11 +419,236 @@
         
         
         <a  class="All Crypto学习记录 "
+           href="/2023/07/20/LFSR%E8%AE%B0%E5%BD%95/"
+           data-tag="LFSR"
+           data-author="" >
+            <span class="post-title" title="LFSR记录">LFSR记录</span>
+            <span class="post-date" title="2023-07-20 13:13:17">2023/07/20</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/07/17/MT19937%E4%BC%AA%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95/"
+           data-tag="MT19937"
+           data-author="" >
+            <span class="post-title" title="MT19937伪随机数生成算法">MT19937伪随机数生成算法</span>
+            <span class="post-date" title="2023-07-17 10:17:50">2023/07/17</span>
+        </a>
+        
+        
+        <a  class="All Python "
+           href="/2023/07/14/%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%AA%E7%BC%A9%E8%BF%9B%E9%97%AE%E9%A2%98/"
+           data-tag="Python格式"
+           data-author="" >
+            <span class="post-title" title="记录一个缩进问题">记录一个缩进问题</span>
+            <span class="post-date" title="2023-07-14 10:07:34">2023/07/14</span>
+        </a>
+        
+        
+        <a  class="All Reverse "
+           href="/2023/07/13/Buuctf-Re%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%88%E4%B8%80%EF%BC%89/"
+           data-tag="Reverse日常刷题"
+           data-author="" >
+            <span class="post-title" title="Buuctf-Re记录">Buuctf-Re记录</span>
+            <span class="post-date" title="2023-07-13 10:50:05">2023/07/13</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/07/11/SCTF2023/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="SCTF2023">SCTF2023</span>
+            <span class="post-date" title="2023-07-11 19:31:34">2023/07/11</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/06/14/%E8%AE%B0%E4%B8%80%E9%81%93%E4%B8%8E%E5%A4%9A%E9%A1%B9%E5%BC%8F%E7%8E%AF%E6%9C%89%E5%85%B3%E7%9A%84%E9%A2%98/"
+           data-tag="多项式环"
+           data-author="" >
+            <span class="post-title" title="记一道与多项式环有关的题">记一道与多项式环有关的题</span>
+            <span class="post-date" title="2023-06-14 21:18:55">2023/06/14</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/06/13/%E5%AE%89%E6%B4%B5%E6%9D%AF2023Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="安洵杯2023Crypto">安洵杯2023Crypto</span>
+            <span class="post-date" title="2023-06-13 23:23:55">2023/06/13</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/06/08/CISCN2023-badkey1/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="CISCN2023-badkey1">CISCN2023-badkey1</span>
+            <span class="post-date" title="2023-06-08 19:06:13">2023/06/08</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/06/05/2023%E5%B9%B4%E7%AC%AC%E4%B8%89%E5%B1%8A%E9%99%95%E8%A5%BF%E7%9C%81%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="2023年第三届陕西省大学生网络安全技能大赛-Crypto">2023年第三届陕西省大学生网络安全技能大赛-Crypto</span>
+            <span class="post-date" title="2023-06-05 09:54:15">2023/06/05</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/05/29/%E4%BB%8E%E4%B8%80%E9%81%93%E9%A2%98%E4%BA%86%E8%A7%A3hnp%E9%97%AE%E9%A2%98%E5%92%8CDSA%E5%8A%A0%E5%AF%86/"
+           data-tag="DSA"
+           data-author="" >
+            <span class="post-title" title="从一道题了解hnp问题和DSA加密">从一道题了解hnp问题和DSA加密</span>
+            <span class="post-date" title="2023-05-29 10:19:44">2023/05/29</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/05/28/%E6%A0%BC%E5%AF%86%E7%A0%81%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/"
+           data-tag="Lattices"
+           data-author="" >
+            <span class="post-title" title="格密码学习之路">格密码学习之路</span>
+            <span class="post-date" title="2023-05-28 17:00:27">2023/05/28</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/05/25/NEEPUCTF-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="NEEPUCTF-Crypto">NEEPUCTF-Crypto</span>
+            <span class="post-date" title="2023-05-25 09:50:35">2023/05/25</span>
+        </a>
+        
+        
+        <a  class="All Crypto "
+           href="/2023/05/22/%E6%97%A5%E5%B8%B8%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%88%E4%BA%8C%EF%BC%89/"
+           data-tag="Crypto日常刷题"
+           data-author="" >
+            <span class="post-title" title="日常刷题记录（二）">日常刷题记录（二）</span>
+            <span class="post-date" title="2023-05-22 21:56:18">2023/05/22</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/05/22/2023DASCTF7%E6%9C%88%E8%B5%9B%E5%A4%8D%E7%8E%B0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="2023DASCTF7月赛复现">2023DASCTF7月赛复现</span>
+            <span class="post-date" title="2023-05-22 10:06:17">2023/05/22</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/05/22/2023%E5%B9%B4%E6%98%A5%E7%A7%8B%E6%9D%AF%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E8%81%94%E8%B5%9B-%E6%98%A5%E5%AD%A3%E8%B5%9B-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="2023年春秋杯网络安全联赛-春季赛-Crypto">2023年春秋杯网络安全联赛-春季赛-Crypto</span>
+            <span class="post-date" title="2023-05-22 10:06:17">2023/05/22</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/05/22/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A22023/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="巅峰极客2023">巅峰极客2023</span>
+            <span class="post-date" title="2023-05-22 10:06:17">2023/05/22</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/05/20/%E4%B8%80%E9%81%93%E4%B8%8E%E6%B5%81%E5%AF%86%E7%A0%81%E7%9B%B8%E5%85%B3%E7%9A%84%E9%A2%98/"
+           data-tag="流密码"
+           data-author="" >
+            <span class="post-title" title="一道与流密码相关的题">一道与流密码相关的题</span>
+            <span class="post-date" title="2023-05-20 14:46:31">2023/05/20</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/05/15/LitCTF2023-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="LitCTF2023-Crypto">LitCTF2023-Crypto</span>
+            <span class="post-date" title="2023-05-15 10:18:24">2023/05/15</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/05/08/DASCTF-Apr-2023-X-SU%E6%88%98%E9%98%9F2023%E5%BC%80%E5%B1%80%E4%B9%8B%E6%88%98-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="DASCTF-Apr-2023-X-SU战队2023开局之战-Crypto">DASCTF-Apr-2023-X-SU战队2023开局之战-Crypto</span>
+            <span class="post-date" title="2023-05-08 10:38:14">2023/05/08</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/05/01/%E5%88%9D%E8%AF%86%E5%B7%AE%E5%88%86%E6%94%BB%E5%87%BB/"
+           data-tag="差分攻击"
+           data-author="" >
+            <span class="post-title" title="初识差分攻击">初识差分攻击</span>
+            <span class="post-date" title="2023-05-01 17:17:47">2023/05/01</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/05/01/Diffie-Hellman%E5%AF%86%E9%92%A5%E4%BA%A4%E6%8D%A2%E7%AE%97%E6%B3%95/"
+           data-tag="Diffie-Hellman"
+           data-author="" >
+            <span class="post-title" title="Diffie-Hellman密钥交换算法">Diffie-Hellman密钥交换算法</span>
+            <span class="post-date" title="2023-05-01 14:50:29">2023/05/01</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/04/30/ECC%E4%BE%8B%E9%A2%98%E5%88%86%E6%9E%90/"
+           data-tag="ECC"
+           data-author="" >
+            <span class="post-title" title="ECC例题分析">ECC例题分析</span>
+            <span class="post-date" title="2023-04-30 14:19:32">2023/04/30</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
            href="/2023/04/29/Pollards-rho-algorithm%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/"
            data-tag="Pollard&#39;s rho algorithm"
            data-author="" >
             <span class="post-title" title="Pollards-rho-algorithm学习记录">Pollards-rho-algorithm学习记录</span>
             <span class="post-date" title="2023-04-29 15:24:06">2023/04/29</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/04/27/LCG%E7%AE%97%E6%B3%95/"
+           data-tag="LCG"
+           data-author="" >
+            <span class="post-title" title="LCG算法">LCG算法</span>
+            <span class="post-date" title="2023-04-27 20:18:47">2023/04/27</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/04/26/e%E4%B8%8Ephi%E4%B8%8D%E4%BA%92%E7%B4%A0%E4%BE%8B%E9%A2%98/"
+           data-tag="AMM"
+           data-author="" >
+            <span class="post-title" title="e与phi不互素例题">e与phi不互素例题</span>
+            <span class="post-date" title="2023-04-26 20:00:24">2023/04/26</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/04/24/HDCTF2023-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="HDCTF2023-Crypto">HDCTF2023-Crypto</span>
+            <span class="post-date" title="2023-04-24 20:30:08">2023/04/24</span>
         </a>
         
         
@@ -340,11 +671,74 @@
         
         
         <a  class="All Match "
+           href="/2023/04/15/NSSCTF-Round-11-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="NSSCTF-Round#11-Crypto">NSSCTF-Round#11-Crypto</span>
+            <span class="post-date" title="2023-04-15 19:37:51">2023/04/15</span>
+        </a>
+        
+        
+        <a  class="All Match "
            href="/2023/04/09/ctfShow%E6%84%9A%E4%BA%BA%E6%9D%AF/"
            data-tag=""
            data-author="" >
             <span class="post-title" title="ctfShow愚人杯">ctfShow愚人杯</span>
             <span class="post-date" title="2023-04-09 15:47:16">2023/04/09</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/03/28/NKCTF-Crypto%E5%A4%8D%E7%8E%B0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="NKCTF--Crypto复现">NKCTF--Crypto复现</span>
+            <span class="post-date" title="2023-03-28 19:32:15">2023/03/28</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/03/23/RSA%E4%B8%ADe%E4%B8%8En%E7%9A%84%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0%E4%B8%8D%E4%BA%92%E7%B4%A0/"
+           data-tag="RSA"
+           data-author="" >
+            <span class="post-title" title="RSA中e与n的欧拉函数不互素">RSA中e与n的欧拉函数不互素</span>
+            <span class="post-date" title="2023-03-23 19:53:13">2023/03/23</span>
+        </a>
+        
+        
+        <a  class="All Crypto "
+           href="/2023/03/18/%E6%97%A5%E5%B8%B8%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%88%E4%B8%80%EF%BC%89/"
+           data-tag="日常刷题"
+           data-author="" >
+            <span class="post-title" title="日常刷题记录（一）">日常刷题记录（一）</span>
+            <span class="post-date" title="2023-03-18 16:27:04">2023/03/18</span>
+        </a>
+        
+        
+        <a  class="All Crypto "
+           href="/2023/03/15/coppersmith%E4%BE%8B%E9%A2%98/"
+           data-tag="Coppersmith"
+           data-author="" >
+            <span class="post-title" title="coppersmith例题">coppersmith例题</span>
+            <span class="post-date" title="2023-03-15 18:44:22">2023/03/15</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/03/11/%E5%BC%BA%E7%BD%91%E6%9D%AF2019%20Copperstudy/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Coppersmith例题">Coppersmith例题</span>
+            <span class="post-date" title="2023-03-11 19:18:36">2023/03/11</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/03/11/Coppersmith%E6%94%BB%E5%87%BB/"
+           data-tag="Coppersmith"
+           data-author="" >
+            <span class="post-title" title="Coppersmith攻击">Coppersmith攻击</span>
+            <span class="post-date" title="2023-03-11 16:44:48">2023/03/11</span>
         </a>
         
         
@@ -384,6 +778,15 @@
         </a>
         
         
+        <a  class="All Match "
+           href="/2023/01/18/Hgame2023%E5%A4%8D%E7%8E%B0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Hgame2023复现">Hgame2023复现</span>
+            <span class="post-date" title="2023-01-18 10:55:26">2023/01/18</span>
+        </a>
+        
+        
         <a  class="All Python "
            href="/2023/01/13/Python%E7%9F%A9%E9%98%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/"
            data-tag="Python矩阵"
@@ -393,12 +796,48 @@
         </a>
         
         
+        <a  class="All Crypto "
+           href="/2022/12/20/%E5%AF%86%E7%A0%81%E9%A2%98%E8%AE%B0%E5%BD%95/"
+           data-tag="Crypto题目记录"
+           data-author="" >
+            <span class="post-title" title="密码题记录">密码题记录</span>
+            <span class="post-date" title="2022-12-20 19:45:24">2022/12/20</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2022/11/26/RSA%E9%A2%98%E5%9E%8B%E6%80%BB%E7%BB%93/"
+           data-tag="RSA"
+           data-author="" >
+            <span class="post-title" title="RSA题型总结">RSA题型总结</span>
+            <span class="post-date" title="2022-11-26 20:51:47">2022/11/26</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2022/11/24/%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86/"
+           data-tag="费马小定理"
+           data-author="" >
+            <span class="post-title" title="费马小定理">费马小定理</span>
+            <span class="post-date" title="2022-11-24 21:42:31">2022/11/24</span>
+        </a>
+        
+        
         <a  class="All Crypto学习记录 "
            href="/2022/11/19/Wiener-attack/"
            data-tag="Wiener Attack"
            data-author="" >
             <span class="post-title" title="Wiener-attack">Wiener-attack</span>
             <span class="post-date" title="2022-11-19 16:08:03">2022/11/19</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2022/11/05/DASCTF-X-GFCTF-2022%E5%8D%81%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="DASCTF X GFCTF 2022十月挑战赛--Crypto">DASCTF X GFCTF 2022十月挑战赛--Crypto</span>
+            <span class="post-date" title="2022-11-05 20:12:10">2022/11/05</span>
         </a>
         
         <div id="no-item-tips">

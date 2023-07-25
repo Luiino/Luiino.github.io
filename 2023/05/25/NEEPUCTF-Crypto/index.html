@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>NEEPUCTF-Crypto | Luino&#39;s Bold</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="NEEPUCTF-Crypto | Luino&#39;s Bold">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="原理大佬讲的够清楚了，直接上题 flag &#x3D; &quot;flag&amp;#123;xxxxxxxxxxxxxxxx&amp;#125;&quot; assert flag.startswith(&quot;flag&amp;#123;&quot;) assert flag.endswith(&quot;&amp;#125;&quot;) assert len(flag)&#x3D;&#x3D;14  def lfsr(R,mask):">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LFSR记录">
+<meta property="og:url" content="http://example.com/2023/07/20/LFSR%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="Luino&#39;s Bold">
+<meta property="og:description" content="原理大佬讲的够清楚了，直接上题 flag &#x3D; &quot;flag&amp;#123;xxxxxxxxxxxxxxxx&amp;#125;&quot; assert flag.startswith(&quot;flag&amp;#123;&quot;) assert flag.endswith(&quot;&amp;#125;&quot;) assert len(flag)&#x3D;&#x3D;14  def lfsr(R,mask):">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-07-20T05:13:17.000Z">
+<meta property="article:modified_time" content="2023-07-20T05:48:57.253Z">
+<meta property="article:author" content="Luino">
+<meta property="article:tag" content="LFSR">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.jpg"/>
+</a>
+<div class="author">
+    <span>Luino</span>
+</div>
+
+<div class="icon">
+    
+        
+            <a title="rss"
+               href="/atom.xml"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-rss"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="github"
+               href="https://github.com/Luiino"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-github"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            <a title="csdn"
+               href="https://blog.csdn.net/Luiino"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-csdn"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+    
+        
+    
+        
+            <a title="email"
+               href="mailto:1666739907@qq.com"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-email"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="qq"
+               href="http://wpa.qq.com/msgrd?v=3&uin=1666739907&site=qq&menu=yes"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-qq"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+    
+        
+    
+</div>
+
+
+
+    <a class="more-menus">更多菜单</a>
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="All">All
+            
+                <small>(47)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                
+    <li>
+        <div data-rel="Match">
+            
+            Match
+            <small>(21)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="Crypto学习记录">
+            
+            Crypto学习记录
+            <small>(19)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="Python">
+            
+            Python
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="Crypto">
+            
+            Crypto
+            <small>(4)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="Reverse">
+            
+            Reverse
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+                <a class="dynamic-menu "
+                   target="_blank"
+                        
+                   href="https://github.com/Luiino">github</a>
+        
+    </div>
+    <div>
+        
+            <a class="about  site_url"
+               
+               href="/about">About</a>
+        
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="47">
+<input type="hidden" id="yelog_site_word_count" value="63.2k">
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>差分攻击</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>多项式环</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>多项式RSA</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>费马小定理</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>流密码</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>日常刷题</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>运算域扩大</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>AMM</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Coppersmith</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Crypto日常刷题</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Crypto题目记录</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Diffie-Hellman</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>DSA</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ECC</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Lattices</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>LCG</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>LFSR</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>MT19937</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Pollard's rho algorithm</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Python格式</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Python矩阵</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Reverse日常刷题</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>RSA</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Wiener Attack</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/07/20/LFSR%E8%AE%B0%E5%BD%95/"
+           data-tag="LFSR"
+           data-author="" >
+            <span class="post-title" title="LFSR记录">LFSR记录</span>
+            <span class="post-date" title="2023-07-20 13:13:17">2023/07/20</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/07/17/MT19937%E4%BC%AA%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95/"
+           data-tag="MT19937"
+           data-author="" >
+            <span class="post-title" title="MT19937伪随机数生成算法">MT19937伪随机数生成算法</span>
+            <span class="post-date" title="2023-07-17 10:17:50">2023/07/17</span>
+        </a>
+        
+        
+        <a  class="All Python "
+           href="/2023/07/14/%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%AA%E7%BC%A9%E8%BF%9B%E9%97%AE%E9%A2%98/"
+           data-tag="Python格式"
+           data-author="" >
+            <span class="post-title" title="记录一个缩进问题">记录一个缩进问题</span>
+            <span class="post-date" title="2023-07-14 10:07:34">2023/07/14</span>
+        </a>
+        
+        
+        <a  class="All Reverse "
+           href="/2023/07/13/Buuctf-Re%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%88%E4%B8%80%EF%BC%89/"
+           data-tag="Reverse日常刷题"
+           data-author="" >
+            <span class="post-title" title="Buuctf-Re记录">Buuctf-Re记录</span>
+            <span class="post-date" title="2023-07-13 10:50:05">2023/07/13</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/07/11/SCTF2023/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="SCTF2023">SCTF2023</span>
+            <span class="post-date" title="2023-07-11 19:31:34">2023/07/11</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/06/14/%E8%AE%B0%E4%B8%80%E9%81%93%E4%B8%8E%E5%A4%9A%E9%A1%B9%E5%BC%8F%E7%8E%AF%E6%9C%89%E5%85%B3%E7%9A%84%E9%A2%98/"
+           data-tag="多项式环"
+           data-author="" >
+            <span class="post-title" title="记一道与多项式环有关的题">记一道与多项式环有关的题</span>
+            <span class="post-date" title="2023-06-14 21:18:55">2023/06/14</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/06/13/%E5%AE%89%E6%B4%B5%E6%9D%AF2023Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="安洵杯2023Crypto">安洵杯2023Crypto</span>
+            <span class="post-date" title="2023-06-13 23:23:55">2023/06/13</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/06/08/CISCN2023-badkey1/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="CISCN2023-badkey1">CISCN2023-badkey1</span>
+            <span class="post-date" title="2023-06-08 19:06:13">2023/06/08</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/06/05/2023%E5%B9%B4%E7%AC%AC%E4%B8%89%E5%B1%8A%E9%99%95%E8%A5%BF%E7%9C%81%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="2023年第三届陕西省大学生网络安全技能大赛-Crypto">2023年第三届陕西省大学生网络安全技能大赛-Crypto</span>
+            <span class="post-date" title="2023-06-05 09:54:15">2023/06/05</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/05/29/%E4%BB%8E%E4%B8%80%E9%81%93%E9%A2%98%E4%BA%86%E8%A7%A3hnp%E9%97%AE%E9%A2%98%E5%92%8CDSA%E5%8A%A0%E5%AF%86/"
+           data-tag="DSA"
+           data-author="" >
+            <span class="post-title" title="从一道题了解hnp问题和DSA加密">从一道题了解hnp问题和DSA加密</span>
+            <span class="post-date" title="2023-05-29 10:19:44">2023/05/29</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/05/28/%E6%A0%BC%E5%AF%86%E7%A0%81%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/"
+           data-tag="Lattices"
+           data-author="" >
+            <span class="post-title" title="格密码学习之路">格密码学习之路</span>
+            <span class="post-date" title="2023-05-28 17:00:27">2023/05/28</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/05/25/NEEPUCTF-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="NEEPUCTF-Crypto">NEEPUCTF-Crypto</span>
+            <span class="post-date" title="2023-05-25 09:50:35">2023/05/25</span>
+        </a>
+        
+        
+        <a  class="All Crypto "
+           href="/2023/05/22/%E6%97%A5%E5%B8%B8%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%88%E4%BA%8C%EF%BC%89/"
+           data-tag="Crypto日常刷题"
+           data-author="" >
+            <span class="post-title" title="日常刷题记录（二）">日常刷题记录（二）</span>
+            <span class="post-date" title="2023-05-22 21:56:18">2023/05/22</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/05/22/2023DASCTF7%E6%9C%88%E8%B5%9B%E5%A4%8D%E7%8E%B0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="2023DASCTF7月赛复现">2023DASCTF7月赛复现</span>
+            <span class="post-date" title="2023-05-22 10:06:17">2023/05/22</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/05/22/2023%E5%B9%B4%E6%98%A5%E7%A7%8B%E6%9D%AF%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E8%81%94%E8%B5%9B-%E6%98%A5%E5%AD%A3%E8%B5%9B-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="2023年春秋杯网络安全联赛-春季赛-Crypto">2023年春秋杯网络安全联赛-春季赛-Crypto</span>
+            <span class="post-date" title="2023-05-22 10:06:17">2023/05/22</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/05/22/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A22023/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="巅峰极客2023">巅峰极客2023</span>
+            <span class="post-date" title="2023-05-22 10:06:17">2023/05/22</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/05/20/%E4%B8%80%E9%81%93%E4%B8%8E%E6%B5%81%E5%AF%86%E7%A0%81%E7%9B%B8%E5%85%B3%E7%9A%84%E9%A2%98/"
+           data-tag="流密码"
+           data-author="" >
+            <span class="post-title" title="一道与流密码相关的题">一道与流密码相关的题</span>
+            <span class="post-date" title="2023-05-20 14:46:31">2023/05/20</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/05/15/LitCTF2023-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="LitCTF2023-Crypto">LitCTF2023-Crypto</span>
+            <span class="post-date" title="2023-05-15 10:18:24">2023/05/15</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/05/08/DASCTF-Apr-2023-X-SU%E6%88%98%E9%98%9F2023%E5%BC%80%E5%B1%80%E4%B9%8B%E6%88%98-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="DASCTF-Apr-2023-X-SU战队2023开局之战-Crypto">DASCTF-Apr-2023-X-SU战队2023开局之战-Crypto</span>
+            <span class="post-date" title="2023-05-08 10:38:14">2023/05/08</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/05/01/%E5%88%9D%E8%AF%86%E5%B7%AE%E5%88%86%E6%94%BB%E5%87%BB/"
+           data-tag="差分攻击"
+           data-author="" >
+            <span class="post-title" title="初识差分攻击">初识差分攻击</span>
+            <span class="post-date" title="2023-05-01 17:17:47">2023/05/01</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/05/01/Diffie-Hellman%E5%AF%86%E9%92%A5%E4%BA%A4%E6%8D%A2%E7%AE%97%E6%B3%95/"
+           data-tag="Diffie-Hellman"
+           data-author="" >
+            <span class="post-title" title="Diffie-Hellman密钥交换算法">Diffie-Hellman密钥交换算法</span>
+            <span class="post-date" title="2023-05-01 14:50:29">2023/05/01</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/04/30/ECC%E4%BE%8B%E9%A2%98%E5%88%86%E6%9E%90/"
+           data-tag="ECC"
+           data-author="" >
+            <span class="post-title" title="ECC例题分析">ECC例题分析</span>
+            <span class="post-date" title="2023-04-30 14:19:32">2023/04/30</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/04/29/Pollards-rho-algorithm%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/"
+           data-tag="Pollard&#39;s rho algorithm"
+           data-author="" >
+            <span class="post-title" title="Pollards-rho-algorithm学习记录">Pollards-rho-algorithm学习记录</span>
+            <span class="post-date" title="2023-04-29 15:24:06">2023/04/29</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/04/27/LCG%E7%AE%97%E6%B3%95/"
+           data-tag="LCG"
+           data-author="" >
+            <span class="post-title" title="LCG算法">LCG算法</span>
+            <span class="post-date" title="2023-04-27 20:18:47">2023/04/27</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/04/26/e%E4%B8%8Ephi%E4%B8%8D%E4%BA%92%E7%B4%A0%E4%BE%8B%E9%A2%98/"
+           data-tag="AMM"
+           data-author="" >
+            <span class="post-title" title="e与phi不互素例题">e与phi不互素例题</span>
+            <span class="post-date" title="2023-04-26 20:00:24">2023/04/26</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/04/24/HDCTF2023-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="HDCTF2023-Crypto">HDCTF2023-Crypto</span>
+            <span class="post-date" title="2023-04-24 20:30:08">2023/04/24</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/04/20/2023%E7%BA%A2%E6%98%8E%E8%B0%B7-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="2023红明谷-Crypto">2023红明谷-Crypto</span>
+            <span class="post-date" title="2023-04-20 14:42:27">2023/04/20</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/04/19/GDOUCTF2023-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="GDOUCTF2023-Crypto">GDOUCTF2023-Crypto</span>
+            <span class="post-date" title="2023-04-19 19:44:33">2023/04/19</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/04/15/NSSCTF-Round-11-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="NSSCTF-Round#11-Crypto">NSSCTF-Round#11-Crypto</span>
+            <span class="post-date" title="2023-04-15 19:37:51">2023/04/15</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/04/09/ctfShow%E6%84%9A%E4%BA%BA%E6%9D%AF/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="ctfShow愚人杯">ctfShow愚人杯</span>
+            <span class="post-date" title="2023-04-09 15:47:16">2023/04/09</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/03/28/NKCTF-Crypto%E5%A4%8D%E7%8E%B0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="NKCTF--Crypto复现">NKCTF--Crypto复现</span>
+            <span class="post-date" title="2023-03-28 19:32:15">2023/03/28</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/03/23/RSA%E4%B8%ADe%E4%B8%8En%E7%9A%84%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0%E4%B8%8D%E4%BA%92%E7%B4%A0/"
+           data-tag="RSA"
+           data-author="" >
+            <span class="post-title" title="RSA中e与n的欧拉函数不互素">RSA中e与n的欧拉函数不互素</span>
+            <span class="post-date" title="2023-03-23 19:53:13">2023/03/23</span>
+        </a>
+        
+        
+        <a  class="All Crypto "
+           href="/2023/03/18/%E6%97%A5%E5%B8%B8%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%88%E4%B8%80%EF%BC%89/"
+           data-tag="日常刷题"
+           data-author="" >
+            <span class="post-title" title="日常刷题记录（一）">日常刷题记录（一）</span>
+            <span class="post-date" title="2023-03-18 16:27:04">2023/03/18</span>
+        </a>
+        
+        
+        <a  class="All Crypto "
+           href="/2023/03/15/coppersmith%E4%BE%8B%E9%A2%98/"
+           data-tag="Coppersmith"
+           data-author="" >
+            <span class="post-title" title="coppersmith例题">coppersmith例题</span>
+            <span class="post-date" title="2023-03-15 18:44:22">2023/03/15</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/03/11/%E5%BC%BA%E7%BD%91%E6%9D%AF2019%20Copperstudy/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Coppersmith例题">Coppersmith例题</span>
+            <span class="post-date" title="2023-03-11 19:18:36">2023/03/11</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/03/11/Coppersmith%E6%94%BB%E5%87%BB/"
+           data-tag="Coppersmith"
+           data-author="" >
+            <span class="post-title" title="Coppersmith攻击">Coppersmith攻击</span>
+            <span class="post-date" title="2023-03-11 16:44:48">2023/03/11</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/03/10/%E8%BF%90%E7%AE%97%E5%9F%9F%E6%89%A9%E5%A4%A7%E9%97%AE%E9%A2%98/"
+           data-tag="运算域扩大"
+           data-author="" >
+            <span class="post-title" title="运算域扩大问题">运算域扩大问题</span>
+            <span class="post-date" title="2023-03-10 17:43:07">2023/03/10</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/03/06/%E9%BB%84%E6%B2%B3%E6%B5%81%E5%9F%9F%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E6%8C%91%E6%88%98%E8%B5%9B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="黄河流域网络安全挑战赛">黄河流域网络安全挑战赛</span>
+            <span class="post-date" title="2023-03-06 21:28:39">2023/03/06</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/02/28/2023-HSCSEC-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="2023-HSCSEC-Crypto">2023-HSCSEC-Crypto</span>
+            <span class="post-date" title="2023-02-28 20:48:27">2023/02/28</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/01/18/%E5%A4%9A%E9%A1%B9%E5%BC%8FRSA%E4%B8%ADphi-n%E6%B1%82%E8%A7%A3/"
+           data-tag="多项式RSA"
+           data-author="" >
+            <span class="post-title" title="多项式RSA中phi_n求解">多项式RSA中phi_n求解</span>
+            <span class="post-date" title="2023-01-18 16:12:59">2023/01/18</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/01/18/Hgame2023%E5%A4%8D%E7%8E%B0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Hgame2023复现">Hgame2023复现</span>
+            <span class="post-date" title="2023-01-18 10:55:26">2023/01/18</span>
+        </a>
+        
+        
+        <a  class="All Python "
+           href="/2023/01/13/Python%E7%9F%A9%E9%98%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/"
+           data-tag="Python矩阵"
+           data-author="" >
+            <span class="post-title" title="Python矩阵学习记录">Python矩阵学习记录</span>
+            <span class="post-date" title="2023-01-13 10:50:28">2023/01/13</span>
+        </a>
+        
+        
+        <a  class="All Crypto "
+           href="/2022/12/20/%E5%AF%86%E7%A0%81%E9%A2%98%E8%AE%B0%E5%BD%95/"
+           data-tag="Crypto题目记录"
+           data-author="" >
+            <span class="post-title" title="密码题记录">密码题记录</span>
+            <span class="post-date" title="2022-12-20 19:45:24">2022/12/20</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2022/11/26/RSA%E9%A2%98%E5%9E%8B%E6%80%BB%E7%BB%93/"
+           data-tag="RSA"
+           data-author="" >
+            <span class="post-title" title="RSA题型总结">RSA题型总结</span>
+            <span class="post-date" title="2022-11-26 20:51:47">2022/11/26</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2022/11/24/%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86/"
+           data-tag="费马小定理"
+           data-author="" >
+            <span class="post-title" title="费马小定理">费马小定理</span>
+            <span class="post-date" title="2022-11-24 21:42:31">2022/11/24</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2022/11/19/Wiener-attack/"
+           data-tag="Wiener Attack"
+           data-author="" >
+            <span class="post-title" title="Wiener-attack">Wiener-attack</span>
+            <span class="post-date" title="2022-11-19 16:08:03">2022/11/19</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2022/11/05/DASCTF-X-GFCTF-2022%E5%8D%81%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="DASCTF X GFCTF 2022十月挑战赛--Crypto">DASCTF X GFCTF 2022十月挑战赛--Crypto</span>
+            <span class="post-date" title="2022-11-05 20:12:10">2022/11/05</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-NEEPUCTF-Crypto" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">NEEPUCTF-Crypto</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="Match">Match</a>
+            
+        </span>
+        
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2023-07-20 14:25:17'>2023-05-25 09:50</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>Count:865</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            Views 👀 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#easymath"><span class="toc-text">easymath</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Loss"><span class="toc-text">Loss</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Loud-Loud2"><span class="toc-text">Loud&amp;Loud2</span></a></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="easymath"><a href="#easymath" class="headerlink" title="easymath"></a>easymath</h3><pre><code class="python">from Crypto.Util.number import *
+
+flag=bytes_to_long(b&#39;Neepu&#123;xxx&#125;&#39;)
+
+N = 7389313481223384214994762619823300589978423075857540712007981373887018860174846208000957230283669342186460652521580595183523706412588695116906905718440770776239313669678685198683933547601793742596023475603667
+m = 1391372358062724416224243990838035874507346098208831800403257
+n = 3583006200974501742604527103814726194237416368238514877166633691321127310414088215607009332255751700661232767709290883038406749484575415867828156201338536386376279995491732514052716934519151026884616917483040
+l = 359786222110993880715372696002813612045630045754565831162281874392294886391569010600976425535545860799388851419768061619942493351122730748490893471593987207207967996028533058621192187630928610989765004439777
+
+c = (110 * pow(m, flag, N) +313 * pow(n, flag, N) + 114 * pow(l, flag, N)) % N
+print(c)
+&#39;&#39;&#39;
+c = 1895030805615627998889733471639619972225091175824712353587361803906002039112746104833908879918848049981737808710773335455541140252543329151696420250885361493998408542681830779056032193286985350503581777508964
+&#39;&#39;&#39;
+</code></pre>
+<p>已知：</p>
+<p>$c &#x3D; (110 \cdot m^{flag} \space mod \space N + 313 \cdot n^{flag} \space mod \space N + 114 \cdot l^{flag} \space mod \space N) \space mod \space N$</p>
+<p>通过所谓的经验可以得到：</p>
+<ul>
+<li>$m \cdot n ≡ 1 (mod N)$</li>
+<li>$m^2 \cdot l ≡ 1 (mod N)$</li>
+</ul>
+<p>将这两个等式代入原始的等式：</p>
+<p>$110 * m^f + 313 * n^f + 114 * l^f ≡ c (mod N) $</p>
+<p>$110 * m^{3f} + 313 * m^f + 114 ≡ c * m^{2f} (mod N)$</p>
+<p>这里将$m^f$当作整体，然后解同余方程。</p>
+<p>接着应该是离散对数问题，观察发现N-1光滑（我观察不出来。。。）</p>
+<pre><code class="python">N =
+73893134812233842149947626198233005899784230758575407120079813738870188601748462080009
+57230283669342186460652521580595183523706412588695116906905718440770776239313669678685
+198683933547601793742596023475603667
+m = 1391372358062724416224243990838035874507346098208831800403257
+n =
+35830062009745017426045271038147261942374163682385148771666336913211273104140882156070
+09332255751700661232767709290883038406749484575415867828156201338536386376279995491732
+514052716934519151026884616917483040
+l =
+35978622211099388071537269600281361204563004575456583116228187439229488639156901060097
+64255355458607993888514197680616199424933511227307484908934715939872072079679960285330
+58621192187630928610989765004439777
+c =
+18950308056156279988897334716396199722250911758247123535873618039060020391127461048339
+08879918848049981737808710773335455541140252543329151696420250885361493998408542681830
+779056032193286985350503581777508964
+print(factor(N-1))
+from Crypto.Util.number import *
+P.&lt;x&gt; = PolynomialRing(Zmod(N))
+f=110*x^3-c*x^2+313*x+114
+f=f.monic()
+print(f.roots())
+a=227512395620376536323376596129750737912423698096760314507923917720826452343855537829
+81776025175997085330048053699862460981278634807985282068185768886554275916855344781615
+71717613561380234338516607855593046949
+fac = [2, 136327, 169937, 313351, 321427, 323377,356887,413783, 519733,792413, 860077, 906289, 976501]
+G=Zmod(N)
+m1=G(m)
+c1=G(a)
+oo=[]
+for i in fac:
+    h=(N-1)//i
+    dlp1=discrete_log(c1**h,m1**h)
+    oo.append(int(dlp1))
+sk=crt(oo,fac)
+mod = prod(fac)
+for i in range(100):
+    print(long_to_bytes(int(sk + i * mod)))
+</code></pre>
+<h3 id="Loss"><a href="#Loss" class="headerlink" title="Loss"></a>Loss</h3><pre><code class="python">from cryptography.hazmat.primitives.ciphers.algorithms import AES
+from cryptography.hazmat.primitives.ciphers import Cipher, modes
+from Crypto.Util.number import *
+import random
+flag=b&quot;&quot;
+key=long_to_bytes(random.getrandbits(16*8))
+assert len(flag) == 32
+def myhex(x):
+    return &quot;&quot;.join(hex(k)[2:] for k in x)
+def encrypt(pt, key):
+   aes = Cipher(AES(key), modes.ECB())
+   enc = aes.encryptor()
+   ct  = enc.update(pt)
+   ct += enc.finalize()
+   return ct
+ct  = myhex(encrypt(flag, key))
+key = myhex(key)
+
+print(ct)
+print(key)
+# ct  = &#39;98691cbec88e449e8bac58e91142269a7da5efa9e7c62848e7135f1150f02a&#39;
+# key = &#39;8ee2b28564433679d93b82873fe8a&#39;
+</code></pre>
+<p>myhex函数的写法会导致转换为16进制的时候将0开头部分的0去掉，通过查看key和ct的位数也可以发现是不完整的。我们只需要爆破所以可能就可以还原key和ct。</p>
+<pre><code class="python">from cryptography.hazmat.primitives.ciphers.algorithms import AES
+from cryptography.hazmat.primitives.ciphers import Cipher, modes
+from itertools import combinations
+from tqdm import tqdm
+def decrypt(ct, key):
+    aes = Cipher(AES(key), modes.ECB())
+    dec = aes.decryptor()
+    pt = dec.update(ct)
+    pt += dec.finalize()
+    return pt
+def add_zeros(ct, p):
+    test_ct = list(ct)
+    for i in p:
+        test_ct.insert(i, &#39;0&#39;)
+    return &#39;&#39;.join(test_ct)
+ct = &#39;98691cbec88e449e8bac58e91142269a7da5efa9e7c62848e7135f1150f02a&#39;
+key = &#39;8ee2b28564433679d93b82873fe8a&#39;
+missing_ct = -len(ct) % 32
+missing_key = -len(key) % 16
+for mc in tqdm([*combinations(range(len(ct)), missing_ct)]):
+    for mk in combinations(range(len(key)), missing_key):
+        test_ct = bytes.fromhex(add_zeros(ct, mc))
+        test_key = bytes.fromhex(add_zeros(key, mk))
+        flag = decrypt(test_ct, test_key)
+        if flag.startswith(b&#39;Neepu&#123;&#39;):
+            print(&#39;Found!&#39;, flag)
+            print(key)
+#Neepu&#123;R41ders_0f_th3_l0st_byt3s&#125;
+</code></pre>
+<h3 id="Loud-Loud2"><a href="#Loud-Loud2" class="headerlink" title="Loud&amp;Loud2"></a>Loud&amp;Loud2</h3><pre><code class="python">from Crypto.Util.number import *
+import random
+flag = randint(1, 2^4096)
+print(flag)
+p = [getPrime(256) for _ in range(20)]
+c = [[randint(0, p[i] - 1) for __ in range(3)] + [int(flag % p[i])] for i in range(20)]
+for c0 in c:
+    random.shuffle(c0)
+print(p)
+print(c)
+#p=[66467878562792562224887473415011035371976498729276781135103070806273826602147, 87779827664444719705378632508432527366151596527264599732383282214161710342059, 106478845076259796180788022071614290976203859464583466743581048528447954519879, 96059795988661207615203630115134173796188205316583242342092930969746956840537, 76648433583138097341785050433545276046328401071616329410459071963649387342037, 75363807436621723536569872393312030066473340867618075065014040776064056013377, 84549506983821330145587582824091845683589581353932033068622843538281197238321, 111370876180722361599897961586244954018438484624454058266043059162224754345369, 64482965162169334114246637526347201196498007629645251181883638859700004974179, 115737745133463165088409210929201564518908251675851193212090312153202710950611, 65430568356698229457733164116539029669340192339524852345167889932007830803713, 83005759669335703543538842561745612525242745913149020160169673469294684269349, 86695300569990829413494539259312051326564517598709183416846805385774886176327, 87649503475806433108642579024197030978459906709386640769733298397489631575119, 67546279258240068058305769281370224151667980031696762855998467222703960646549, 109277222890519331704406685175081474974918071159722270158398833428598261621993, 94947541482876422720663520475916415155713415168744242709306335577278248129671, 72169704519430039945520319412623531417839608722431394881643470024106954771823, 67960163975784724339119270210646072354375119081204577840800359343098463410911, 99600976311231076437603674530239237427983536499904250636338541144596856152681]
+#c=[[36006797306819385066479875554093947690583427970449583820207929310836800884907, 42421831928852572111305575764455253114855197661030346257979092292334693704638, 12802758082612276306666301210467012086210333405770973816248015272325645518737, 35891119003347284519077367147618128608424314149438118637710340094202006973607], [69221811235046204007409195125183399115207721139473251108686359647136964539528, 68728546052531932227774742525240050245981893208569278338806756195046394386320, 77378932313251132635143406501260917558950175409375255430759788116685665756853, 52610629088183684552705334542273079173241031671071904128690224212767984326814], [84632180774187758644772651231005808936754972376616591239738706882585325508504, 22245885241129428291065279034982203110690225047634487933389806520943556010139, 65058154300579433325392929157176043693547112910255708084394089838078169979653, 26450521689799343844879689401496427283279097300795496218417820952255310453381], [31743210200723432871171527300926464156713378567872351797727553809801223755669, 13585899089974057026763852048073375117825112528263695778864069316682632842469, 61718974141826995988697061776372539645461814294568567001726256109104825647174, 51180314603392071189287058511013567287870020999513958065031674007822278281592], [54972437884087220348657249916515696089000557932808046438758622081654015388431, 60595394189514447466338506137494568375465810079275014516953880523799578017650, 48290106501584587524538351792623115913538457076946109833703750186838567097829, 75809640108047877199495621711957016420204838905577105767711805228492185803198], [2043782039074334576524460230918369530353673853539675192552828729137718721899, 49835004172676327317136633790276532689791891581739516605994211773520862094089, 74150446127124215081973853925119891529594162176613983713739514646864857274598, 3870903633214309884568064156029910145031131868082685800718700340446754642668], [58530922734504496400650172153260509666806593206632885245359170202099163777029, 24679955301703325026039585637067957593890919790442322117013190013849632870045, 47461847478301275711387089619360312020232490159064156700718722079533108310495, 78436661760605062831488783213279281637896003485976271847409520316669048162591], [3960169205004685923298734670827529710258905436583484891133449600679523626998, 56971763036590510871648632641525055519742294555040115044720432874482626152527, 7500941845513450196840656641552395008944195976110947855355515297144549893577, 104364444158131675753431216431697712763613996035708348677723420914206545999308], [21090310989423433113256120275297260716078136824734467530250689161392790805917, 59095240674034520085214866457855433129352762312493710903594522366480317145097, 25950268632849909273587896220763105221984980662119437334003683923010964181793, 22214910913289817220594820237750728594412035322558117144502181839908519483813], [6516207309607110723013310828779534786605721487724433166085213573594060054191, 62491095915002854769743893168840271080994195414466604510886959458801333994425, 43298696119722427147738220942971604096101207270771677319478440633957185506012, 95999300849358990419162309412086189707629278626118528491801630061635930409174], [21901937371736027133484836626793049950863305103635439434565692334061323247459, 22177707944556298482781825594816606678702151909926553218938857302296851101061, 37265517992688571580384548897674161792052985496826940853296718063969030761085, 45803015810935362104176472501216732994877801735307247883040947086374864784522], [22887302429552282917137975404437379689230279867683032429064655381687354309967, 63687512791087585071097169701758075850922324857489524802811455099431146712006, 43241233600118761031756067392063544631958472413548145463886944168747993611755, 78540416079875697330277927812643707908744419489483603613867805715379418188382], [83274701456245595041914535781657541250722792681868330743604458671030342631093, 29265221035131869074958665850197081103720257562467498607821734305785454256445, 19656036104607964818483236621454584533830854692521644548949580232419092579485, 36685991496747026794589417986750583003976651961717444764360736602328859939203], [7197271849934394038490337096465830651019854061628854994110403632096530818658, 13199583400545916173897024693988359528617080325104182927755868559199746329580, 76705903744610047925943025263768006533642196751938988456317343613219129386367, 8284847848213860404087592474405055922947517109038702885136704630947806019241], [40192513898904947184731216279798716826510915071804534174239538082671192078053, 756883344718645808681598066443462390307116757281839378450937721653214302485, 46319296839244788373603804279624137323125709215284595152627739510983625831713, 38066834404440733412548216101182968084184940639461830700714702917736840764910], [52459924240743004858678271074727889512634425322058383892565820049302166247484, 1124830903052334805081369416754962375712146318972731973481260141314675294280, 7048586820754100983732909765398789018269542052380424872274364753361851089050, 46261533803791211860667474793341333491934930635468558951890405299902112599717], [23712997405587065505471765580307890926020635436932008780552027395793174460196, 67696894015776789806885369424535665938702806354704500197616129889160343225036, 22335907790107175161378264382954791596027764567679319454957440806458200559861, 76817272441881586284817699756225532359147752598882508352406898668675942956599], [48442733699161048528383543478196401606393182356208996862954079146924798030016, 33988046942702399144226829264100378601075005547176282333019034404108127701223, 3878811651113775226499837109875057444157158981192358109242560352485567236840, 48096508435450140842190594378561970076075899550630622502080370324305787016204], [4661700708549906139665791533582485338344505441635713456342199101346895847315, 57085434497175712126874334119472545667616658739402471396702109228089918012639, 43291903057149273908186130451801222008858189682043034712173498638683726314620, 43681777323686685006867808938443372833327865869793588659920726812432020143637], [34817244237217626483621974571192315048341502556634007719371004295715069335162, 10855671893795758052388714204250213675262352053079039688785650172729770783108, 55808546957704772545340135312880985328286637622927964296444521648705445287337, 57996505385421171401445757882512186395065784033051493647151141293523405436642]]
+</code></pre>
+<p>参考论文：</p>
+<p><a target="_blank" rel="noopener" href="https://link.springer.com/content/pdf/10.1007/3-540-45539-6_4.pdf">https://link.springer.com/content/pdf/10.1007/3-540-45539-6_4.pdf</a></p>
+<p>参考：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41626232/article/details/130795851?spm=1001.2014.3001.5502">NEEPU Sec 2023 公开赛 Crypto wp 全解_无趣的浅的博客-CSDN博客</a></p>
+<p>[NEEPU Sec 2023 公开赛 writeup_是Mumuzi的博客-CSDN博客](<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42880719/article/details/130798835?ops_request_misc=%7B%22request_id%22:%22168629897516800197022880%22,%22scm%22:%2220140713.130102334..%22%7D&request_id=168629897516800197022880&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-130798835-null-null.142%5Ev88%5Ekoosearch_v1,239%5Ev2%5Einsert_chatgpt&utm_term=NEEPU">https://blog.csdn.net/qq_42880719/article/details/130798835?ops_request_misc=%7B%22request%5Fid%22%3A%22168629897516800197022880%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&amp;request_id=168629897516800197022880&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-130798835-null-null.142^v88^koosearch_v1,239^v2^insert_chatgpt&amp;utm_term=NEEPU</a> Sec 2023 公开赛&amp;spm&#x3D;1018.2226.3001.4187)</p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 1666739907@qq.com </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+        <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="//cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<input type="hidden" id="MathJax-js"
+        value="//cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
+</input>
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2022-2023 Luino
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+<div class="mobile-menus-out" >
+
+</div>
+<div class="mobile-menus">
+    
+    
+    
+    
+    <a class="dynamic-menu " target="_blank"  href="https://github.com/Luiino">github</a>
+    
+</div>
+
+
+</html>
