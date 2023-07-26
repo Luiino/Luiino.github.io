@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Re刷题记录（二） | Luino&#39;s Bold</title>
+  <meta name="keywords" content=" Reverse日常刷题 ">
+  <meta name="description" content="Re刷题记录（二） | Luino&#39;s Bold">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="[FlareOn6]Overlong进入主函数： int __stdcall start(int a1, int a2, int a3, int a4) &amp;#123;   char Text[128]; &#x2F;&#x2F; [esp+0h] [ebp-84h] BYREF   unsigned int v6; &#x2F;&#x2F; [esp+80h] [ebp-4h]    v6 &#x3D; sub_401160(Text, (int">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Re刷题记录（二）">
+<meta property="og:url" content="http://example.com/2023/07/26/Re%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
+<meta property="og:site_name" content="Luino&#39;s Bold">
+<meta property="og:description" content="[FlareOn6]Overlong进入主函数： int __stdcall start(int a1, int a2, int a3, int a4) &amp;#123;   char Text[128]; &#x2F;&#x2F; [esp+0h] [ebp-84h] BYREF   unsigned int v6; &#x2F;&#x2F; [esp+80h] [ebp-4h]    v6 &#x3D; sub_401160(Text, (int">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/image-20230726131750408.png">
+<meta property="og:image" content="http://example.com/images/image-20230726132206846.png">
+<meta property="og:image" content="http://example.com/images/image-20230726140210961.png">
+<meta property="og:image" content="http://example.com/images/image-20230726140619117.png">
+<meta property="og:image" content="http://example.com/images/image-20230726140823557.png">
+<meta property="og:image" content="http://example.com/images/image-20230726135631167.png">
+<meta property="og:image" content="http://example.com/images/image-20230726135712600.png">
+<meta property="og:image" content="http://example.com/images/image-20230726150421949.png">
+<meta property="article:published_time" content="2023-07-26T03:07:32.000Z">
+<meta property="article:modified_time" content="2023-07-26T07:07:34.124Z">
+<meta property="article:author" content="Luino">
+<meta property="article:tag" content="Reverse日常刷题">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/image-20230726131750408.png">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.jpg"/>
+</a>
+<div class="author">
+    <span>Luino</span>
+</div>
+
+<div class="icon">
+    
+        
+            <a title="rss"
+               href="/atom.xml"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-rss"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="github"
+               href="https://github.com/Luiino"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-github"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            <a title="csdn"
+               href="https://blog.csdn.net/Luiino"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-csdn"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+    
+        
+    
+        
+            <a title="email"
+               href="mailto:1666739907@qq.com"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-email"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="qq"
+               href="http://wpa.qq.com/msgrd?v=3&uin=1666739907&site=qq&menu=yes"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-qq"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+    
+        
+    
+</div>
+
+
+
+    <a class="more-menus">更多菜单</a>
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="All">All
+            
+                <small>(48)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                
+    <li>
+        <div data-rel="Match">
+            
+            Match
+            <small>(21)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="Crypto学习记录">
+            
+            Crypto学习记录
+            <small>(19)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="Python">
+            
+            Python
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="Crypto">
+            
+            Crypto
+            <small>(4)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="Reverse">
+            
+            Reverse
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+                <a class="dynamic-menu "
+                   target="_blank"
+                        
+                   href="https://github.com/Luiino">github</a>
+        
+    </div>
+    <div>
+        
+            <a class="about  site_url"
+               
+               href="/about">About</a>
+        
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="48">
+<input type="hidden" id="yelog_site_word_count" value="65.8k">
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>差分攻击</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>多项式环</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>多项式RSA</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>费马小定理</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>流密码</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>日常刷题</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>运算域扩大</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>AMM</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Coppersmith</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Crypto日常刷题</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Crypto题目记录</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Diffie-Hellman</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>DSA</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ECC</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Lattices</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>LCG</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>LFSR</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>MT19937</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Pollard's rho algorithm</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Python格式</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Python矩阵</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Reverse日常刷题</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>RSA</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Wiener Attack</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        
+        <a  class="All Reverse "
+           href="/2023/07/26/Re%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%88%E4%BA%8C%EF%BC%89/"
+           data-tag="Reverse日常刷题"
+           data-author="" >
+            <span class="post-title" title="Re刷题记录（二）">Re刷题记录（二）</span>
+            <span class="post-date" title="2023-07-26 11:07:32">2023/07/26</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/07/23/2023DASCTF7%E6%9C%88%E8%B5%9B%E5%A4%8D%E7%8E%B0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="2023DASCTF7月赛复现">2023DASCTF7月赛复现</span>
+            <span class="post-date" title="2023-07-23 11:06:17">2023/07/23</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/07/23/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A22023/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="巅峰极客2023">巅峰极客2023</span>
+            <span class="post-date" title="2023-07-23 10:06:17">2023/07/23</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/07/20/LFSR%E8%AE%B0%E5%BD%95/"
+           data-tag="LFSR"
+           data-author="" >
+            <span class="post-title" title="LFSR记录">LFSR记录</span>
+            <span class="post-date" title="2023-07-20 13:13:17">2023/07/20</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/07/17/MT19937%E4%BC%AA%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95/"
+           data-tag="MT19937"
+           data-author="" >
+            <span class="post-title" title="MT19937伪随机数生成算法">MT19937伪随机数生成算法</span>
+            <span class="post-date" title="2023-07-17 10:17:50">2023/07/17</span>
+        </a>
+        
+        
+        <a  class="All Python "
+           href="/2023/07/14/%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%AA%E7%BC%A9%E8%BF%9B%E9%97%AE%E9%A2%98/"
+           data-tag="Python格式"
+           data-author="" >
+            <span class="post-title" title="记录一个缩进问题">记录一个缩进问题</span>
+            <span class="post-date" title="2023-07-14 10:07:34">2023/07/14</span>
+        </a>
+        
+        
+        <a  class="All Reverse "
+           href="/2023/07/13/Re%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%88%E4%B8%80%EF%BC%89/"
+           data-tag="Reverse日常刷题"
+           data-author="" >
+            <span class="post-title" title="Re刷题记录（一）">Re刷题记录（一）</span>
+            <span class="post-date" title="2023-07-13 10:50:05">2023/07/13</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/07/11/SCTF2023/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="SCTF2023">SCTF2023</span>
+            <span class="post-date" title="2023-07-11 19:31:34">2023/07/11</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/06/14/%E8%AE%B0%E4%B8%80%E9%81%93%E4%B8%8E%E5%A4%9A%E9%A1%B9%E5%BC%8F%E7%8E%AF%E6%9C%89%E5%85%B3%E7%9A%84%E9%A2%98/"
+           data-tag="多项式环"
+           data-author="" >
+            <span class="post-title" title="记一道与多项式环有关的题">记一道与多项式环有关的题</span>
+            <span class="post-date" title="2023-06-14 21:18:55">2023/06/14</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/06/13/%E5%AE%89%E6%B4%B5%E6%9D%AF2023Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="安洵杯2023Crypto">安洵杯2023Crypto</span>
+            <span class="post-date" title="2023-06-13 23:23:55">2023/06/13</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/06/08/CISCN2023-badkey1/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="CISCN2023-badkey1">CISCN2023-badkey1</span>
+            <span class="post-date" title="2023-06-08 19:06:13">2023/06/08</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/06/05/2023%E5%B9%B4%E7%AC%AC%E4%B8%89%E5%B1%8A%E9%99%95%E8%A5%BF%E7%9C%81%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E6%8A%80%E8%83%BD%E5%A4%A7%E8%B5%9B-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="2023年第三届陕西省大学生网络安全技能大赛-Crypto">2023年第三届陕西省大学生网络安全技能大赛-Crypto</span>
+            <span class="post-date" title="2023-06-05 09:54:15">2023/06/05</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/05/29/%E4%BB%8E%E4%B8%80%E9%81%93%E9%A2%98%E4%BA%86%E8%A7%A3hnp%E9%97%AE%E9%A2%98%E5%92%8CDSA%E5%8A%A0%E5%AF%86/"
+           data-tag="DSA"
+           data-author="" >
+            <span class="post-title" title="从一道题了解hnp问题和DSA加密">从一道题了解hnp问题和DSA加密</span>
+            <span class="post-date" title="2023-05-29 10:19:44">2023/05/29</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/05/28/%E6%A0%BC%E5%AF%86%E7%A0%81%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/"
+           data-tag="Lattices"
+           data-author="" >
+            <span class="post-title" title="格密码学习之路">格密码学习之路</span>
+            <span class="post-date" title="2023-05-28 17:00:27">2023/05/28</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/05/25/NEEPUCTF-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="NEEPUCTF-Crypto">NEEPUCTF-Crypto</span>
+            <span class="post-date" title="2023-05-25 09:50:35">2023/05/25</span>
+        </a>
+        
+        
+        <a  class="All Crypto "
+           href="/2023/05/22/Crypto%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%88%E4%B8%89%EF%BC%89/"
+           data-tag="Crypto日常刷题"
+           data-author="" >
+            <span class="post-title" title="Crypto刷题记录（三）">Crypto刷题记录（三）</span>
+            <span class="post-date" title="2023-05-22 21:56:18">2023/05/22</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/05/22/2023%E5%B9%B4%E6%98%A5%E7%A7%8B%E6%9D%AF%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E8%81%94%E8%B5%9B-%E6%98%A5%E5%AD%A3%E8%B5%9B-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="2023年春秋杯网络安全联赛-春季赛-Crypto">2023年春秋杯网络安全联赛-春季赛-Crypto</span>
+            <span class="post-date" title="2023-05-22 10:06:17">2023/05/22</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/05/20/%E4%B8%80%E9%81%93%E4%B8%8E%E6%B5%81%E5%AF%86%E7%A0%81%E7%9B%B8%E5%85%B3%E7%9A%84%E9%A2%98/"
+           data-tag="流密码"
+           data-author="" >
+            <span class="post-title" title="一道与流密码相关的题">一道与流密码相关的题</span>
+            <span class="post-date" title="2023-05-20 14:46:31">2023/05/20</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/05/15/LitCTF2023-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="LitCTF2023-Crypto">LitCTF2023-Crypto</span>
+            <span class="post-date" title="2023-05-15 10:18:24">2023/05/15</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/05/08/DASCTF-Apr-2023-X-SU%E6%88%98%E9%98%9F2023%E5%BC%80%E5%B1%80%E4%B9%8B%E6%88%98-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="DASCTF-Apr-2023-X-SU战队2023开局之战-Crypto">DASCTF-Apr-2023-X-SU战队2023开局之战-Crypto</span>
+            <span class="post-date" title="2023-05-08 10:38:14">2023/05/08</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/05/01/%E5%88%9D%E8%AF%86%E5%B7%AE%E5%88%86%E6%94%BB%E5%87%BB/"
+           data-tag="差分攻击"
+           data-author="" >
+            <span class="post-title" title="初识差分攻击">初识差分攻击</span>
+            <span class="post-date" title="2023-05-01 17:17:47">2023/05/01</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/05/01/Diffie-Hellman%E5%AF%86%E9%92%A5%E4%BA%A4%E6%8D%A2%E7%AE%97%E6%B3%95/"
+           data-tag="Diffie-Hellman"
+           data-author="" >
+            <span class="post-title" title="Diffie-Hellman密钥交换算法">Diffie-Hellman密钥交换算法</span>
+            <span class="post-date" title="2023-05-01 14:50:29">2023/05/01</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/04/30/ECC%E4%BE%8B%E9%A2%98%E5%88%86%E6%9E%90/"
+           data-tag="ECC"
+           data-author="" >
+            <span class="post-title" title="ECC例题分析">ECC例题分析</span>
+            <span class="post-date" title="2023-04-30 14:19:32">2023/04/30</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/04/29/Pollards-rho-algorithm%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/"
+           data-tag="Pollard&#39;s rho algorithm"
+           data-author="" >
+            <span class="post-title" title="Pollards-rho-algorithm学习记录">Pollards-rho-algorithm学习记录</span>
+            <span class="post-date" title="2023-04-29 15:24:06">2023/04/29</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/04/27/LCG%E7%AE%97%E6%B3%95/"
+           data-tag="LCG"
+           data-author="" >
+            <span class="post-title" title="LCG算法">LCG算法</span>
+            <span class="post-date" title="2023-04-27 20:18:47">2023/04/27</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/04/26/e%E4%B8%8Ephi%E4%B8%8D%E4%BA%92%E7%B4%A0%E4%BE%8B%E9%A2%98/"
+           data-tag="AMM"
+           data-author="" >
+            <span class="post-title" title="e与phi不互素例题">e与phi不互素例题</span>
+            <span class="post-date" title="2023-04-26 20:00:24">2023/04/26</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/04/24/HDCTF2023-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="HDCTF2023-Crypto">HDCTF2023-Crypto</span>
+            <span class="post-date" title="2023-04-24 20:30:08">2023/04/24</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/04/20/2023%E7%BA%A2%E6%98%8E%E8%B0%B7-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="2023红明谷-Crypto">2023红明谷-Crypto</span>
+            <span class="post-date" title="2023-04-20 14:42:27">2023/04/20</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/04/19/GDOUCTF2023-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="GDOUCTF2023-Crypto">GDOUCTF2023-Crypto</span>
+            <span class="post-date" title="2023-04-19 19:44:33">2023/04/19</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/04/15/NSSCTF-Round-11-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="NSSCTF-Round#11-Crypto">NSSCTF-Round#11-Crypto</span>
+            <span class="post-date" title="2023-04-15 19:37:51">2023/04/15</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/04/09/ctfShow%E6%84%9A%E4%BA%BA%E6%9D%AF/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="ctfShow愚人杯">ctfShow愚人杯</span>
+            <span class="post-date" title="2023-04-09 15:47:16">2023/04/09</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/03/28/NKCTF-Crypto%E5%A4%8D%E7%8E%B0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="NKCTF--Crypto复现">NKCTF--Crypto复现</span>
+            <span class="post-date" title="2023-03-28 19:32:15">2023/03/28</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/03/23/RSA%E4%B8%ADe%E4%B8%8En%E7%9A%84%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0%E4%B8%8D%E4%BA%92%E7%B4%A0/"
+           data-tag="RSA"
+           data-author="" >
+            <span class="post-title" title="RSA中e与n的欧拉函数不互素">RSA中e与n的欧拉函数不互素</span>
+            <span class="post-date" title="2023-03-23 19:53:13">2023/03/23</span>
+        </a>
+        
+        
+        <a  class="All Crypto "
+           href="/2023/03/18/Crypto%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%88%E4%BA%8C%EF%BC%89/"
+           data-tag="日常刷题"
+           data-author="" >
+            <span class="post-title" title="Crypto刷题记录（二）">Crypto刷题记录（二）</span>
+            <span class="post-date" title="2023-03-18 16:27:04">2023/03/18</span>
+        </a>
+        
+        
+        <a  class="All Crypto "
+           href="/2023/03/15/coppersmith%E4%BE%8B%E9%A2%98/"
+           data-tag="Coppersmith"
+           data-author="" >
+            <span class="post-title" title="coppersmith例题">coppersmith例题</span>
+            <span class="post-date" title="2023-03-15 18:44:22">2023/03/15</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/03/11/%E5%BC%BA%E7%BD%91%E6%9D%AF2019%20Copperstudy/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Coppersmith例题">Coppersmith例题</span>
+            <span class="post-date" title="2023-03-11 19:18:36">2023/03/11</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/03/11/Coppersmith%E6%94%BB%E5%87%BB/"
+           data-tag="Coppersmith"
+           data-author="" >
+            <span class="post-title" title="Coppersmith攻击">Coppersmith攻击</span>
+            <span class="post-date" title="2023-03-11 16:44:48">2023/03/11</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/03/10/%E8%BF%90%E7%AE%97%E5%9F%9F%E6%89%A9%E5%A4%A7%E9%97%AE%E9%A2%98/"
+           data-tag="运算域扩大"
+           data-author="" >
+            <span class="post-title" title="运算域扩大问题">运算域扩大问题</span>
+            <span class="post-date" title="2023-03-10 17:43:07">2023/03/10</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/03/06/%E9%BB%84%E6%B2%B3%E6%B5%81%E5%9F%9F%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E6%8C%91%E6%88%98%E8%B5%9B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="黄河流域网络安全挑战赛">黄河流域网络安全挑战赛</span>
+            <span class="post-date" title="2023-03-06 21:28:39">2023/03/06</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/02/28/2023-HSCSEC-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="2023-HSCSEC-Crypto">2023-HSCSEC-Crypto</span>
+            <span class="post-date" title="2023-02-28 20:48:27">2023/02/28</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/01/18/%E5%A4%9A%E9%A1%B9%E5%BC%8FRSA%E4%B8%ADphi-n%E6%B1%82%E8%A7%A3/"
+           data-tag="多项式RSA"
+           data-author="" >
+            <span class="post-title" title="多项式RSA中phi_n求解">多项式RSA中phi_n求解</span>
+            <span class="post-date" title="2023-01-18 16:12:59">2023/01/18</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/01/18/Hgame2023%E5%A4%8D%E7%8E%B0/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Hgame2023复现">Hgame2023复现</span>
+            <span class="post-date" title="2023-01-18 10:55:26">2023/01/18</span>
+        </a>
+        
+        
+        <a  class="All Python "
+           href="/2023/01/13/Python%E7%9F%A9%E9%98%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/"
+           data-tag="Python矩阵"
+           data-author="" >
+            <span class="post-title" title="Python矩阵学习记录">Python矩阵学习记录</span>
+            <span class="post-date" title="2023-01-13 10:50:28">2023/01/13</span>
+        </a>
+        
+        
+        <a  class="All Crypto "
+           href="/2022/12/20/Crypto%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%88%E4%B8%80%EF%BC%89/"
+           data-tag="Crypto题目记录"
+           data-author="" >
+            <span class="post-title" title="Crypto刷题记录（一）">Crypto刷题记录（一）</span>
+            <span class="post-date" title="2022-12-20 19:45:24">2022/12/20</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2022/11/26/RSA%E9%A2%98%E5%9E%8B%E6%80%BB%E7%BB%93/"
+           data-tag="RSA"
+           data-author="" >
+            <span class="post-title" title="RSA题型总结">RSA题型总结</span>
+            <span class="post-date" title="2022-11-26 20:51:47">2022/11/26</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2022/11/24/%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86/"
+           data-tag="费马小定理"
+           data-author="" >
+            <span class="post-title" title="费马小定理">费马小定理</span>
+            <span class="post-date" title="2022-11-24 21:42:31">2022/11/24</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2022/11/19/Wiener-attack/"
+           data-tag="Wiener Attack"
+           data-author="" >
+            <span class="post-title" title="Wiener-attack">Wiener-attack</span>
+            <span class="post-date" title="2022-11-19 16:08:03">2022/11/19</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2022/11/05/DASCTF-X-GFCTF-2022%E5%8D%81%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B-Crypto/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="DASCTF X GFCTF 2022十月挑战赛--Crypto">DASCTF X GFCTF 2022十月挑战赛--Crypto</span>
+            <span class="post-date" title="2022-11-05 20:12:10">2022/11/05</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-Re刷题记录（二）" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">Re刷题记录（二）</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="Reverse">Reverse</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color2">Reverse日常刷题</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2023-07-26 15:07:34'>2023-07-26 11:07</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>Count:1.3k</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            Views 👀 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#FlareOn6-Overlong"><span class="toc-text">[FlareOn6]Overlong</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ACTF%E6%96%B0%E7%94%9F%E8%B5%9B2020-Oruga"><span class="toc-text">[ACTF新生赛2020]Oruga</span></a></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="FlareOn6-Overlong"><a href="#FlareOn6-Overlong" class="headerlink" title="[FlareOn6]Overlong"></a>[FlareOn6]Overlong</h3><p>进入主函数：</p>
+<pre><code class="c">int __stdcall start(int a1, int a2, int a3, int a4)
+&#123;
+  char Text[128]; // [esp+0h] [ebp-84h] BYREF
+  unsigned int v6; // [esp+80h] [ebp-4h]
+
+  v6 = sub_401160(Text, (int)&amp;unk_402008, 0x1Cu);
+  //对unk_402008的前28格字符进行操作，unk_402008是给了的，含100多个字符
+  Text[v6] = 0;
+  MessageBoxA(0, Text, Caption, 0);
+  return 0;
+&#125;
+</code></pre>
+<p>直接执行exe文件，输出：</p>
+<p><img src="/../images/image-20230726131750408.png" alt="image-20230726131750408"></p>
+<p>只输出了前28个字符，末尾有冒号，后面应该就是flag。</p>
+<p>嵌套的sub_401160和sub_401000不需要看懂。两种解决方法：</p>
+<p>法一：</p>
+<p>因为函数不多，将所有的照着复制下来，修改传入的长度以及部分变量的数据类型：</p>
+<pre><code class="c">#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+
+int __cdecl sub_401000(char *a1, char *a2)
+&#123;
+  int v3; // [esp+0h] [ebp-8h]
+  char v4; // [esp+4h] [ebp-4h]
+
+  if ( (int)(unsigned __int8)*a2 &gt;&gt; 3 == 30 )
+  &#123;
+    v4 = a2[3] &amp; 0x3F | ((a2[2] &amp; 0x3F) &lt;&lt; 6);
+    v3 = 4;
+  &#125;
+  else if ( (int)(unsigned __int8)*a2 &gt;&gt; 4 == 14 )
+  &#123;
+    v4 = a2[2] &amp; 0x3F | ((a2[1] &amp; 0x3F) &lt;&lt; 6);
+    v3 = 3;
+  &#125;
+  else if ( (int)(unsigned __int8)*a2 &gt;&gt; 5 == 6 )
+  &#123;
+    v4 = a2[1] &amp; 0x3F | ((*a2 &amp; 0x1F) &lt;&lt; 6);
+    v3 = 2;
+  &#125;
+  else
+  &#123;
+    v4 = *a2;
+    v3 = 1;
+  &#125;
+  *a1 = v4;
+  return v3;
+&#125;
+
+unsigned int __cdecl sub_401160(char *a1, char *a2, unsigned int a3)
+&#123;
+  unsigned int i; // [esp+4h] [ebp-4h]
+
+  for ( i = 0; i &lt; a3; ++i )
+  &#123;
+    a2 += sub_401000(a1, a2);
+    if ( !*a1++ )
+      break;
+  &#125;
+  return i;
+&#125;
+
+int main()&#123;
+    char unk_402008[] =
+    &#123;
+      0xE0, 0x81, 0x89, 0xC0, 0xA0, 0xC1, 0xAE, 0xE0, 0x81, 0xA5, 
+      0xC1, 0xB6, 0xF0, 0x80, 0x81, 0xA5, 0xE0, 0x81, 0xB2, 0xF0, 
+      0x80, 0x80, 0xA0, 0xE0, 0x81, 0xA2, 0x72, 0x6F, 0xC1, 0xAB, 
+      0x65, 0xE0, 0x80, 0xA0, 0xE0, 0x81, 0xB4, 0xE0, 0x81, 0xA8, 
+      0xC1, 0xA5, 0x20, 0xC1, 0xA5, 0xE0, 0x81, 0xAE, 0x63, 0xC1, 
+      0xAF, 0xE0, 0x81, 0xA4, 0xF0, 0x80, 0x81, 0xA9, 0x6E, 0xC1, 
+      0xA7, 0xC0, 0xBA, 0x20, 0x49, 0xF0, 0x80, 0x81, 0x9F, 0xC1, 
+      0xA1, 0xC1, 0x9F, 0xC1, 0x8D, 0xE0, 0x81, 0x9F, 0xC1, 0xB4, 
+      0xF0, 0x80, 0x81, 0x9F, 0xF0, 0x80, 0x81, 0xA8, 0xC1, 0x9F, 
+      0xF0, 0x80, 0x81, 0xA5, 0xE0, 0x81, 0x9F, 0xC1, 0xA5, 0xE0, 
+      0x81, 0x9F, 0xF0, 0x80, 0x81, 0xAE, 0xC1, 0x9F, 0xF0, 0x80, 
+      0x81, 0x83, 0xC1, 0x9F, 0xE0, 0x81, 0xAF, 0xE0, 0x81, 0x9F, 
+      0xC1, 0x84, 0x5F, 0xE0, 0x81, 0xA9, 0xF0, 0x80, 0x81, 0x9F, 
+      0x6E, 0xE0, 0x81, 0x9F, 0xE0, 0x81, 0xA7, 0xE0, 0x81, 0x80, 
+      0xF0, 0x80, 0x81, 0xA6, 0xF0, 0x80, 0x81, 0xAC, 0xE0, 0x81, 
+      0xA1, 0xC1, 0xB2, 0xC1, 0xA5, 0xF0, 0x80, 0x80, 0xAD, 0xF0, 
+      0x80, 0x81, 0xAF, 0x6E, 0xC0, 0xAE, 0xF0, 0x80, 0x81, 0xA3, 
+      0x6F, 0xF0, 0x80, 0x81, 0xAD, 0x00
+    &#125;;
+    char Text[128]; // [esp+0h] [ebp-84h] BYREF
+    int v6; // [esp+80h] [ebp-4h]
+
+    v6 = sub_401160(Text, unk_402008, 128);
+    Text[v6] = 0;
+    for(int i=0; i&lt;128; i++)
+        printf(&quot;%c&quot;,Text[i]); 
+    return 0;
+&#125; 
+</code></pre>
+<p>得到：</p>
+<p><img src="/../images/image-20230726132206846.png" alt="image-20230726132206846"></p>
+<p>法二：</p>
+<p>ollydbg动态调试。找到需要修改的地址：</p>
+<p><img src="/../images/image-20230726140210961.png" alt="image-20230726140210961"></p>
+<p>这里不能双击用汇编直接修改，不然下面的push会被覆盖掉。具体操作：</p>
+<p>在机器码处，右键，点击二进制直接修改：</p>
+<p><img src="/../images/image-20230726140619117.png" alt="image-20230726140619117"></p>
+<p>然后运行得到：</p>
+<p><img src="/../images/image-20230726140823557.png" alt="image-20230726140823557"></p>
+<p>法三：</p>
+<p>用010打开exe文件，直接修改</p>
+<p><img src="/../images/image-20230726135631167.png" alt="image-20230726135631167"></p>
+<p>这里我已经把原本的1C修改为66了，保存后直接执行：</p>
+<p><img src="/../images/image-20230726135712600.png" alt="image-20230726135712600"></p>
+<h3 id="ACTF新生赛2020-Oruga"><a href="#ACTF新生赛2020-Oruga" class="headerlink" title="[ACTF新生赛2020]Oruga"></a>[ACTF新生赛2020]Oruga</h3><p>主要函数：</p>
+<pre><code class="c">_BOOL8 __fastcall sub_78A(__int64 a1)
+&#123;
+  int v2; // [rsp+Ch] [rbp-Ch]
+  int v3; // [rsp+10h] [rbp-8h]
+  int v4; // [rsp+14h] [rbp-4h]
+
+  v2 = 0;
+  v3 = 5;
+  v4 = 0;
+  while ( qword_201020[v2] != 33 )
+  &#123;
+    v2 -= v4;
+    if ( *(_BYTE *)(v3 + a1) != 87 || v4 == -16 )//87为W
+    &#123;
+      if ( *(_BYTE *)(v3 + a1) != 69 || v4 == 1 )//69为E
+      &#123;
+        if ( *(_BYTE *)(v3 + a1) != 77 || v4 == 16 )//77为M
+        &#123;
+          if ( *(_BYTE *)(v3 + a1) != 74 || v4 == -1 )//74为J
+            return 0LL;
+          v4 = -1;
+        &#125;
+        else
+        &#123;
+          v4 = 16;
+        &#125;
+      &#125;
+      else
+      &#123;
+        v4 = 1;
+      &#125;
+    &#125;
+    else
+    &#123;
+      v4 = -16;
+    &#125;
+    ++v3;
+    while ( !qword_201020[v2] )
+    &#123;
+      if ( v4 == -1 &amp;&amp; (v2 &amp; 0xF) == 0 )
+        return 0LL;
+      if ( v4 == 1 &amp;&amp; v2 % 16 == 15 )
+        return 0LL;
+      if ( v4 == 16 &amp;&amp; (unsigned int)(v2 - 240) &lt;= 0xF )
+        return 0LL;
+      if ( v4 == -16 &amp;&amp; (unsigned int)(v2 + 15) &lt;= 0x1E )
+        return 0LL;
+      v2 += v4;
+    &#125;
+  &#125;
+  return *(_BYTE *)(v3 + a1) == 125;/125为&#125;，判断最后一位是否为&#125;
+&#125;
+</code></pre>
+<p>分析主要代码得知是迷宫题。</p>
+<p>W向上，M向下，J向左，E向右。且遇到障碍会停下来。</p>
+<p>进入qword_201020获取迷宫数据，0为能走的路，0x21为终点，其它值不能走：</p>
+<pre><code class="c">#include &lt;stdio.h&gt;
+char maze[256] = &#123;
+    0x00, 0x00, 0x00, 0x00, 0x23, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x23, 0x23, 0x23, 0x23,
+    0x00, 0x00, 0x00, 0x23, 0x23, 0x00, 0x00, 0x00, 0x4F, 0x4F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x4F, 0x4F, 0x00, 0x50, 0x50, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x4C, 0x00, 0x4F, 0x4F, 0x00, 0x4F, 0x4F, 0x00, 0x50, 0x50, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x4C, 0x00, 0x4F, 0x4F, 0x00, 0x4F, 0x4F, 0x00, 0x50, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x4C, 0x4C, 0x00, 0x4F, 0x4F, 0x00, 0x00, 0x00, 0x00, 0x50, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x4F, 0x4F, 0x00, 0x00, 0x00, 0x00, 0x50, 0x00, 0x00, 0x00, 0x00,
+    0x23, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x23, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x4D, 0x4D, 0x4D, 0x00, 0x00, 0x00, 0x23, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x4D, 0x4D, 0x4D, 0x00, 0x00, 0x00, 0x00, 0x45, 0x45,
+    0x00, 0x00, 0x00, 0x30, 0x00, 0x4D, 0x00, 0x4D, 0x00, 0x4D, 0x00, 0x00, 0x00, 0x00, 0x45, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x45, 0x45,
+    0x54, 0x54, 0x54, 0x49, 0x00, 0x4D, 0x00, 0x4D, 0x00, 0x4D, 0x00, 0x00, 0x00, 0x00, 0x45, 0x00,
+    0x00, 0x54, 0x00, 0x49, 0x00, 0x4D, 0x00, 0x4D, 0x00, 0x4D, 0x00, 0x00, 0x00, 0x00, 0x45, 0x00,
+    0x00, 0x54, 0x00, 0x49, 0x00, 0x4D, 0x00, 0x4D, 0x00, 0x4D, 0x21, 0x00, 0x00, 0x00, 0x45, 0x45
+&#125;;
+int main(void)
+&#123;
+    int i, j;
+    for (i = 0; i &lt; 16; i++)
+    &#123;
+        for (j = 0; j &lt; 16; j++)
+        &#123;
+            if (i == 0 &amp;&amp; j == 0)
+                printf(&quot;☆&quot;);  //起点
+            else if (maze[16 * i + j] == 0)
+                printf(&quot;□&quot;);  //路
+            else if (maze[16 * i + j] == 0x21)
+                printf(&quot;★&quot;);  //终点
+            else printf(&quot;■&quot;); //障碍物
+        &#125;
+        putchar(&#39;\n&#39;);
+    &#125;
+&#125;
+</code></pre>
+<p><img src="/../images/image-20230726150421949.png" alt="image-20230726150421949"></p>
+<p>flag{MEWEMEWJMEWJM}</p>
+<p>参考：</p>
+<p>[(1条消息) re学习笔记（59）BUUCTF - re - [ACTF新生赛2020]Oruga_Forgo7ten的博客-CSDN博客](<a target="_blank" rel="noopener" href="https://blog.csdn.net/Palmer9/article/details/105274167/?ops_request_misc=&request_id=&biz_id=102&utm_term=buuctf">https://blog.csdn.net/Palmer9/article/details/105274167/?ops_request_misc=&amp;request_id=&amp;biz_id=102&amp;utm_term=buuctf</a> re [ACTF新生赛2020]Oruga&amp;utm_medium&#x3D;distribute.pc_search_result.none-task-blog-2<del>all</del>sobaiduweb~default-1-105274167.142^v91^koosearch_v1,239^v3^control&amp;spm&#x3D;1018.2226.3001.4187)</p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 1666739907@qq.com </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2022-2023 Luino
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+<div class="mobile-menus-out" >
+
+</div>
+<div class="mobile-menus">
+    
+    
+    
+    
+    <a class="dynamic-menu " target="_blank"  href="https://github.com/Luiino">github</a>
+    
+</div>
+
+
+</html>
