@@ -14,7 +14,7 @@
 <meta property="og:description" content="sagemath的相关操作倒是一直有在用，但是谈不上熟悉，还是需要整理一下。 sagemath与python的一些不同x**y #在两者中均表示幂 x^y #sage中表示幂，python中则是异或 x^^y #sage中合法且表示异或  环和域 整数环，ZZ 有理数环，QQ 实数域，RR 负数域，CC 多项式环，PolynomialRing()，用的最频繁的。  定义： PR.&lt;x&gt;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-07-31T06:00:23.000Z">
-<meta property="article:modified_time" content="2023-07-31T07:32:13.477Z">
+<meta property="article:modified_time" content="2023-07-31T14:05:59.817Z">
 <meta property="article:author" content="Luino">
 <meta property="article:tag" content="Sagemath">
 <meta name="twitter:card" content="summary">
@@ -907,7 +907,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2023-07-31 15:32:13'>2023-07-31 14:00</time>
+            Created At : <time class="date" title='Updated At: 2023-07-31 22:05:59'>2023-07-31 14:00</time>
         
     </div>
     <div class="article-meta">
@@ -1049,6 +1049,46 @@ solve_mod([x+y==66, x-y==23],97)
 
 
 
+    
+        <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="//cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<input type="hidden" id="MathJax-js"
+        value="//cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
+</input>
     
 
 
