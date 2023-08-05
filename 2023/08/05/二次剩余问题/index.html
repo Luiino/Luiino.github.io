@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>ECC例题分析 | Luino&#39;s Bold</title>
-  <meta name="keywords" content=" ECC ">
-  <meta name="description" content="ECC例题分析 | Luino&#39;s Bold">
+  <title>二次剩余问题 | Luino&#39;s Bold</title>
+  <meta name="keywords" content=" 二次剩余 ">
+  <meta name="description" content="二次剩余问题 | Luino&#39;s Bold">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="在一些连nc的题中需要用到Pwntools，没有系统的学习过，今天来补充下。 接收数据 **recv(n)**，接收任何数量的字节 **recvline()**，接收一行数据 **recvuntil()**，接收数据，直到找到一个分隔符 **recvregex(pattern)**，接收数据，直到满足一个与pattern重合的内容为止 **recvrepeat(timeout)**，继续接收数据，">
 <meta property="og:type" content="article">
@@ -915,9 +915,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-ECC例题分析" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-二次剩余问题" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">ECC例题分析</h1>
+        <h1 class="article-title">二次剩余问题</h1>
     
     <div class="article-meta">
         
@@ -935,19 +935,19 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color4">ECC</a>
+            <a class="color5">二次剩余</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2023-05-12 17:23:43'>2023-04-30 14:19</time>
+            Created At : <time class="date" title='Updated At: 2023-08-05 20:48:49'>2023-08-05 15:18</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:1.3k</span>
+        <span>Count:2.1k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -966,7 +966,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ECC%E5%AD%A6%E4%B9%A0%E6%96%87%E7%AB%A0"><span class="toc-text">ECC学习文章</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%8C%E6%AC%A1%E5%89%A9%E4%BD%99"><span class="toc-text">什么是二次剩余</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E6%96%B9%E6%B3%95"><span class="toc-text">判断方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Euler%E5%88%A4%E5%88%AB%E6%B3%95"><span class="toc-text">Euler判别法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8B%92%E8%AE%A9%E5%BE%B7%E7%AC%A6%E5%8F%B7%EF%BC%88Legendre%EF%BC%89"><span class="toc-text">勒让德符号（Legendre）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%A7%A3%E4%BA%8C%E6%AC%A1%E5%90%8C%E4%BD%99%E6%96%B9%E7%A8%8B"><span class="toc-text">如何解二次同余方程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E7%90%86%E4%B8%80"><span class="toc-text">定理一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E7%90%86%E4%BA%8C"><span class="toc-text">定理二</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E7%AE%97%E6%B3%95"><span class="toc-text">相关算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%B9%E6%AE%8A%E6%83%85%E5%86%B5"><span class="toc-text">特殊情况</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Atkin%E7%AE%97%E6%B3%95"><span class="toc-text">Atkin算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Tonelli%E2%80%93Shanks-%E7%AE%97%E6%B3%95"><span class="toc-text">Tonelli–Shanks 算法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E4%BE%8B%E9%A2%98"><span class="toc-text">相关例题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#V-N2020-%E5%85%AC%E5%BC%80%E8%B5%9B-easy-RSA"><span class="toc-text">[V&amp;N2020 公开赛]easy_RSA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#D-3CTF-d3qcg"><span class="toc-text">D^3CTF d3qcg</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -982,127 +982,325 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>来自HGame2023 Week4的ECRSA，对于我这个刚接触ECC的菜鸟来说，我觉得很有必要单独拿出来作记录，文中的内容会很啰嗦，主要是都不懂😭，希望海涵。</p>
-<p>源码：</p>
-<pre><code class="python">from sage.all import *
-from sage.all_cmdline import *
-from Crypto.Util.number import *
-from secret import flag
-
-Nbits = 512
-x = bytes_to_long(flag)
-f = open(&#39;./output&#39;, &#39;w&#39;)
-
-def gen_pubkey(Nbits):
-    p = getPrime(Nbits // 2)
-    q = getPrime(Nbits // 2)
-    n = p*q
-    while True:
-        a = getRandomInteger(Nbits // 2)
-        b = getRandomInteger(Nbits // 2)
-        if gcd(4*a**3 + 27*b**2, n) == 1:
+        <p>二次剩余问题之前就遇到过，但未深入学习过，也未做过记录，今天来补充。</p>
+<h2 id="什么是二次剩余"><a href="#什么是二次剩余" class="headerlink" title="什么是二次剩余"></a>什么是二次剩余</h2><p>指一个整数n，如果存在一个整数x，使得$x^2 \equiv n \pmod p$，那么n就是p的一个二次剩余。其中，p是一个正整数，x是一个整数。如果不存在这样的x，那么n就是p的一个二次非剩余。</p>
+<h2 id="判断方法"><a href="#判断方法" class="headerlink" title="判断方法"></a>判断方法</h2><h3 id="Euler判别法"><a href="#Euler判别法" class="headerlink" title="Euler判别法"></a>Euler判别法</h3><p>当且仅当$a^{\frac{p-1}{2}} \equiv 1 \pmod p$，a是p的二次剩余，即方程有解</p>
+<p>当且仅当$a^{\frac{p-1}{2}} \equiv -1 \pmod p$，a是p的二次非剩余，即方程无解</p>
+<h3 id="勒让德符号（Legendre）"><a href="#勒让德符号（Legendre）" class="headerlink" title="勒让德符号（Legendre）"></a>勒让德符号（Legendre）</h3><p>引入勒让德符号：</p>
+<p>$(\frac{a}{p}) &#x3D; \left{ \begin{matrix} 1,a在模p意义下是二次剩余\-1,a在模p意义下是非二次剩余\0,a\equiv0 \pmod p \end{matrix} \right.$</p>
+<p>有结论：</p>
+<p>$(\frac{a}{p}) \equiv a^{\frac{p-1}{2}} \pmod p$</p>
+<h2 id="如何解二次同余方程"><a href="#如何解二次同余方程" class="headerlink" title="如何解二次同余方程"></a>如何解二次同余方程</h2><p>前提，p为奇素数（不能被2整除的素数，是素数中的特例）。</p>
+<h3 id="定理一"><a href="#定理一" class="headerlink" title="定理一"></a>定理一</h3><p>对于上述同余方程，共有$\frac{p-1}{2}+1$个n的值能使方程有解，$+1$为n&#x3D;0的情况。</p>
+<h3 id="定理二"><a href="#定理二" class="headerlink" title="定理二"></a>定理二</h3><p>设a满足$\omega &#x3D; a^2-n$是模p的非二次剩余，那么：</p>
+<p>$x\equiv (a+\sqrt \omega)^{\frac{p+1}{2}}$是二次同余方程$x^2 \equiv n \pmod p$的解。</p>
+<h3 id="相关算法"><a href="#相关算法" class="headerlink" title="相关算法"></a>相关算法</h3><h4 id="特殊情况"><a href="#特殊情况" class="headerlink" title="特殊情况"></a>特殊情况</h4><p>对于同余方程$x^2 \equiv n \pmod p$，且有$p \mod 4 \equiv 3$</p>
+<p>那么$n^{\frac{p+1}{4}} \mod p$为一个解</p>
+<h4 id="Atkin算法"><a href="#Atkin算法" class="headerlink" title="Atkin算法"></a>Atkin算法</h4><p>满足$p \mod 8 \equiv 5$，令$b \equiv (2n)^{\frac{p-5}{8}}\pmod p$和$i \equiv 2nb^2 \pmod p$</p>
+<p>此时$i^2 \equiv -1 \pmod p$且$nb(i-1) \pmod p$为一个解。</p>
+<h4 id="Tonelli–Shanks-算法"><a href="#Tonelli–Shanks-算法" class="headerlink" title="Tonelli–Shanks 算法"></a>Tonelli–Shanks 算法</h4><p><img src="/../images/image-20230805161744054.png" alt="image-20230805161744054"></p>
+<p><img src="/../images/image-20230805161759991.png" alt="image-20230805161759991"></p>
+<p>代码实现：</p>
+<pre><code class="python">def Legendre(n,p): #这里用勒让德符号来表示判断二次（非）剩余的过程
+    return pow(n,(p - 1) // 2,p)
+def Tonelli_Shanks(n,p):
+    assert Legendre(n,p) == 1
+    if p % 4 == 3:
+        return pow(n,(p + 1) // 4,p)
+    q = p - 1
+    s = 0
+    while q % 2 == 0:
+        q = q // 2
+        s += 1
+    for z in range(2,p):
+        if Legendre(z,p) == p - 1:
+            c = pow(z,q,p)
             break
-    E = EllipticCurve(Zmod(n), [a, b])
-    e = getPrime(64)
-    f.write(f&quot;p=&#123;p&#125;\nq=&#123;q&#125;\n&quot;)
-    return n, E, e
-
-n, E, e = gen_pubkey(Nbits)
-pt = E.lift_x(Integer(x))
-ct = pt * e
-f.write(f&quot;n = &#123;n&#125;\na = &#123;E.a4()&#125;\nb = &#123;E.a6()&#125;\ne = &#123;e&#125;\n&quot;)
-f.write(f&quot;ciphertext = &#123;long_to_bytes(int(ct.xy()[0]))&#125;\n&quot;)
+    r = pow(n,(q + 1) // 2,p)
+    t = pow(n,q,p)
+    m = s
+    if t % p == 1:
+        return r
+    else:
+        i = 0
+        while t % p != 1: #外层循环的判断条件
+            temp = pow(t,2**(i+1),p) #这里写作i+1是为了确保之后内层循环用到i值是与这里的i+1的值是相等的
+            i += 1
+            if temp % p == 1: # 内层循环的判断条件
+                b = pow(c,2**(m - i - 1),p)
+                r = r * b % p
+                c = b * b % p
+                t = t * c % p
+                m = i
+                i = 0 # 注意每次内层循环结束后i值要更新为0
+        return r
 </code></pre>
-<p>RSA与ECC结合。</p>
-<p>密文ct是通过使用明文pt和随机数e进行加密得到的，其中pt是一个椭圆曲线上的点，而e是一个整数。因此，我们需要先求出pt这个点。$pt &#x3D; E.lift_x(Integer(x))$来将明文x转换为椭圆曲线上的点$pt$。但是，在实际运行时可能会出现无法找到满足x坐标的点的情况，这时我们需要使用$lift_y$函数来寻找满足y坐标的点。对于在有限域上的椭圆曲线，每个x坐标对应的y坐标可能有0个、1个或2个。因此，我们需要分别在$GF(p)和GF(q)$中求出满足x坐标的y值，然后使用中国剩余定理将它们合并成一个在$Zmod(n)$上的y值。</p>
-<pre><code class="python">from sage.all import *
-from sage.all_cmdline import *
+<p>sympy库中的nthroot_mod()函数也可用与求解同余式$n^{index} \equiv x \pmod p$</p>
+<pre><code class="python">from sympy.ntheory.residue_ntheory import nthroot_mod
+
+x=nthroot_mod(n,index,p)
+</code></pre>
+<p>我只是知识的搬运工，相关证明可参考：</p>
+<p><a target="_blank" rel="noopener" href="https://oi-wiki.org/math/number-theory/quad-residue/#%E5%AE%9A%E4%B9%89">二次剩余 - OI Wiki (oi-wiki.org)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_51999772/article/details/122642868">Tonelli-Shanks算法_python_M3ng@L的博客-CSDN博客</a></p>
+<h2 id="相关例题"><a href="#相关例题" class="headerlink" title="相关例题"></a>相关例题</h2><h3 id="V-N2020-公开赛-easy-RSA"><a href="#V-N2020-公开赛-easy-RSA" class="headerlink" title="[V&amp;N2020 公开赛]easy_RSA"></a>[V&amp;N2020 公开赛]easy_RSA</h3><pre><code class="python">from random import randint
+from gmpy2 import *
 from Crypto.Util.number import *
 
-p = 115192265954802311941399019598810724669437369433680905425676691661793518967453
-q = 109900879774346908739236130854229171067533592200824652124389936543716603840487
-n = 1265973137163332340636107173548074387094288440751164714475805591193132153433
-a = 3457301624586139606837804088262299224575469302815229087413111295501888448568
-b = 1032821371338209482066820365696715669963814382548975103442891640397173555138
-e = 11415307674045871669
-ciphertext = b&#39;&#39;
+def getprime(bits):
+    while 1:
+        n = 1
+        while n.bit_length() &lt; bits:
+            n *= next_prime(randint(1,1000))
+        if isPrime(n - 1):
+            return n - 1
 
-Ep = EllipticCurve(Zmod(p), [a, b])
-Eq = EllipticCurve(Zmod(q), [a, b])
-cx = bytes_to_long(ciphertext)
-cp = Ep.lift_x(Integer(cx))
-cq = Eq.lift_x(Integer(cx))
-dp = inverse(e, Ep.order())
-dq = inverse(e, Eq.order())
-mp = (dp * cp).xy()[0]
-mq = (dq * cq).xy()[0]
+m = bytes_to_long(b&#39;flag&#123;************************************&#125;&#39;)
 
-flag = CRT_list([ZZ(mp), ZZ(mq)], [p, q])
-print(long_to_bytes(int(flag)))
-</code></pre>
-<p>初学者，所以对代码作详细解释，会很啰嗦：</p>
-<pre><code class="python">Ep = EllipticCurve(Zmod(p), [a, b])
-Eq = EllipticCurve(Zmod(q), [a, b])
-</code></pre>
-<p>分别构造以$p、q$为域的椭圆曲线，系数相同均为$a、b$，如下：</p>
-<pre><code class="python">y^2 = (x^3 + a*x + b) mod p
-y^2 = (x^3 + a*x + b) mod q
-</code></pre>
-<pre><code class="python">cx = bytes_to_long(ciphertext)
-cp = Ep.lift_x(Integer(cx))
-cq = Eq.lift_x(Integer(cx))
-</code></pre>
-<p>这里将cx转为整数后，分别在有限域GF(p)和GF(q)上找到满足x坐标为cx的点cp和cq。</p>
-<p>这个Integer函数可以不加，作保险起见吧。</p>
-<p>我输出了下cp、cq的结果，如下：</p>
-<pre><code class="python">(0 : 68179883496530713257477536240611223816942458437112513090828235340489931605592 : 1) 
-(0 : 22872408154206024463287219703888573608694484866139369114952150185047577317172 : 1)
-</code></pre>
-<p>分别是cp、cq的x、y、z坐标。</p>
-<pre><code class="python">dp = inverse(e, Ep.order())
-dq = inverse(e, Eq.order())
-mp = (dp * cp).xy()[0]
-mq = (dq * cq).xy()[0]
-</code></pre>
-<p>椭圆曲线Ep和Eq上的点的阶，解释：在椭圆曲线上，每个点都有一个阶，表示通过不断进行点加运算得到的最小循环周期。具体地，如果点P的阶为n，则有nP &#x3D; O，其中O表示椭圆曲线上的无穷远点。对于椭圆曲线Ep和Eq，它们上面的点的阶分别表示为Ep.order()和Eq.order()。</p>
-<p>$dp &#x3D; inverse(e, Ep.order())$，<strong>椭圆曲线里求逆元的方式。</strong></p>
-<p>然后，将dp和dq分别与cp和cq相乘，得到解密后的结果mp和mq。其中，mp和mq是椭圆曲线上的点。<strong>使用mp.xy()[0]和mq.xy()[0]函数分别取出mp和mq的x坐标</strong>，得到明文的两个部分。（<strong>mp &#x3D; (dp * cp).xy()[1]即表示求y坐标</strong>）</p>
-<pre><code class="python">flag = CRT_list([ZZ(mp), ZZ(mq)], [p, q])
-</code></pre>
-<p>将mp和mq作为同余方程组的解，p和q分别作为模数传入CRT_list函数。函数返回值flag表示满足以上两个同余方程的最小非负整数解，即解密后的明文。mp、mq已经为整数了，用ZZ转其实也是作保险起见吧。</p>
-<p>整体代码如下：</p>
-<pre><code class="python">from Crypto.Util.number import *
+p = getprime(505)
+q = getPrime(512)
+r = getPrime(512)
+assert m &lt; q
 
-p = 115192265954802311941399019598810724669437369433680905425676691661793518967453
-q = 109900879774346908739236130854229171067533592200824652124389936543716603840487
-n = 12659731371633323406361071735480743870942884407511647144758055911931321534333057725377899993936046070028289182446615763391740446071787318153462098556669611
-a = 34573016245861396068378040882622992245754693028152290874131112955018884485688
-b = 103282137133820948206682036569671566996381438254897510344289164039717355513886
-e = 11415307674045871669
-ciphertext = b&#39;f\xb1\xae\x08`\xe8\xeb\x14\x8a\x87\xd6\x18\x82\xaf1q\xe4\x84\xf0\x87\xde\xedF\x99\xe0\xf7\xdcH\x9ai\x04[\x8b\xbbHR\xd6\xa0\xa2B\x0e\xd4\xdbr\xcc\xad\x1e\xa6\xba\xad\xe9L\xde\x94\xa4\xffKP\xcc\x00\x907\xf3\xea&#39;
+n = p * q * r
+e = 0x10001
+d = invert(q ** 2, p ** 2)
+c = pow(m, 2, r)
+cipher = pow(c, e, n)
 
-Ep = EllipticCurve(Zmod(p), [a, b])
-Eq = EllipticCurve(Zmod(q), [a, b])
-cx = bytes_to_long(ciphertext)
-cp = Ep.lift_x(Integer(cx))
-cq = Eq.lift_x(Integer(cx))
-dp = inverse(e, Ep.order())
-dq = inverse(e, Eq.order())
-mp = (dp * cp).xy()[0]
-mq = (dq * cq).xy()[0]
-
-flag = CRT_list([ZZ(mp), ZZ(mq)], [p, q])
-print(long_to_bytes(int(flag)))
+print(n)
+print(d)
+print(cipher)
+&#39;&#39;&#39;
+7941371739956577280160664419383740967516918938781306610817149744988379280561359039016508679365806108722198157199058807892703837558280678711420411242914059658055366348123106473335186505617418956630780649894945233345985279471106888635177256011468979083320605103256178446993230320443790240285158260236926519042413378204298514714890725325831769281505530787739922007367026883959544239568886349070557272869042275528961483412544495589811933856131557221673534170105409
+7515987842794170949444517202158067021118454558360145030399453487603693522695746732547224100845570119375977629070702308991221388721952258969752305904378724402002545947182529859604584400048983091861594720299791743887521228492714135449584003054386457751933095902983841246048952155097668245322664318518861440
+1618155233923718966393124032999431934705026408748451436388483012584983753140040289666712916510617403356206112730613485227084128314043665913357106301736817062412927135716281544348612150328867226515184078966397180771624148797528036548243343316501503364783092550480439749404301122277056732857399413805293899249313045684662146333448668209567898831091274930053147799756622844119463942087160062353526056879436998061803187343431081504474584816590199768034450005448200
+&#39;&#39;&#39;
 </code></pre>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>了解了基础的ECC题目解法，还是很有收获的，后面就要不断深入了，题目刷起来！</p>
-<p>此外，今天还解决了kali上sage无法使用Crypto这个库的问题，还是很开心的，下一个目标：解决python与sage交互的问题，导入库from sage.all import *</p>
-<h3 id="ECC学习文章"><a href="#ECC学习文章" class="headerlink" title="ECC学习文章"></a>ECC学习文章</h3><p>稍微进行了了解，贴下看过的佬们的文章，防止找不到了，写的很好！</p>
-<p>原理介绍：</p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/42629724"><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/42629724">ECC椭圆曲线密码学的原理、公式推导、例子、Python实现和应用 - 知乎 (zhihu.com)</a></a></p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/36326221"><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/36326221">ECC椭圆曲线加密算法：介绍 - 知乎 (zhihu.com)</a></a></p>
-<p>加密解密实现：</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38130747/article/details/85053660">椭圆曲线在Fp域上的加密（python实现）_椭圆曲线ecc_风澜舞的博客-CSDN博客</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Kalafinaian/p/7392505.html">ECC椭圆曲线详解(有具体实例) - Kalafinaian - 博客园 (cnblogs.com)</a></p>
+<p>已知关系</p>
+<ul>
+<li>$d\cdot q^2 \equiv 1 \pmod {p^2}$</li>
+<li>$m^2 \equiv c \pmod r$</li>
+<li>$cipher \equiv c^e \pmod n$</li>
+<li>$n &#x3D; p\cdot q \cdot r$</li>
+</ul>
+<p>其中$n、d、cipher$已知，且$m &lt; q$</p>
+<p>通过getprime函数可知，生成的素数为光滑数。直接分解n得到p、q、r。然后常规RSA解出c。最后便是二次剩余问题了，用下算法即可：</p>
+<pre><code class="python">n = ...
+d = ...
+cipher = ...
+e = 0x10001
+
+p = 102634610559478918970860957918259981057327949366949344137104804864768237961662136189827166317524151288799657758536256924609797810164397005081733039415393
+q = 7534810196420932552168708937019691994681052660068275906973480617604535381306041583841106383688654426129050931519275383386503174076258645141589911492908993
+r = 10269028767754306217563721664976261924407940883784193817786660413744866184645984238866463711873380072803747092361041245422348883639933712733051005791543841
+
+phi = (p-1)*(q-1)*(r-1)
+d = inverse(e,phi)
+c = pow(cipher,d,n)
+
+def Legendre(n,p): #这里用勒让德符号来表示判断二次（非）剩余的过程
+    return pow(n,(p - 1) // 2,p)
+def Tonelli_Shanks(n,p):
+    assert Legendre(n,p) == 1
+    if p % 4 == 3:
+        return pow(n,(p + 1) // 4,p)
+    q = p - 1
+    s = 0
+    while q % 2 == 0:
+        q = q // 2
+        s += 1
+    for z in range(2,p):
+        if Legendre(z,p) == p - 1:
+            c = pow(z,q,p)
+            break
+    r = pow(n,(q + 1) // 2,p)
+    t = pow(n,q,p)
+    m = s
+    if t % p == 1:
+        return r
+    else:
+        i = 0
+        while t % p != 1: #外层循环的判断条件
+            temp = pow(t,2**(i+1),p) #这里写作i+1是为了确保之后内层循环用到i值是与这里的i+1的值是相等的
+            i += 1
+            if temp % p == 1: # 内层循环的判断条件
+                b = pow(c,2**(m - i - 1),p)
+                r = r * b % p
+                c = b * b % p
+                t = t * c % p
+                m = i
+                i = 0 # 注意每次内层循环结束后i值要更新为0
+        return r
+
+m = Tonelli_Shanks(c,r)
+print(long_to_bytes(m))
+</code></pre>
+<h3 id="D-3CTF-d3qcg"><a href="#D-3CTF-d3qcg" class="headerlink" title="D^3CTF d3qcg"></a>D^3CTF d3qcg</h3><pre><code class="python">from Crypto.Util.number import *
+import random
+from random import randint
+from gmpy2 import *
+from secret import flag
+import hashlib
+assert b&#39;d3ctf&#39; in flag
+Bits = 512
+UnKnownBits = 146
+
+class QCG():
+    def __init__(self,bit_length):
+        p = getPrime(bit_length)
+        a = randint(0,p)
+        c = randint(0,p)
+        self._key = &#123;&#39;a&#39;:a,&#39;c&#39;:c,&#39;p&#39;:p&#125;
+        self.secret = randint(0,p)
+        self.high = []
+    def Qnext(self,num):
+        return ((self._key[&#39;a&#39;])*num**2+self._key[&#39;c&#39;])%self._key[&#39;p&#39;]
+    
+    def hint(self):
+        num = self.secret
+        for i in range(2):
+            num = self.Qnext (num)
+            self.high.append(num&gt;&gt;UnKnownBits)
+    def get_key(self):
+        return self._key
+    def get_hint(self):
+        return self.high
+
+Q1 = QCG(Bits)
+print(Q1.get_key())
+#&#123;&#39;a&#39;: 3591518680290719943596137190796366296374484536382380061852237064647969442581391967815457547858969187198898670115651116598727939742165753798804458359397101, &#39;c&#39;: 6996824752943994631802515921125382520044917095172009220000813718617441355767447428067985103926211738826304567400243131010272198095205381950589038817395833, &#39;p&#39;: 7386537185240346459857715381835501419533088465984777861268951891482072249822526223542514664598394978163933836402581547418821954407062640385756448408431347&#125;
+Q1.hint()
+print(Q1.get_hint())
+#[67523583999102391286646648674827012089888650576715333147417362919706349137337570430286202361838682309142789833, 70007105679729967877791601360700732661124470473944792680253826569739619391572400148455527621676313801799318422]
+enc = bytes_to_long(hashlib.sha512(b&#39;%d&#39;%(secret)).digest())^bytes_to_long(flag)
+print(enc)
+# 6176615302812247165125832378994890837952704874849571780971393318502417187945089718911116370840334873574762045429920150244413817389304969294624001945527125
+</code></pre>
+<p>想求flag就必须先求secret，对于secret，有下面的关系：</p>
+<p>$num_1 &#x3D; a \cdot secret^2 + c \pmod p$</p>
+<p>$num_2 &#x3D; a \cdot num_1^2 + c \pmod p$</p>
+<p>$high[0] &#x3D; num_1 &gt;&gt; 146，high[1] &#x3D; num_2 &gt;&gt; 146$</p>
+<p>$a、c、p、high[0]、high[1]$已知。</p>
+<p>显然得想办法恢复出完整的$num_1$来。</p>
+<p>对于$num_i$，高位记作$h_i$，低位记作$l_i$，那么$num_2 &#x3D; a \cdot num_1^2 + c \pmod p$可写成：</p>
+<p>$h_2+l_2 &#x3D; a \cdot (h_1+l_1)^2 + c \pmod p$</p>
+<p>$a \cdot (h_1+l_1)^2 - (h_2+l_2) + c \equiv 0 \pmod p$</p>
+<p>高位$h_i$我们是知道的，大概365位。低位$l_i$不知道，有146位。</p>
+<p>显然需要构造二元copper解。</p>
+<pre><code class="python">a = ...
+c = ...
+p = ...
+hint = [..., ...]
+enc = ...
+
+def small_roots(f, bounds, m=1, d=None):
+    if not d:
+        d = f.degree()
+
+    R = f.base_ring()
+    N = R.cardinality()
+
+    f /= f.coefficients().pop(0)
+    f = f.change_ring(ZZ)
+
+    G = Sequence([], f.parent())
+    for i in range(m + 1):
+        base = N ^ (m - i) * f ^ i
+        for shifts in itertools.product(range(d), repeat=f.nvariables()):
+            g = base * prod(map(power, f.variables(), shifts))
+            G.append(g)
+
+    B, monomials = G.coefficient_matrix()
+    monomials = vector(monomials)
+
+    factors = [monomial(*bounds) for monomial in monomials]
+    for i, factor in enumerate(factors):
+        B.rescale_col(i, factor)
+
+    B = B.dense_matrix().LLL()
+
+    B = B.change_ring(QQ)
+    for i, factor in enumerate(factors):
+        B.rescale_col(i, 1 / factor)
+
+    H = Sequence([], f.parent().change_ring(QQ))
+    for h in filter(None, B * monomials):
+        H.append(h)
+        I = H.ideal()
+        if I.dimension() == -1:
+            H.pop()
+        elif I.dimension() == 0:
+            roots = []
+            for root in I.variety(ring=ZZ):
+                root = tuple(R(root[var]) for var in f.variables())
+                roots.append(root)
+            return roots
+
+    return []
+
+h1 = hint[0] &lt;&lt; 146
+h2 = hint[1] &lt;&lt; 146
+P.&lt;l1,l2&gt; = PolynomialRing(Zmod(p))
+f = a*(h1 + l1)^2 + c - (h2 + l2)
+l1,l2 = small_roots(f,[2^146,2^146],m=4,d=4)[0]
+num1 = h1 + l1
+print(num1)
+</code></pre>
+<p>m和d的取值有待考究。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/defund/coppersmith">defund&#x2F;coppersmith: Coppersmith’s method for multivariate polynomials (github.com)</a></p>
+<p>求出$num_1$后，看第一个式子：</p>
+<p>$num_1 &#x3D; a \cdot secret^2 + c \pmod p$</p>
+<p>$secret^2 &#x3D; a^{-1}\cdot (num_1 - c) \pmod p$</p>
+<p>满足二次同余式$x^2 \equiv n \pmod p$</p>
+<p>可利用Tonelli–Shanks算法求解secret，然后异或enc便得到了flag：</p>
+<pre><code class="python">def Legendre(n,p): #这里用勒让德符号来表示判断二次（非）剩余的过程
+    return pow(n,(p - 1) // 2,p)
+def Tonelli_Shanks(n,p):
+    assert Legendre(n,p) == 1
+    if p % 4 == 3:
+        return pow(n,(p + 1) // 4,p)
+    q = p - 1
+    s = 0
+    while q % 2 == 0:
+        q = q // 2
+        s += 1
+    for z in range(2,p):
+        if Legendre(z,p) == p - 1:
+            c = pow(z,q,p)
+            break
+    r = pow(n,(q + 1) // 2,p)
+    t = pow(n,q,p)
+    m = s
+    if t % p == 1:
+        return r
+    else:
+        i = 0
+        while t % p != 1: #外层循环的判断条件
+            temp = pow(t,2**(i+1),p) #这里写作i+1是为了确保之后内层循环用到i值是与这里的i+1的值是相等的
+            i += 1
+            if temp % p == 1: # 内层循环的判断条件
+                b = pow(c,2**(m - i - 1),p)
+                r = r * b % p
+                c = b * b % p
+                t = t * c % p
+                m = i
+                i = 0 # 注意每次内层循环结束后i值要更新为0
+        return r
+
+num1 = 6023304966622247460261427847144394818572943247946434323275721792843243938440324294324349326166203828252327046668948034768905493329350113405677812338671880
+n = inverse(a,p)*(num1 - c)
+secret = Tonelli_Shanks(n,p)
+
+import hashlib
+flag = enc ^ bytes_to_long(hashlib.sha512(b&#39;%d&#39;%(secret)).digest())
+print(long_to_bytes(flag))
+#b&#39;Here_is_ur_flag!:)d3ctf&#123;th3_c0oppbpbpbp3rsM1th_i5_s0_1ntr35ting&#125;&#39;
+</code></pre>
+<p>这道题里考的求解二元多项式也很重要。</p>
+<p>这两道题只是简单用来下TS算法，其它类型的待补充。</p>
+<p>参考：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_51999772/article/details/123446566?spm=1001.2014.3001.5502">AntCTF x D^3CTF_Crypto_部分复现_M3ng@L的博客-CSDN博客</a></p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 1666739907@qq.com </span>

@@ -166,7 +166,7 @@
     <li>
         <div class="all active" data-rel="All">All
             
-                <small>(51)</small>
+                <small>(52)</small>
             
         </div>
     </li>
@@ -193,7 +193,7 @@
         <div data-rel="Crypto学习记录">
             
             Crypto学习记录
-            <small>(19)</small>
+            <small>(20)</small>
         </div>
         
     </li>
@@ -268,8 +268,8 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="51">
-<input type="hidden" id="yelog_site_word_count" value="72.3k">
+<input type="hidden" id="yelog_site_posts_number" value="52">
+<input type="hidden" id="yelog_site_word_count" value="74.5k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -324,6 +324,10 @@
         
             <li class="article-tag-list-item">
                 <i class="iconfont icon-tag"></i><a>多项式RSA</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>二次剩余</a>
             </li>
         
             <li class="article-tag-list-item">
@@ -424,6 +428,15 @@
 
     
     <nav id="title-list-nav">
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/08/05/%E4%BA%8C%E6%AC%A1%E5%89%A9%E4%BD%99%E9%97%AE%E9%A2%98/"
+           data-tag="二次剩余"
+           data-author="" >
+            <span class="post-title" title="二次剩余问题">二次剩余问题</span>
+            <span class="post-date" title="2023-08-05 15:18:40">2023/08/05</span>
+        </a>
         
         
         <a  class="All Reverse "
@@ -929,12 +942,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2023-07-31 23:23:28'>2023-07-31 14:00</time>
+            Created At : <time class="date" title='Updated At: 2023-08-05 16:38:06'>2023-07-31 14:00</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:480</span>
+        <span>Count:510</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -1007,6 +1020,14 @@ print(a)
 <li>Pollard-Rho算法：discrete_log_rho(n,b,a)</li>
 <li>Pollard-kangaroo算法：discrete_log__lambda(n,b,a)</li>
 </ul>
+<p>在python中，对于$7^3 \equiv 41 \pmod {15}$：</p>
+<pre><code class="python">from sympy import *
+
+a = discrete_log(41, 15, 7)
+print(a)
+#3
+</code></pre>
+<p>在sage中却实现不了</p>
 <h3 id="相关线代应用"><a href="#相关线代应用" class="headerlink" title="相关线代应用"></a>相关线代应用</h3><h4 id="定义矩阵"><a href="#定义矩阵" class="headerlink" title="定义矩阵"></a>定义矩阵</h4><pre><code class="python">A = matrix(Zmod(2),[[1,2,3],[3,2,1],[1,1,1]]) 
 print(A)
 B=matrix(GF(2),A)
