@@ -268,7 +268,7 @@
     </div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="54">
-<input type="hidden" id="yelog_site_word_count" value="75.5k">
+<input type="hidden" id="yelog_site_word_count" value="76.4k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -959,12 +959,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2023-08-02 13:49:03'>2023-05-22 21:56</time>
+            Created At : <time class="date" title='Updated At: 2023-08-06 21:29:29'>2023-05-22 21:56</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:1.3k</span>
+        <span>Count:2.2k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -1202,12 +1202,13 @@ for er in r_list:
 <pre><code class="python">e = 757*66553*5156273 
 #259776235785533
 </code></pre>
-<p>还是很大的，采取AMM应该会求不出或很慢。</p>
+<p><strong>解决e与$\phi(n)不互素$</strong></p>
+<p>e还是很大，采取AMM应该会很慢。</p>
 <p><a target="_blank" rel="noopener" href="https://eprint.iacr.org/2020/1059.pdf">1059.pdf (iacr.org)</a></p>
-<p>根据论文，有两个方法：</p>
-<p><strong>法一</strong></p>
+<p>根据论文，有下面的方法：</p>
+<p><strong>首先</strong></p>
 <p>令$\phi &#x3D; \frac{\phi(n)}{e} ，g &#x3D; 1$</p>
-<p>循环$g &#x3D; g + 1 ，gE \equiv g^{\phi} \pmod n$<br>直到出现$gE \neq 1$的$gE$</p>
+<p>循环$g &#x3D; g + 1 ，gE \equiv g^{\phi} \pmod n$​<br>直到出现$gE \neq 1$​的$gE$​，代码实现：</p>
 <pre><code class="python">phi = phi_n//e
 g = 1
 gE = pow(g,phi,n)
@@ -1215,13 +1216,169 @@ while gE == 1:
     g += 1
     gE = pow(g,phi,n)
 </code></pre>
-<p>这道题用这个方法解不出来。做个记录。</p>
-<p><strong>法二</strong></p>
-<p>令$\phi &#x3D; \frac{\phi(n)}{e}$</p>
-<p>计算$d \equiv e^{-1} \pmod \phi，a \equiv c^d \pmod N$</p>
+<p><strong>接着</strong></p>
+<p>计算$d \equiv e^{-1} \pmod \phi，a \equiv c^d \pmod n$</p>
 <p>判断a转换为字节&#x2F;字符类型之后，是否有flag的信息</p>
-<p>若没有，进行e次循环，跳出循环的条件也是上述条件</p>
-<p>循环体：$a \equiv a\cdot gE \pmod N$</p>
+<p>若没有，进行e次循环</p>
+<p>循环体：$a \equiv a\cdot gE \pmod n$，代码实现：</p>
+<pre><code>d = inverse(e,phi)
+a = pow(c,d,n)
+for _ in range(e):
+    flag = a
+    if msg in long_to_bytes(flag):
+        print(long_to_bytes(flag))
+        break
+    else:
+        a = a*gE % n
+</code></pre>
+<p>因为e太大了，执行e次循环根本跑不完，想办法约简。</p>
+<p>让$e &#x3D; e&#x2F;&#x2F;r$，且有$er\cdot dr \equiv 1 \pmod {\phi(n)}$相关参数也作改变，</p>
+<p>$\phi(n) &#x3D; (p-1)\cdot (q-1)$，$n &#x3D; n&#x2F;&#x2F;r$</p>
+<p>$c \equiv m^{ep\cdot eq\cdot er} \pmod n$</p>
+<p>$c^{dr} \equiv m^{er\cdot dr\cdot eq\cdot ep} \pmod n$</p>
+<p>可得：$c\equiv c^{dr} \pmod n$</p>
+<p>同时我们看到assert对明文的断言，长度在L到2L间，也就是1024bit到2048bit。那么明文至少要填充1024bit的\x00。当我们选择舍弃了r后，就需要把多余2048bit的填充的\x00除掉：</p>
+<p>$c \equiv (m\cdot2^{1024})^e \pmod n$</p>
+<p>$c\cdot 2^{-1024e} \equiv m^e \pmod n$</p>
+<p>这部分代码如下：</p>
+<pre><code class="python">ep = 757
+eq = 66553
+er = 5156273
+e = 757*66553*5156273
+
+c = c*inverse(2**(1024*e),n) % n
+
+e = e // er
+phi_n = (p - 1) * (q - 1)
+n = n // r 
+dr = inverse(er,phi_n)
+c = pow(c,dr,n)
+
+phi = phi_n // e
+g = 1
+gE = pow(g,phi,n)
+while gE == 1:
+    g = g + 1
+    gE = pow(g,phi,n)
+
+d = inverse(e,phi)
+a = pow(c,d,n) 
+for _ in tqdm(range(e)):
+    flag = a 
+    if b&quot;SUSCTF&quot; in long_to_bytes(flag):
+        print()
+        print(long_to_bytes(flag))
+        break
+    else:
+        a = a * gE % n
+</code></pre>
+<p>用了近10分钟，还是挺久的。</p>
+<p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_51999772/article/details/123273510?spm=1001.2014.3001.5502">SUSCTF_Crypto_large case_复现_M3ng@L的博客-CSDN博客</a></p>
+<p>也试一下AMM：</p>
+<p>从开始到去除明文多余2048bit的填充部分的操作一样，不一样的是后面的操作。</p>
+<p>$c \equiv m^{ep\cdot eq\cdot er} \pmod n$</p>
+<p>$e \cdot d \equiv 1 \pmod {\phi(n)}$</p>
+<p>分别计算模p和模q下的情况：</p>
+<p>$ep\cdot eq\cdot er\cdot dp \equiv 1\pmod {(p-1)}$</p>
+<p>$eq\cdot eq\cdot er\cdot dq \equiv 1\pmod {(q-1)}$</p>
+<p>$cp \equiv c^{dp} \pmod p$</p>
+<p>$cq \equiv c^{dq} \pmod q$</p>
+<p>接着便是套用AMM模板了，上面的部分相同就不贴了：</p>
+<pre><code class="python">import time
+import random
+
+...
+
+def AMM(o, r, q):
+    start = time.time()
+    print(&#39;\n----------------------------------------------------------------------------------&#39;)
+    print(&#39;Start to run Adleman-Manders-Miller Root Extraction Method&#39;)
+    print(&#39;Try to find one &#123;:#x&#125;th root of &#123;&#125; modulo &#123;&#125;&#39;.format(r, o, q))
+    g = GF(q)
+    o = g(o)
+    p = g(random.randint(1, q))
+    while p ^ ((q-1) // r) == 1:
+        p = g(random.randint(1, q))
+    print(&#39;[+] Find p:&#123;&#125;&#39;.format(p))
+    t = 0
+    s = q - 1
+    while s % r == 0:
+        t += 1
+        s = s // r
+    print(&#39;[+] Find s:&#123;&#125;, t:&#123;&#125;&#39;.format(s, t))
+    k = 1
+    while (k * s + 1) % r != 0:
+        k += 1
+    alp = (k * s + 1) // r
+    print(&#39;[+] Find alp:&#123;&#125;&#39;.format(alp))
+    a = p ^ (r**(t-1) * s)
+    b = o ^ (r*alp - 1)
+    c = p ^ s
+    h = 1
+    for i in range(1, t):
+        d = b ^ (r^(t-1-i))
+        if d == 1:
+            j = 0
+        else:
+            print(&#39;[+] Calculating DLP...&#39;)
+            j = - discrete_log(d, a)
+            print(&#39;[+] Finish DLP...&#39;)
+        b = b * (c^r)^j
+        h = h * c^j
+        c = c^r
+    result = o^alp * h
+    end = time.time()
+    print(&quot;Finished in &#123;&#125; seconds.&quot;.format(end - start))
+    print(&#39;Find one solution: &#123;&#125;&#39;.format(result))
+    return result
+
+def findAllPRoot(p, e):
+    print(&quot;Start to find all the Primitive &#123;:#x&#125;th root of 1 modulo &#123;&#125;.&quot;.format(e, p))
+    start = time.time()
+    proot = set()
+    while len(proot) &lt; e:
+        proot.add(pow(random.randint(2, p-1), (p-1)//e, p))
+    end = time.time()
+    print(&quot;Finished in &#123;&#125; seconds.&quot;.format(end - start))
+    return proot
+
+def findAllSolutions(mp, proot, cp, p):
+    print(&quot;Start to find all the &#123;:#x&#125;th root of &#123;&#125; modulo &#123;&#125;.&quot;.format(e, cp, p))
+    start = time.time()
+    all_mp = set()
+    for root in proot:
+        mp2 = mp * root % p
+        all_mp.add(mp2)
+    end = time.time()
+    print(&quot;Finished in &#123;&#125; seconds.&quot;.format(end - start))
+    return all_mp
+
+dp = inverse(eq*er,p-1)
+cp = pow(c,dp,p)
+dq = inverse(ep*er,q-1)
+cq = pow(c,dq,q)
+print(cp,cq)
+mp = AMM(cp, ep, p)
+mq = AMM(cq, eq, q)
+p_proot = findAllPRoot(p, ep)
+q_proot = findAllPRoot(q, eq)
+mps = findAllSolutions(mp, p_proot, cp, p)
+mqs = findAllSolutions(mq, q_proot, cq, q)
+
+start = time.time()
+print(&#39;Start CRT...&#39;)
+for mpp in mps:
+    print(mpp)
+    for mqq in mqs:
+        solution = crt([int(mpp), int(mqq)], [p, q])
+        if b&#39;SUSCTF&#39; in long_to_bytes(solution):
+            print(long_to_bytes(solution))
+            end = time.time()
+            print(&quot;Finished in &#123;&#125; seconds.&quot;.format(end - start))
+</code></pre>
+<p>执行的时间似乎要更久。</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/oyrd/articles/15963745.html">SUSCTF 2022 - hash_hash - 博客园 (cnblogs.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://su-team.cn/passages/2022-2-28-SUSCTF/">2022 SUSCTF SU Writeup | TEAM-SU (su-team.cn)</a></p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 1666739907@qq.com </span>
