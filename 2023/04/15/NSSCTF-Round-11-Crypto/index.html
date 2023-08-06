@@ -6,17 +6,16 @@
   <meta name="keywords" content="">
   <meta name="description" content="NSSCTF-Round#11-Crypto | Luino&#39;s Bold">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="在一些连nc的题中需要用到Pwntools，没有系统的学习过，今天来补充下。 接收数据 **recv(n)**，接收任何数量的字节 **recvline()**，接收一行数据 **recvuntil()**，接收数据，直到找到一个分隔符 **recvregex(pattern)**，接收数据，直到满足一个与pattern重合的内容为止 **recvrepeat(timeout)**，继续接收数据，">
+<meta name="description" content="返回值是如何传递的函数是怎么把返回值存到某个地方的，在函数外面是怎么得到这个返回值的，对应汇编代码 函数的返回值是：  8位，用al返回 16位，用ax返回 32位，用eax返回  返回值超过32位时，存在哪里？ int64 Function()&amp;#123;						     __int64 x &#x3D; 0x1234567890;					     return x;					 &amp;#125;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="pwntools的使用">
-<meta property="og:url" content="http://example.com/2023/07/31/pwntools%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:title" content="滴水三期学习笔记（三）">
+<meta property="og:url" content="http://example.com/2023/08/06/%E6%BB%B4%E6%B0%B4%E4%B8%89%E6%9C%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/index.html">
 <meta property="og:site_name" content="Luino&#39;s Bold">
-<meta property="og:description" content="在一些连nc的题中需要用到Pwntools，没有系统的学习过，今天来补充下。 接收数据 **recv(n)**，接收任何数量的字节 **recvline()**，接收一行数据 **recvuntil()**，接收数据，直到找到一个分隔符 **recvregex(pattern)**，接收数据，直到满足一个与pattern重合的内容为止 **recvrepeat(timeout)**，继续接收数据，">
+<meta property="og:description" content="返回值是如何传递的函数是怎么把返回值存到某个地方的，在函数外面是怎么得到这个返回值的，对应汇编代码 函数的返回值是：  8位，用al返回 16位，用ax返回 32位，用eax返回  返回值超过32位时，存在哪里？ int64 Function()&amp;#123;						     __int64 x &#x3D; 0x1234567890;					     return x;					 &amp;#125;">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-07-31T14:10:00.000Z">
-<meta property="article:modified_time" content="2023-07-31T15:37:24.093Z">
+<meta property="article:published_time" content="2023-08-06T08:26:46.000Z">
+<meta property="article:modified_time" content="2023-08-06T08:27:16.325Z">
 <meta property="article:author" content="Luino">
-<meta property="article:tag" content="Pwntools">
 <meta name="twitter:card" content="summary">
 
 
@@ -166,7 +165,7 @@
     <li>
         <div class="all active" data-rel="All">All
             
-                <small>(52)</small>
+                <small>(54)</small>
             
         </div>
     </li>
@@ -238,7 +237,7 @@
         <div data-rel="Reverse">
             
             Reverse
-            <small>(3)</small>
+            <small>(5)</small>
         </div>
         
     </li>
@@ -268,8 +267,8 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="52">
-<input type="hidden" id="yelog_site_word_count" value="74.5k">
+<input type="hidden" id="yelog_site_posts_number" value="54">
+<input type="hidden" id="yelog_site_word_count" value="75.5k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -428,6 +427,24 @@
 
     
     <nav id="title-list-nav">
+        
+        
+        <a  class="All Reverse "
+           href="/2023/08/06/%E6%BB%B4%E6%B0%B4%E4%B8%89%E6%9C%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="滴水三期学习笔记（三）">滴水三期学习笔记（三）</span>
+            <span class="post-date" title="2023-08-06 16:26:46">2023/08/06</span>
+        </a>
+        
+        
+        <a  class="All Reverse "
+           href="/2023/08/05/%E6%BB%B4%E6%B0%B4%E4%B8%89%E6%9C%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="滴水三期学习笔记（二）">滴水三期学习笔记（二）</span>
+            <span class="post-date" title="2023-08-05 15:46:34">2023/08/05</span>
+        </a>
         
         
         <a  class="All Crypto学习记录 "

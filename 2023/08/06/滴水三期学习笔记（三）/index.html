@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>LitCTF2023-Crypto | Luino&#39;s Bold</title>
+  <title>滴水三期学习笔记（三） | Luino&#39;s Bold</title>
   <meta name="keywords" content="">
-  <meta name="description" content="LitCTF2023-Crypto | Luino&#39;s Bold">
+  <meta name="description" content="滴水三期学习笔记（三） | Luino&#39;s Bold">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="返回值是如何传递的函数是怎么把返回值存到某个地方的，在函数外面是怎么得到这个返回值的，对应汇编代码 函数的返回值是：  8位，用al返回 16位，用ax返回 32位，用eax返回  返回值超过32位时，存在哪里？ int64 Function()&amp;#123;						     __int64 x &#x3D; 0x1234567890;					     return x;					 &amp;#125;">
 <meta property="og:type" content="article">
@@ -932,9 +932,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-LitCTF2023-Crypto" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-滴水三期学习笔记（三）" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">LitCTF2023-Crypto</h1>
+        <h1 class="article-title">滴水三期学习笔记（三）</h1>
     
     <div class="article-meta">
         
@@ -944,7 +944,7 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="Match">Match</a>
+            <a  data-rel="Reverse">Reverse</a>
             
         </span>
         
@@ -952,12 +952,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2023-05-16 21:15:42'>2023-05-15 10:18</time>
+            Created At : <time class="date" title='Updated At: 2023-08-06 16:27:16'>2023-08-06 16:26</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:526</span>
+        <span>Count:561</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -976,7 +976,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#easy-math-%E4%B8%AD%E7%BA%A7"><span class="toc-text">easy_math(中级)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Where-is-P"><span class="toc-text">Where is P</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#baby-xor"><span class="toc-text">baby_xor</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%94%E5%9B%9E%E5%80%BC%E6%98%AF%E5%A6%82%E4%BD%95%E4%BC%A0%E9%80%92%E7%9A%84"><span class="toc-text">返回值是如何传递的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="toc-text">参数传递的本质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D"><span class="toc-text">局部变量的内存分配</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -992,82 +992,56 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>技术不到位，没能耐ak，记录几道题，简单的不提了</p>
-<h3 id="easy-math-中级"><a href="#easy-math-中级" class="headerlink" title="easy_math(中级)"></a>easy_math(中级)</h3><pre><code class="python">from Crypto.Util.number import *
-from secret import flag
-
-m = bytes_to_long(flag)
-e = 65537
-p = getPrime(512)
-q = getPrime(128)
-n = p*q
-hint = p**3-q**5
-c = pow(m,e,n)
-print(f&#39;n = &#123;n&#125;&#39;)
-print(f&#39;c = &#123;c&#125;&#39;)
-print(f&#39;hint = &#123;hint&#125;&#39;)
+        <h3 id="返回值是如何传递的"><a href="#返回值是如何传递的" class="headerlink" title="返回值是如何传递的"></a>返回值是如何传递的</h3><p>函数是怎么把返回值存到某个地方的，在函数外面是怎么得到这个返回值的，对应汇编代码</p>
+<p>函数的返回值是：</p>
+<ul>
+<li>8位，用al返回</li>
+<li>16位，用ax返回</li>
+<li>32位，用eax返回</li>
+</ul>
+<p>返回值超过32位时，存在哪里？</p>
+<pre><code class="c">int64 Function()&#123;						
+    __int64 x = 0x1234567890;					
+    return x;					
+&#125;		
 </code></pre>
-<p>关键在利用sympy库解方程组，只能说我用的少，之前做题也没遇到过。。。知识储备太少了。</p>
-<pre><code class="python">p,q = symbols(&#39;p q&#39;)
-eq1 = Eq(p*q, n)
-eq2 = Eq(p**3 - q**5, hint)
-sol = solve((eq1, eq2), (p, q))
-print(sol)
-#p = 7321664971326604351487965655099805117568571010588695608389113791312918573783115429227542573780838065461696504325762281209452761930184231131129306271846427
-#q = 304683618109085947723284393392507415311
+<p>对应汇编</p>
+<pre><code class="assembly">mov dword ptr [ebp-8],eax
+mov dword ptr [ebp-4],edx
 </code></pre>
-<p>其它的不bb。</p>
-<h3 id="Where-is-P"><a href="#Where-is-P" class="headerlink" title="Where is P"></a>Where is P</h3><pre><code class="python">from Crypto.Util.number import *
-m=bytes_to_long(b&#39;XXXX&#39;)
-e=65537
-p=getPrime(1024)
-q=getPrime(1024)
-n=p*q
-print(p)
-c=pow(m,e,n)
-P=p&gt;&gt;340
-print(P)
-a=pow(P,3,n)
-print(&quot;n=&quot;,n)
-print(&quot;c=&quot;,c)
-print(&quot;a=&quot;,a)
+<p>用eax、edx两个寄存器，且eax存低位34567890h，edx存高位12h。</p>
+<h3 id="参数传递的本质"><a href="#参数传递的本质" class="headerlink" title="参数传递的本质"></a>参数传递的本质</h3><p>两种传递方式：用堆栈和用寄存器。</p>
+<p>1字节、2字节、4字节等整数类型的参数一律按4字节（本机尺寸）传递，但在使用的时候仍会按定义的字节来使用，如：</p>
+<pre><code class="c">void fun(char a)&#123;
+    int b = a;
+    //对应汇编：
+    //movsx       eax,byte ptr [ebp+8]
+    //mov         dword ptr [ebp-4],eax
+    //会进行扩展
+&#125;
+int main()&#123;
+    fun(1);
+&#125;
 </code></pre>
-<p>$a&#x3D;pow(P,3,n)$，好家伙换了层皮我就不认识了，不就是低指数解密嘛😂，我当时竟然在分析位数想直接开方。</p>
-<p>解出P就是构造copper解p了不多bb。这道题放这里提个醒。</p>
-<h3 id="baby-xor"><a href="#baby-xor" class="headerlink" title="baby_xor"></a>baby_xor</h3><pre><code class="python">from Crypto.Util.number import *
-from secret import flag
-
-m = bytes_to_long(flag)
-assert len(flag)==32
-p = getPrime(512)
-q = getPrime(512)
-n = p*q
-e = 65537
-c1 = p^m
-c2 = pow(m,e,n)
-print(f&#39;n = &#123;n&#125;&#39;)
-print(f&#39;c1 = &#123;c1&#125;&#39;)
-print(f&#39;c2 = &#123;c2&#125;&#39;)
+<p>按本机尺寸传递参数效率最高。</p>
+<p>再来以编译器的角度看待一个老问题：改变形参的值不影响实参：</p>
+<pre><code class="c">void fun(int x)&#123;
+    x = x + 1;
+&#125;
+int main()&#123;
+    int x = 2;
+    fun(x);
+    printf(&quot;%d&quot;,x);
+&#125;
 </code></pre>
-<p>当时我是按照flag的长度大概找到了m的最大位数，大致255位，差不多为p位数的一半，所以m与p异或，高位部分不变，所以通过c1知道p的高256位左右，但还不够，接着我想到flag的格式，前面肯定是LitCTF{，加上这部分55位，就满足了构造copper的条件。但当时结果解不出来，搞不懂。</p>
-<pre><code class="python">flag = b&#39;LitCTF&#123;&#39;
-print(bytes_to_long(flag))
-m = 21508046296729211#55位
-m = m &lt;&lt; 200
-p = c1^^m#sage里异或
-phigh = p &gt;&gt; 200
-kbits = 512 - phigh.nbits()
-p4 = phigh &lt;&lt; kbits
-PR.&lt;x&gt; = PolynomialRing(Zmod(n))
-f = x + p4
-roots = f.small_roots(X=2^kbits, beta=0.4)
-if roots:
-    p = p4 + int(roots[0])
-    print(p)
-#11201139662236758800406931253538295757259990870588609533820056210585752522925662842097418194280333596411677923137891577493678147771013147838272857867768049
-</code></pre>
-<p>p出了就直接解了。</p>
-<p>其它的题就不记录了（长本事了doge）。</p>
+<p>很显然上面代码输出的值是2。</p>
+<p>首先在main里，2的值是存在了[ebp-4]上，传参的时候也仅是将[ebp-4]上的值<strong>复制了一份</strong>再传递给fun函数，所以你对复制的这个值怎么操作也影响不到[ebp-4]上的大小。</p>
+<h3 id="局部变量的内存分配"><a href="#局部变量的内存分配" class="headerlink" title="局部变量的内存分配"></a>局部变量的内存分配</h3><p>对于char、short、int型等小于本机尺寸的局部变量，内存会分配本机尺寸字节数（32位–4字节）。</p>
+<p>而但对于char、short、int型数组变量，内存则会分配对应大小字节空间，如：</p>
+<p>假设对于空函数，内存默认分配40h</p>
+<p>若定义char a[4] &#x3D; {0}，则会分配44h（根据本机尺寸，char a[3] &#x3D; {0}，同样分配44h）</p>
+<p>若定义short a[4] &#x3D; {0}，则会分配48h</p>
+<p>参数与局部变量其实没有本质区别，都是在堆栈中分配的空间。如果严谨点说区别，那就是，参数是函数调用时分配的，而局部变量是函数执行时分配的。</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 1666739907@qq.com </span>
@@ -1080,46 +1054,6 @@ if roots:
 
 
 
-    
-        <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-    "HTML-CSS": {
-        preferredFont: "TeX",
-        availableFonts: ["STIX","TeX"],
-        linebreaks: { automatic:true },
-        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
-    },
-    tex2jax: {
-        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
-        processEscapes: true,
-        ignoreClass: "tex2jax_ignore|dno",
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-    TeX: {
-        equationNumbers: { autoNumber: "AMS" },
-        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
-        Macros: { href: "{}" }
-    },
-    messageStyle: "none"
-    });
-</script>
-<!-- 给MathJax元素添加has-jax class -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-<!-- 通过连接CDN加载MathJax的js代码 -->
-<script type="text/javascript" async
-        src="//cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
-<input type="hidden" id="MathJax-js"
-        value="//cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
-</input>
     
 
 
