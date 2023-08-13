@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Python矩阵学习记录 | Luino&#39;s Bold</title>
-  <meta name="keywords" content=" Python矩阵 ">
-  <meta name="description" content="Python矩阵学习记录 | Luino&#39;s Bold">
+  <title>滴水三期学习笔记（四） | Luino&#39;s Bold</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="滴水三期学习笔记（四） | Luino&#39;s Bold">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="返回值是如何传递的函数是怎么把返回值存到某个地方的，在函数外面是怎么得到这个返回值的，对应汇编代码 函数的返回值是：  8位，用al返回 16位，用ax返回 32位，用eax返回  返回值超过32位时，存在哪里？ int64 Function()&amp;#123;						     __int64 x &#x3D; 0x1234567890;					     return x;					 &amp;#125;">
 <meta property="og:type" content="article">
@@ -941,9 +941,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-Python矩阵学习记录" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-滴水三期学习笔记（四）" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">Python矩阵学习记录</h1>
+        <h1 class="article-title">滴水三期学习笔记（四）</h1>
     
     <div class="article-meta">
         
@@ -953,27 +953,20 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="Python">Python</a>
+            <a  data-rel="Reverse">Reverse</a>
             
         </span>
         
         
-        <span class="tag">
-            <i class="iconfont icon-tag"></i>
-            
-            <a class="color4">Python矩阵</a>
-            
-        </span>
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2023-08-13 21:51:40'>2023-08-13 18:55</time>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2023-03-02 19:35:42'>2023-01-13 10:50</time>
-        
-    </div>
-    <div class="article-meta">
-        
-        <span>Count:714</span>
+        <span>Count:1.7k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -992,7 +985,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#switch%E7%9A%84%E6%B1%87%E7%BC%96"><span class="toc-text">switch的汇编</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BD%A2%E5%BC%8F%E4%B8%80"><span class="toc-text">形式一</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BD%A2%E5%BC%8F%E4%BA%8C"><span class="toc-text">形式二</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BD%A2%E5%BC%8F%E4%B8%89"><span class="toc-text">形式三</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BD%A2%E5%BC%8F%E5%9B%9B"><span class="toc-text">形式四</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#do-while%E7%9A%84%E6%B1%87%E7%BC%96"><span class="toc-text">do while的汇编</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#while%E7%9A%84%E6%B1%87%E7%BC%96"><span class="toc-text">while的汇编</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#for%E5%BE%AA%E7%8E%AF%E7%9A%84%E6%B1%87%E7%BC%96"><span class="toc-text">for循环的汇编</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -1008,150 +1001,282 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>最近在写航电新生赛的题，遇到一道题中，需要通过矩阵快速幂来加速递归的过程，因为python中矩阵不熟悉，故进行学习并记录。</p>
-<p><strong>构造方法</strong></p>
-<p>首先构造矩阵需要导入numpy，有两种构造方法。</p>
-<pre><code class="python">import numpy
-
-A = numpy.matrix([[1,1],[2,2]])
-B = numpy.mat(([[2,2],[1,1]]))
-print(A)
-print(B)
-#输出
-&#39;&#39;&#39;
-[[1 1]
- [2 2]]
-[[2 2]
- [1 1]]
-&#39;&#39;&#39;
+        <h3 id="switch的汇编"><a href="#switch的汇编" class="headerlink" title="switch的汇编"></a>switch的汇编</h3><p>switch语句的汇编总共有4种</p>
+<h4 id="形式一"><a href="#形式一" class="headerlink" title="形式一"></a>形式一</h4><p>当分支少于4种时，其汇编本质上与if else相同，如下：</p>
+<p>c代码：</p>
+<pre><code class="c">void fun(int x) &#123;//传入2
+    switch(x) &#123;
+        case 1:
+            printf(&quot;1&quot;);
+            break;
+        case 2:
+            printf(&quot;2&quot;);
+            break;
+        case 3:
+            printf(&quot;3&quot;);
+            break;
+        default:
+            printf(&quot;error&quot;);
+            break;
+    &#125;
+&#125;
 </code></pre>
-<p>中间部分用逗号间隔的[]可以理解为矩阵的每一行，输出行：</p>
-<pre><code class="python">print(A[0])
-print(A[1])
-#输出
-&#39;&#39;&#39;
-[[1 1]]
-[[2 2]]
-&#39;&#39;&#39;
+<p>汇编（主要部分）：</p>
+<pre><code class="assembly">0040D758   mov         eax,dword ptr [ebp+8]
+0040D75B   mov         dword ptr [ebp-4],eax
+0040D75E   cmp         dword ptr [ebp-4],1
+0040D762   je          fun+32h (0040d772)
+0040D764   cmp         dword ptr [ebp-4],2
+0040D768   je          fun+41h (0040d781)
+0040D76A   cmp         dword ptr [ebp-4],3
+0040D76E   je          fun+50h (0040d790)
+0040D770   jmp         fun+5Fh (0040d79f)
+0040D772   push        offset string &quot;1&quot; (00422fa8)
+0040D777   call        printf (0040d6c0)
+0040D77C   add         esp,4
+0040D77F   jmp         fun+6Ch (0040d7ac)
+0040D781   push        offset string &quot;2&quot; (00422fa4)
+0040D786   call        printf (0040d6c0)
+0040D78B   add         esp,4
+0040D78E   jmp         fun+6Ch (0040d7ac)
+0040D790   push        offset string &quot;%d &quot; (0042210c)
+0040D795   call        printf (0040d6c0)
+0040D79A   add         esp,4
+0040D79D   jmp         fun+6Ch (0040d7ac)
+0040D79F   push        offset string &quot;error&quot; (00422f9c)
 </code></pre>
-<p>输出单个元素：</p>
-<pre><code class="python">A = numpy.matrix([[1,2,1],[2,-1,3],[3,1,2]])
-print(A[0])#第一行
-print(A[0][0,0])#第一行第一个元素
-print(A[0,0])#同上
-#输出
-&#39;&#39;&#39;
-[[1 2 1]]
-1
-1
-&#39;&#39;&#39;
+<p>显然，对标与if else语句，当分支少于4种时，使用switch语句将没有意义。</p>
+<h4 id="形式二"><a href="#形式二" class="headerlink" title="形式二"></a>形式二</h4><p>而当分支情况大于等于4种时且case后的常量值连续，情况会完全不同：</p>
+<p>c代码：</p>
+<pre><code class="c">void fun(int x) &#123;//传入2
+    switch(x) &#123;
+        case 1:
+            printf(&quot;1&quot;);
+            break;
+        case 2:
+            printf(&quot;2&quot;);
+            break;
+        case 3:
+            printf(&quot;3&quot;);
+            break;
+        case 4:
+            printf(&quot;4&quot;);
+            break;	
+        default:
+            printf(&quot;error&quot;);
+            break;
+    &#125;
+&#125;
 </code></pre>
-<p><strong>shape获取矩阵行列值</strong></p>
-<pre><code class="python">A = numpy.matrix([[1,1],[2,2],[3,3]])
-print(A.shape)
-#输出
-&#39;&#39;&#39;
-(3, 2)
-&#39;&#39;&#39;
+<p>汇编（主要部分）：</p>
+<pre><code class="assembly">0040D818   mov         eax,dword ptr [ebp+8]
+0040D81B   mov         dword ptr [ebp-4],eax
+0040D81E   mov         ecx,dword ptr [ebp-4]
+0040D821   sub         ecx,1
+0040D824   mov         dword ptr [ebp-4],ecx
+0040D827   cmp         dword ptr [ebp-4],3
+0040D82B   ja          $L539+0Fh (0040d873)
+0040D82D   mov         edx,dword ptr [ebp-4]
+0040D830   jmp         dword ptr [edx*4+40D891h]
+$L533:
+0040D837   push        offset string &quot;1&quot; (00422fac)
+0040D83C   call        printf (0040d6c0)
+0040D841   add         esp,4
+0040D844   jmp         $L539+1Ch (0040d880)
+$L535:
+0040D846   push        offset string &quot;2&quot; (00422fa8)
+0040D84B   call        printf (0040d6c0)
+0040D850   add         esp,4
+0040D853   jmp         $L539+1Ch (0040d880)
+$L537:
+0040D855   push        offset string &quot;3&quot; (00422fa4)
+0040D85A   call        printf (0040d6c0)
+0040D85F   add         esp,4
+0040D862   jmp         $L539+1Ch (0040d880)
+$L539:
+0040D864   push        offset string &quot;%d &quot; (0042210c)
+0040D869   call        printf (0040d6c0)
+0040D86E   add         esp,4
+0040D871   jmp         $L539+1Ch (0040d880)
+0040D873   push        offset string &quot;error&quot; (00422f9c)
+0040D878   call        printf (0040d6c0)
 </code></pre>
-<p><strong>A.T或A.transpose()进行矩阵转置</strong></p>
-<pre><code class="python">A = numpy.matrix([[1,1],[2,2],[3,3]])
-print(A.T)
-print(A.transpose())
-#输出
-&#39;&#39;&#39;
-[[1 2 3]
- [1 2 3]]
-[[1 2 3]
- [1 2 3]]
-&#39;&#39;&#39;
+<p>可以看到，编译器在将参数2传入ecx后减1，再与3比较，若大于3，则直接输出error，否则通过表达式[edx*4+40D891h]进行跳转。</p>
+<p>我们通过看具体地址存储的内容，可以知道：</p>
+<p>[edx*4+40D891h]分别代表了每个分支的首地址（edx&#x3D;0，1，2）。</p>
+<p>switch语句的汇编过程：</p>
+<p>编译器会在编译时生成一个大表，用来存储每个分支的首地址，通过特定的表达式来直接进行跳转（表达式是否固定？）。</p>
+<p>当case后的常量值可以无序，不影响大表的生成，如下：</p>
+<pre><code class="c">void fun(int x) &#123;//传入2
+    switch(x) &#123;
+        case 4:
+            printf(&quot;4&quot;);
+            break;
+        case 2:
+            printf(&quot;2&quot;);
+            break;
+        case 3:
+            printf(&quot;3&quot;);
+            break;
+        case 1:
+            printf(&quot;1&quot;);
+            break;	
+        default:
+            printf(&quot;error&quot;);
+            break;
+    &#125;
+&#125;
 </code></pre>
-<p><strong>矩阵相加减</strong></p>
-<pre><code class="python">A = numpy.matrix([[1,1],[2,2],[3,3]])
-B = numpy.matrix([[4,4],[5,5],[6,6]])
-print(A+B)
-print(B-A)
-#输出
-&#39;&#39;&#39;
-[[5 5]
- [7 7]
- [9 9]]
-[[3 3]
- [3 3]
- [3 3]]
-&#39;&#39;&#39;
+<p>所以，在分配每个分支的地址时，编译器会采取某种排序算法。</p>
+<h4 id="形式三"><a href="#形式三" class="headerlink" title="形式三"></a>形式三</h4><p>当分支情况大于等于4种时且case后的常量值总体不连续但有规律，情况又会不同：</p>
+<p>c代码：</p>
+<pre><code class="c">void fun(int x)&#123;
+    switch(x)&#123;
+        case 1:
+            printf(&quot;1&quot;);
+            break;
+        case 4:
+            printf(&quot;4&quot;);
+            break;
+        case 5:
+            printf(&quot;5&quot;);
+            break;
+        case 6:
+            printf(&quot;6&quot;);
+            break;
+        case 7:
+            printf(&quot;7&quot;);
+            break;
+        case 8:
+            printf(&quot;8&quot;);
+            break;
+        case 9:
+            printf(&quot;9&quot;);
+            break;
+        case 10:
+            printf(&quot;10&quot;);
+            break;
+        default:
+            printf(&quot;error&quot;);
+            break;
+    &#125;
+&#125;
 </code></pre>
-<p><strong>矩阵乘法</strong></p>
-<pre><code class="python">A = numpy.matrix([[1,1],[2,2],[3,3]])
-B = numpy.matrix([[1,2,3],[1,2,3]])
-print(numpy.dot(A,B))
-print(numpy.dot(B,A))#矩阵乘法不满足交换律
-#输出
-&#39;&#39;&#39;
-[[ 2  4  6]
- [ 4  8 12]
- [ 6 12 18]]
-[[14 14]
- [14 14]]
-&#39;&#39;&#39;
+<p>把等于2和3的情况删除后，case 2和case 3对应的地址上的地址值将被替换为default的地址值（default没写的时候或许是跳出switch）。</p>
+<pre><code class="assembly">0040D830   jmp         dword ptr [edx*4+40D8BEh]
 </code></pre>
-<p>用dot进行矩阵乘法运算时需注意矩阵乘法运算的规则，否则报错。</p>
-<p><strong>用eye创建单位矩阵</strong></p>
-<pre><code class="python">print(numpy.eye(3))
-#输出
-&#39;&#39;&#39;
-[[1. 0. 0.]
- [0. 1. 0.]
- [0. 0. 1.]]
-&#39;&#39;&#39;
+<p><img src="/../images/image-20230813202251990.png" alt="image-20230813202251990"></p>
+<p>显然当删除的情况过多时，将删除的情况对应的地址替换成default的地址这种做法过于浪费空间。此时，会有另外的做法：</p>
+<p>当我删除6种情况（不同编译器上限不同）</p>
+<pre><code class="c">void fun(int x)&#123;
+    switch(x)&#123;
+        case 1:
+            printf(&quot;1&quot;);
+            break;
+        case 8:
+            printf(&quot;8&quot;);
+            break;
+        case 9:
+            printf(&quot;9&quot;);
+            break;
+        case 10:
+            printf(&quot;10&quot;);
+            break;
+        default:
+            printf(&quot;error&quot;);
+            break;
+    &#125;
+&#125;
 </code></pre>
-<p><strong>trare计算矩阵的迹（主对角线元素的和）</strong></p>
-<pre><code class="python">B = numpy.matrix([[1,2,3],[1,2,3],[1,2,3]])
-print(numpy.trace(B))
-#输出
-&#39;&#39;&#39;
-6
-&#39;&#39;&#39;
+<p>对应汇编（主要部分）：</p>
+<pre><code class="assembly">0040D818   mov         eax,dword ptr [ebp+8]
+0040D81B   mov         dword ptr [ebp-4],eax
+0040D81E   mov         ecx,dword ptr [ebp-4]
+0040D821   sub         ecx,1
+0040D824   mov         dword ptr [ebp-4],ecx
+0040D827   cmp         dword ptr [ebp-4],9
+0040D82B   ja          $L539+0Fh (0040d87b)
+0040D82D   mov         eax,dword ptr [ebp-4]
+0040D830   xor         edx,edx
+0040D832   mov         dl,byte ptr  (0040d8ad)[eax]
+0040D838   jmp         dword ptr [edx*4+40D899h]
 </code></pre>
-<p><strong>linalg.det()计算矩阵对应行列式的值（矩阵行列数必须相等）</strong></p>
-<pre><code class="python">A = numpy.matrix([[1,1],[2,3]])
-B = numpy.matrix([[1,2,3],[1,2,3],[1,2,3]])
-print(numpy.linalg.det(A))
-print(numpy.linalg.det(B))
-#输出
-&#39;&#39;&#39;
-1.0
-0.0
-&#39;&#39;&#39;
+<p><img src="/../images/image-20230813204022664.png" alt="image-20230813204022664"></p>
+<p>(0040d8ad)即为小表，且小表紧挨着大表，此时大表中的被替换的部分会消除，目的是为了节省内存。操作过程，假设我们传入的参数为2：</p>
+<p>减1后传给eax，edx清0，查小表，将小表中第eax个字节（dl是8位）位置的值传给edx，再去查询大表，因为case 2是不存在的，所以会直接跳到default处。</p>
+<h4 id="形式四"><a href="#形式四" class="headerlink" title="形式四"></a>形式四</h4><p>当分支情况大于等于4种时且case后的常量值毫无规律时。此时编译器会按if else语句处理。</p>
+<h3 id="do-while的汇编"><a href="#do-while的汇编" class="headerlink" title="do while的汇编"></a>do while的汇编</h3><p>c代码（传入参数2）：</p>
+<pre><code class="c">void fun(int x)&#123;
+    do &#123;
+        printf(&quot;hello!&quot;);
+        x--;
+    &#125;while(x&gt;0);
+&#125;
 </code></pre>
-<p><strong>linalg.inv()计算矩阵的逆矩阵（逆矩阵：若方阵A、B满足，AB&#x3D;BA&#x3D;E，称B为A的逆矩阵，矩阵A的行列式值不能为0）</strong></p>
-<pre><code class="python">A = numpy.matrix([[1,-2,1],[0,2,-1],[1,1,-2]])
-print(numpy.linalg.inv(A))
-#输出
-&#39;&#39;&#39;
-[[ 1.          1.          0.        ]
- [ 0.33333333  1.         -0.33333333]
- [ 0.66666667  1.         -0.66666667]]
-&#39;&#39;&#39;
+<p>汇编：</p>
+<pre><code class="assembly">0040D818   push        offset string &quot;hello!&quot; (00422f9c)
+0040D81D   call        printf (0040d6c0)
+0040D822   add         esp,4
+0040D825   mov         eax,dword ptr [ebp+8]
+0040D828   sub         eax,1
+0040D82B   mov         dword ptr [ebp+8],eax
+0040D82E   cmp         dword ptr [ebp+8],0
+0040D832   jg          fun+18h (0040d818)
 </code></pre>
-<p><strong>linalg.solve()解多元一次方程</strong></p>
-<pre><code class="python">a = [[1,2,1],[2,-1,3],[3,1,2]]#未知数系数
-A = numpy.array(a)
-b = [7,7,18]#常数项
-B = numpy.array(b)
-X = numpy.linalg.solve(A,B)
-print(X)
-#输出
-&#39;&#39;&#39;
-[ 7.  1. -2.]
-&#39;&#39;&#39;
-
-#验证结果是否正确
-print(numpy.dot(a,X))
-&#39;&#39;&#39;
-[ 7.  7. 18.]
-&#39;&#39;&#39;
+<p>do while语句有下面的特点：</p>
+<ul>
+<li>根据条件跳转指令所跳转到的地址，可以得到循环语句块的起始地址</li>
+<li>条件跳转的逻辑与源码相同</li>
+</ul>
+<h3 id="while的汇编"><a href="#while的汇编" class="headerlink" title="while的汇编"></a>while的汇编</h3><p>c代码（传入参数2）</p>
+<pre><code class="c">    while(x&gt;0) &#123;
+        printf(&quot;hello!&quot;);
+        x--;
+    &#125;
 </code></pre>
+<p>汇编：</p>
+<pre><code class="assembly">0040D818   cmp         dword ptr [ebp+8],0
+0040D81C   jle         fun+36h (0040d836)
+0040D81E   push        offset string &quot;hello!&quot; (00422f9c)
+0040D823   call        printf (0040d6c0)
+0040D828   add         esp,4
+0040D82B   mov         eax,dword ptr [ebp+8]
+0040D82E   sub         eax,1
+0040D831   mov         dword ptr [ebp+8],eax
+0040D834   jmp         fun+18h (0040d818)
+</code></pre>
+<p>while语句有下面的特点：</p>
+<ul>
+<li>根据条件跳转指令所跳转到的地址，可以得到循环语句块的结束地址；					</li>
+<li>根据jmp 指令所跳转到的地址，可以得到循环语句块的起始地址								</li>
+<li>在还原while比较时，条件跳转的逻辑与源码相反</li>
+</ul>
+<p>			</p>
+<h3 id="for循环的汇编"><a href="#for循环的汇编" class="headerlink" title="for循环的汇编"></a>for循环的汇编</h3><p>c代码（传入参数2）</p>
+<pre><code class="c">void fun(int x)&#123;
+    for(int i=0; i&lt;x; i++)
+        printf(&quot;hello!&quot;);
+&#125;
+</code></pre>
+<p>汇编：</p>
+<pre><code class="assembly">0040D818   mov         dword ptr [ebp-4],0
+0040D81F   jmp         fun+2Ah (0040d82a)
+0040D821   mov         eax,dword ptr [ebp-4]
+0040D824   add         eax,1
+0040D827   mov         dword ptr [ebp-4],eax
+0040D82A   mov         ecx,dword ptr [ebp-4]
+0040D82D   cmp         ecx,dword ptr [ebp+8]
+0040D830   jge         fun+41h (0040d841)
+0040D832   push        offset string &quot;hello!&quot; (00422f9c)
+0040D837   call        printf (0040d6c0)
+0040D83C   add         esp,4
+0040D83F   jmp         fun+21h (0040d821)
+0040D841   pop         edi
+0040D842   pop         esi
+0040D843   pop         ebx
+</code></pre>
+<p>for循环语句有下面的特点：</p>
+<p>第一个jmp指令之前为赋初值部分				<br>第一个jmp指令所跳转的地址为循环条件判定部分起始			<br>判断条件后面的跳转指令条件成立时跳转的循环体外面				<br>条件判断跳转指令所指向的地址上面有一个jmp，jmp地址为表达式3（第二个分号后的表达式）的起始位置				</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 1666739907@qq.com </span>
