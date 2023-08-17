@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Python矩阵学习记录 | Luino&#39;s Bold</title>
-  <meta name="keywords" content=" Python矩阵 ">
-  <meta name="description" content="Python矩阵学习记录 | Luino&#39;s Bold">
+  <title>滴水三期学习笔记（五） | Luino&#39;s Bold</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="滴水三期学习笔记（五） | Luino&#39;s Bold">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="switch的汇编switch语句的汇编总共有4种 形式一当分支少于4种时，其汇编本质上与if else相同，如下： c代码： void fun(int x) &amp;#123;&#x2F;&#x2F;传入2     switch(x) &amp;#123;         case 1:             printf(&quot;1&quot;);             break;         case 2:">
 <meta property="og:type" content="article">
@@ -953,9 +953,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-Python矩阵学习记录" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-滴水三期学习笔记（五）" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">Python矩阵学习记录</h1>
+        <h1 class="article-title">滴水三期学习笔记（五）</h1>
     
     <div class="article-meta">
         
@@ -965,27 +965,20 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="Python">Python</a>
+            <a  data-rel="Reverse">Reverse</a>
             
         </span>
         
         
-        <span class="tag">
-            <i class="iconfont icon-tag"></i>
-            
-            <a class="color4">Python矩阵</a>
-            
-        </span>
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2023-08-17 14:56:01'>2023-08-14 20:15</time>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2023-03-02 19:35:42'>2023-01-13 10:50</time>
-        
-    </div>
-    <div class="article-meta">
-        
-        <span>Count:714</span>
+        <span>Count:636</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -1004,7 +997,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E6%95%B0%E7%BB%84%E4%B8%8E%E6%95%B0%E7%BB%84%E6%8C%87%E9%92%88"><span class="toc-text">指针数组与数组指针</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E6%95%B0%E7%BB%84"><span class="toc-text">指针数组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E6%8C%87%E9%92%88"><span class="toc-text">数组指针</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88"><span class="toc-text">函数指针</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E5%90%88%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88%EF%BC%8C%E7%94%A8%E5%87%BD%E6%95%B0%E7%9A%84%E7%A1%AC%E7%BC%96%E7%A0%81%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8%E5%87%BD%E6%95%B0%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="toc-text">结合函数指针，用函数的硬编码直接使用函数的功能</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -1020,149 +1013,80 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>最近在写航电新生赛的题，遇到一道题中，需要通过矩阵快速幂来加速递归的过程，因为python中矩阵不熟悉，故进行学习并记录。</p>
-<p><strong>构造方法</strong></p>
-<p>首先构造矩阵需要导入numpy，有两种构造方法。</p>
-<pre><code class="python">import numpy
+        <pre><code class="c">char* a = &quot;hello&quot;;
+char b[] = &quot;hello&quot;;
+</code></pre>
+<p>上面两个变量的区别：</p>
+<p>上面一句产生的效果是，将常量”hello”的首地址赋给a；下面一句产生的效果是把字符串”hello”整体复制一份给b。因此，不能通过a对字符串进行修改，即只能读不能改；而b中的值已经复制到堆栈中了，可以修改。</p>
+<h3 id="指针数组与数组指针"><a href="#指针数组与数组指针" class="headerlink" title="指针数组与数组指针"></a>指针数组与数组指针</h3><p>用int类型举例。</p>
+<h4 id="指针数组"><a href="#指针数组" class="headerlink" title="指针数组"></a>指针数组</h4><pre><code class="c">int* a[5];
+</code></pre>
+<p>里面存储的内容是一些指针，都是int *类型的。</p>
+<h4 id="数组指针"><a href="#数组指针" class="headerlink" title="数组指针"></a>数组指针</h4><pre><code class="c">int (*a)[5];
+</code></pre>
+<p>里面存储的内容是一些指向某个数组首地址的指针。</p>
+<p>类型名为*<em>int (</em>)[5]*<em>，也带</em>，故宽度为4。变量名是a，这个变量里面存储了一个值，指向一个数组。</p>
+<pre><code class="c">a = (int (*)[5])10;
+//类型不相同赋值，强转
+a++;
+//去掉*后，剩下int [5]，宽度为20，故a++后变为30。
+</code></pre>
+<p>赋值：</p>
+<pre><code class="c">int a[10] = &#123;1,2,3,4,5,6,7,8,9,10&#125;;
 
-A = numpy.matrix([[1,1],[2,2]])
-B = numpy.mat(([[2,2],[1,1]]))
-print(A)
-print(B)
-#输出
-&#39;&#39;&#39;
-[[1 1]
- [2 2]]
-[[2 2]
- [1 1]]
-&#39;&#39;&#39;
-</code></pre>
-<p>中间部分用逗号间隔的[]可以理解为矩阵的每一行，输出行：</p>
-<pre><code class="python">print(A[0])
-print(A[1])
-#输出
-&#39;&#39;&#39;
-[[1 1]]
-[[2 2]]
-&#39;&#39;&#39;
-</code></pre>
-<p>输出单个元素：</p>
-<pre><code class="python">A = numpy.matrix([[1,2,1],[2,-1,3],[3,1,2]])
-print(A[0])#第一行
-print(A[0][0,0])#第一行第一个元素
-print(A[0,0])#同上
-#输出
-&#39;&#39;&#39;
-[[1 2 1]]
-1
-1
-&#39;&#39;&#39;
-</code></pre>
-<p><strong>shape获取矩阵行列值</strong></p>
-<pre><code class="python">A = numpy.matrix([[1,1],[2,2],[3,3]])
-print(A.shape)
-#输出
-&#39;&#39;&#39;
-(3, 2)
-&#39;&#39;&#39;
-</code></pre>
-<p><strong>A.T或A.transpose()进行矩阵转置</strong></p>
-<pre><code class="python">A = numpy.matrix([[1,1],[2,2],[3,3]])
-print(A.T)
-print(A.transpose())
-#输出
-&#39;&#39;&#39;
-[[1 2 3]
- [1 2 3]]
-[[1 2 3]
- [1 2 3]]
-&#39;&#39;&#39;
-</code></pre>
-<p><strong>矩阵相加减</strong></p>
-<pre><code class="python">A = numpy.matrix([[1,1],[2,2],[3,3]])
-B = numpy.matrix([[4,4],[5,5],[6,6]])
-print(A+B)
-print(B-A)
-#输出
-&#39;&#39;&#39;
-[[5 5]
- [7 7]
- [9 9]]
-[[3 3]
- [3 3]
- [3 3]]
-&#39;&#39;&#39;
-</code></pre>
-<p><strong>矩阵乘法</strong></p>
-<pre><code class="python">A = numpy.matrix([[1,1],[2,2],[3,3]])
-B = numpy.matrix([[1,2,3],[1,2,3]])
-print(numpy.dot(A,B))
-print(numpy.dot(B,A))#矩阵乘法不满足交换律
-#输出
-&#39;&#39;&#39;
-[[ 2  4  6]
- [ 4  8 12]
- [ 6 12 18]]
-[[14 14]
- [14 14]]
-&#39;&#39;&#39;
-</code></pre>
-<p>用dot进行矩阵乘法运算时需注意矩阵乘法运算的规则，否则报错。</p>
-<p><strong>用eye创建单位矩阵</strong></p>
-<pre><code class="python">print(numpy.eye(3))
-#输出
-&#39;&#39;&#39;
-[[1. 0. 0.]
- [0. 1. 0.]
- [0. 0. 1.]]
-&#39;&#39;&#39;
-</code></pre>
-<p><strong>trare计算矩阵的迹（主对角线元素的和）</strong></p>
-<pre><code class="python">B = numpy.matrix([[1,2,3],[1,2,3],[1,2,3]])
-print(numpy.trace(B))
-#输出
-&#39;&#39;&#39;
-6
-&#39;&#39;&#39;
-</code></pre>
-<p><strong>linalg.det()计算矩阵对应行列式的值（矩阵行列数必须相等）</strong></p>
-<pre><code class="python">A = numpy.matrix([[1,1],[2,3]])
-B = numpy.matrix([[1,2,3],[1,2,3],[1,2,3]])
-print(numpy.linalg.det(A))
-print(numpy.linalg.det(B))
-#输出
-&#39;&#39;&#39;
-1.0
-0.0
-&#39;&#39;&#39;
-</code></pre>
-<p><strong>linalg.inv()计算矩阵的逆矩阵（逆矩阵：若方阵A、B满足，AB&#x3D;BA&#x3D;E，称B为A的逆矩阵，矩阵A的行列式值不能为0）</strong></p>
-<pre><code class="python">A = numpy.matrix([[1,-2,1],[0,2,-1],[1,1,-2]])
-print(numpy.linalg.inv(A))
-#输出
-&#39;&#39;&#39;
-[[ 1.          1.          0.        ]
- [ 0.33333333  1.         -0.33333333]
- [ 0.66666667  1.         -0.66666667]]
-&#39;&#39;&#39;
-</code></pre>
-<p><strong>linalg.solve()解多元一次方程</strong></p>
-<pre><code class="python">a = [[1,2,1],[2,-1,3],[3,1,2]]#未知数系数
-A = numpy.array(a)
-b = [7,7,18]#常数项
-B = numpy.array(b)
-X = numpy.linalg.solve(A,B)
-print(X)
-#输出
-&#39;&#39;&#39;
-[ 7.  1. -2.]
-&#39;&#39;&#39;
+int (*px)[2];
 
-#验证结果是否正确
-print(numpy.dot(a,X))
-&#39;&#39;&#39;
-[ 7.  7. 18.]
-&#39;&#39;&#39;
+px = (int (*)[2])a;
+printf(&quot;%d&quot;,*(*(px)));//等同于px[0][0]
+//*b代表数组a的首地址，*(*(b))代表第一个元素，故输出1
+
+printf(&quot;%d \n&quot;,*(*(px+2)+2) );
+printf(&quot;%d \n&quot;,px[2][2]);
+//都输出7
+</code></pre>
+<p>数组指针本质上还是指针，所指向的类型不是定死的，一维二维多维数组、其它类型数据都可以指，但指向非数组类型数据就没有实际的意义（比如一个int型整数），要注意这点。</p>
+<h3 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h3><pre><code class="c">int Fun(int x, int y)&#123;
+    return x+y;
+&#125;
+int main()&#123;
+    int (*pFun)(int, int);
+    pFun = Function;
+    int a = pFun(1,2);
+    printf(&quot;%d &quot;,a);
+    //输出3
+&#125;
+</code></pre>
+<p>定义格式：*<em>int (<em>pFun)(int, int);</em></em></p>
+<p>pFun为变量名，前面的int表示指向的函数的返回类型，后面的**(int, int)**表示传入的参数类型。pFun同样也是指针类型，所以指向的类型不固定，但指向非函数类型的没有实际意义。</p>
+<h4 id="结合函数指针，用函数的硬编码直接使用函数的功能"><a href="#结合函数指针，用函数的硬编码直接使用函数的功能" class="headerlink" title="结合函数指针，用函数的硬编码直接使用函数的功能"></a>结合函数指针，用函数的硬编码直接使用函数的功能</h4><pre><code class="c">int Fun(int x,int y)&#123;
+    return x+y;
+&#125;
+int main()&#123;
+    int x = Fun(1,2);
+    printf(&quot;%d &quot;,x);
+    return 0;
+&#125;
+</code></pre>
+<p>实现上面函数的功能：</p>
+<pre><code class="c">char a[] = &#123;0x55,
+0x8B,0xEC,0x83,0xEC,0x44,
+0x53,0x56,0x57,0x8D,0x7D,
+0xBC,0xB9,0x11,0x00,0x00,
+0x00,0xB8,0xCC,0xCC,0xCC,
+0xCC,0xF3,0xAB,0x8B,0x45,
+0x08,0x03,0x45,0x0C,0x5F,
+0x5E,0x5B,0x8B,0xE5,0x5D,
+0xC3&#125;;
+//获取对应函数的硬编码
+
+int main()&#123;
+    int (*pFun)(int, int); 
+    pFun = (int (*)(int,int))&amp;a;
+    int x = pFun(1,2);
+
+    printf(&quot;%d &quot;,x);
+    return 0;
+&#125;
 </code></pre>
 
       

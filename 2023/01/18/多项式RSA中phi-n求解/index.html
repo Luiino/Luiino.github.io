@@ -6,17 +6,20 @@
   <meta name="keywords" content=" 多项式RSA ">
   <meta name="description" content="多项式RSA中phi_n求解 | Luino&#39;s Bold">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="返回值是如何传递的函数是怎么把返回值存到某个地方的，在函数外面是怎么得到这个返回值的，对应汇编代码 函数的返回值是：  8位，用al返回 16位，用ax返回 32位，用eax返回  返回值超过32位时，存在哪里？ int64 Function()&amp;#123;						     __int64 x &#x3D; 0x1234567890;					     return x;					 &amp;#125;">
+<meta name="description" content="switch的汇编switch语句的汇编总共有4种 形式一当分支少于4种时，其汇编本质上与if else相同，如下： c代码： void fun(int x) &amp;#123;&#x2F;&#x2F;传入2     switch(x) &amp;#123;         case 1:             printf(&quot;1&quot;);             break;         case 2:">
 <meta property="og:type" content="article">
-<meta property="og:title" content="滴水三期学习笔记（三）">
-<meta property="og:url" content="http://example.com/2023/08/06/%E6%BB%B4%E6%B0%B4%E4%B8%89%E6%9C%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/index.html">
+<meta property="og:title" content="滴水三期学习笔记（四）">
+<meta property="og:url" content="http://example.com/2023/08/13/%E6%BB%B4%E6%B0%B4%E4%B8%89%E6%9C%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89/index.html">
 <meta property="og:site_name" content="Luino&#39;s Bold">
-<meta property="og:description" content="返回值是如何传递的函数是怎么把返回值存到某个地方的，在函数外面是怎么得到这个返回值的，对应汇编代码 函数的返回值是：  8位，用al返回 16位，用ax返回 32位，用eax返回  返回值超过32位时，存在哪里？ int64 Function()&amp;#123;						     __int64 x &#x3D; 0x1234567890;					     return x;					 &amp;#125;">
+<meta property="og:description" content="switch的汇编switch语句的汇编总共有4种 形式一当分支少于4种时，其汇编本质上与if else相同，如下： c代码： void fun(int x) &amp;#123;&#x2F;&#x2F;传入2     switch(x) &amp;#123;         case 1:             printf(&quot;1&quot;);             break;         case 2:">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-08-06T08:26:46.000Z">
-<meta property="article:modified_time" content="2023-08-06T08:27:16.325Z">
+<meta property="og:image" content="http://example.com/images/image-20230813202251990.png">
+<meta property="og:image" content="http://example.com/images/image-20230813204022664.png">
+<meta property="article:published_time" content="2023-08-13T10:55:51.000Z">
+<meta property="article:modified_time" content="2023-08-13T13:51:40.334Z">
 <meta property="article:author" content="Luino">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/image-20230813202251990.png">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -165,7 +168,7 @@
     <li>
         <div class="all active" data-rel="All">All
             
-                <small>(55)</small>
+                <small>(56)</small>
             
         </div>
     </li>
@@ -237,7 +240,7 @@
         <div data-rel="Reverse">
             
             Reverse
-            <small>(6)</small>
+            <small>(7)</small>
         </div>
         
     </li>
@@ -267,8 +270,8 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="55">
-<input type="hidden" id="yelog_site_word_count" value="78.1k">
+<input type="hidden" id="yelog_site_posts_number" value="56">
+<input type="hidden" id="yelog_site_word_count" value="78.8k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -427,6 +430,15 @@
 
     
     <nav id="title-list-nav">
+        
+        
+        <a  class="All Reverse "
+           href="/2023/08/14/%E6%BB%B4%E6%B0%B4%E4%B8%89%E6%9C%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%94%EF%BC%89/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="滴水三期学习笔记（五）">滴水三期学习笔记（五）</span>
+            <span class="post-date" title="2023-08-14 20:15:01">2023/08/14</span>
+        </a>
         
         
         <a  class="All Reverse "
@@ -610,10 +622,10 @@
         
         
         <a  class="All Crypto学习记录 "
-           href="/2023/05/28/%E6%A0%BC%E5%AF%86%E7%A0%81%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/"
+           href="/2023/05/28/NRTU%E6%A0%BC%E5%AF%86%E7%A0%81/"
            data-tag="Lattices"
            data-author="" >
-            <span class="post-title" title="格密码学习之路">格密码学习之路</span>
+            <span class="post-title" title="NRTU格密码">NRTU格密码</span>
             <span class="post-date" title="2023-05-28 17:00:27">2023/05/28</span>
         </a>
         

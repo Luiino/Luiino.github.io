@@ -2,21 +2,24 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>格密码学习之路 | Luino&#39;s Bold</title>
-  <meta name="keywords" content=" Lattices ">
-  <meta name="description" content="格密码学习之路 | Luino&#39;s Bold">
+  <title>Luino&#39;s Bold</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="Luino&#39;s Bold">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="返回值是如何传递的函数是怎么把返回值存到某个地方的，在函数外面是怎么得到这个返回值的，对应汇编代码 函数的返回值是：  8位，用al返回 16位，用ax返回 32位，用eax返回  返回值超过32位时，存在哪里？ int64 Function()&amp;#123;						     __int64 x &#x3D; 0x1234567890;					     return x;					 &amp;#125;">
+<meta name="description" content="switch的汇编switch语句的汇编总共有4种 形式一当分支少于4种时，其汇编本质上与if else相同，如下： c代码： void fun(int x) &amp;#123;&#x2F;&#x2F;传入2     switch(x) &amp;#123;         case 1:             printf(&quot;1&quot;);             break;         case 2:">
 <meta property="og:type" content="article">
-<meta property="og:title" content="滴水三期学习笔记（三）">
-<meta property="og:url" content="http://example.com/2023/08/06/%E6%BB%B4%E6%B0%B4%E4%B8%89%E6%9C%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/index.html">
+<meta property="og:title" content="滴水三期学习笔记（四）">
+<meta property="og:url" content="http://example.com/2023/08/13/%E6%BB%B4%E6%B0%B4%E4%B8%89%E6%9C%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89/index.html">
 <meta property="og:site_name" content="Luino&#39;s Bold">
-<meta property="og:description" content="返回值是如何传递的函数是怎么把返回值存到某个地方的，在函数外面是怎么得到这个返回值的，对应汇编代码 函数的返回值是：  8位，用al返回 16位，用ax返回 32位，用eax返回  返回值超过32位时，存在哪里？ int64 Function()&amp;#123;						     __int64 x &#x3D; 0x1234567890;					     return x;					 &amp;#125;">
+<meta property="og:description" content="switch的汇编switch语句的汇编总共有4种 形式一当分支少于4种时，其汇编本质上与if else相同，如下： c代码： void fun(int x) &amp;#123;&#x2F;&#x2F;传入2     switch(x) &amp;#123;         case 1:             printf(&quot;1&quot;);             break;         case 2:">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-08-06T08:26:46.000Z">
-<meta property="article:modified_time" content="2023-08-06T08:27:16.325Z">
+<meta property="og:image" content="http://example.com/images/image-20230813202251990.png">
+<meta property="og:image" content="http://example.com/images/image-20230813204022664.png">
+<meta property="article:published_time" content="2023-08-13T10:55:51.000Z">
+<meta property="article:modified_time" content="2023-08-13T13:51:40.334Z">
 <meta property="article:author" content="Luino">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/image-20230813202251990.png">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -56,7 +59,7 @@
 
 
 <body>
-<aside class="nav">
+<aside class="nav mobile">
     <div class="nav-left">
         <a href="/"
    class="avatar_target">
@@ -165,7 +168,7 @@
     <li>
         <div class="all active" data-rel="All">All
             
-                <small>(55)</small>
+                <small>(56)</small>
             
         </div>
     </li>
@@ -237,7 +240,7 @@
         <div data-rel="Reverse">
             
             Reverse
-            <small>(6)</small>
+            <small>(7)</small>
         </div>
         
     </li>
@@ -267,8 +270,8 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="55">
-<input type="hidden" id="yelog_site_word_count" value="78.1k">
+<input type="hidden" id="yelog_site_posts_number" value="56">
+<input type="hidden" id="yelog_site_word_count" value="78.8k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -427,6 +430,15 @@
 
     
     <nav id="title-list-nav">
+        
+        
+        <a  class="All Reverse "
+           href="/2023/08/14/%E6%BB%B4%E6%B0%B4%E4%B8%89%E6%9C%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%94%EF%BC%89/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="滴水三期学习笔记（五）">滴水三期学习笔记（五）</span>
+            <span class="post-date" title="2023-08-14 20:15:01">2023/08/14</span>
+        </a>
         
         
         <a  class="All Reverse "
@@ -610,10 +622,10 @@
         
         
         <a  class="All Crypto学习记录 "
-           href="/2023/05/28/%E6%A0%BC%E5%AF%86%E7%A0%81%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/"
+           href="/2023/05/28/NRTU%E6%A0%BC%E5%AF%86%E7%A0%81/"
            data-tag="Lattices"
            data-author="" >
-            <span class="post-title" title="格密码学习之路">格密码学习之路</span>
+            <span class="post-title" title="NRTU格密码">NRTU格密码</span>
             <span class="post-date" title="2023-05-28 17:00:27">2023/05/28</span>
         </a>
         
@@ -939,60 +951,12 @@
         </div>
     </div>
 </aside>
-<div id="post">
+<div id="post" class="index">
     <div class="pjax">
-        <article id="post-格密码学习之路" class="article article-type-post" itemscope itemprop="blogPost">
+        <article class="index">
+            <div class="toc-ref">
     
-        <h1 class="article-title">格密码学习之路</h1>
-    
-    <div class="article-meta">
-        
-        
-        
-        <span class="book">
-            <i class="iconfont icon-category"></i>
-            
-            
-            <a  data-rel="Crypto学习记录">Crypto学习记录</a>
-            
-        </span>
-        
-        
-        <span class="tag">
-            <i class="iconfont icon-tag"></i>
-            
-            <a class="color4">Lattices</a>
-            
-        </span>
-        
-    </div>
-    <div class="article-meta">
-        
-            Created At : <time class="date" title='Updated At: 2023-07-28 13:30:07'>2023-05-28 17:00</time>
-        
-    </div>
-    <div class="article-meta">
-        
-        <span>Count:3.6k</span>
-        
-        
-        <span id="busuanzi_container_page_pv">
-            Views 👀 :<span id="busuanzi_value_page_pv">
-                <span class="count-comment">
-                    <span class="spinner">
-                      <div class="cube1"></div>
-                      <div class="cube2"></div>
-                    </span>
-                </span>
-            </span>
-        </span>
-        
-        
-    </div>
-    
-    <div class="toc-ref">
-    
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#NRTU%E6%A0%BC%E5%AF%86%E7%A0%81"><span class="toc-text">NRTU格密码</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%86%E9%92%A5%E7%94%9F%E6%88%90"><span class="toc-text">密钥生成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A0%E5%AF%86"><span class="toc-text">加密</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E5%AF%86"><span class="toc-text">解密</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E7%9F%A9%E9%98%B5"><span class="toc-text">构造矩阵</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DASCTF2022-07%E8%B5%8B%E8%83%BD%E8%B5%9B"><span class="toc-text">DASCTF2022.07赋能赛</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#easyNTRU"><span class="toc-text">easyNTRU</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#NTRURSA"><span class="toc-text">NTRURSA</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2"><span class="toc-text">巅峰极客</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#NTRU"><span class="toc-text">NTRU</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Myself"><span class="toc-text">Myself</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bold"><span class="toc-text">Bold</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -1005,401 +969,14 @@
     }
 </style>
 </div>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>水平有限，主要贴一下觉得好的文章，加一些自己的思路，以及一些例题。</p>
-<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/people/steven-yue-72/posts?page=2">(3 封私信 &#x2F; 4 条消息) Steven Yue - 知乎 (zhihu.com)</a></p>
-<p><a target="_blank" rel="noopener" href="https://lazzzaro.github.io/2020/11/07/crypto-%E6%A0%BC%E5%AF%86%E7%A0%81/">格密码 | Lazzaro (lazzzaro.github.io)</a></p>
-<p><a target="_blank" rel="noopener" href="https://jayxv.github.io/2020/05/12/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8BHNP/">密码学学习笔记 之 HNP | Van1sh的小屋 (jayxv.github.io)</a></p>
-<h2 id="NRTU格密码"><a href="#NRTU格密码" class="headerlink" title="NRTU格密码"></a>NRTU格密码</h2><h4 id="密钥生成"><a href="#密钥生成" class="headerlink" title="密钥生成"></a>密钥生成</h4><p>Alice需要选择四个整数参数$(N,p,q,d)$和4个次数为$N−1$的整系数多项式集合$L_f,L_g,L_φ,L_m$，其中$N$为素数，$p和q$不必为素数但$gcd(p,q)&#x3D;1$，且$q&gt;(6d+1)p$</p>
-<p>记$L(d1,d2)&#x3D;F(x)∈R$，$F(x)$有$d_1$个系数为$1$，$d_2$个系数为$−1$，其余为$0$。选取三个确定的整数$d_f,d_g,d_φ$，多项式集合 $L_f&#x3D;L(d_f,d_{f−1})，L_g&#x3D;L(d_g,d_g),L_φ&#x3D;L(d_φ,d_φ)$，而$L_m&#x3D; m∈R，m$的系数位于区间 $[\frac{−p−1}{2},\frac{p−1}{2}]$，其中p为素数。</p>
-<p>Bob再选择两个多项式$f∈L(d+1,d),g∈L(d,d)$，并且计算$f$在$R_p,R_q$中的逆$f_p,f_q$，若逆不存在则需重新选择$f$。</p>
-<p>即$f \cdot f_p &#x3D; 1 mod p$，$f \cdot f_q &#x3D; 1 mod q$</p>
-<p>而后Bob计算$h&#x3D;f_q\cdot g mod q$，$(N,p,q,ℎ)$作为公钥，$(f,f_p,f_q,g)$作为私钥。Alice仅知道公钥。</p>
-<h4 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h4><p>Alice发送信息 $m∈L_m（m已为多项式，系数满足要求）$ 给Bob，然后随机选择一个多项式 $r∈L$，然后利用Bob的公钥 $h$ 计算密文$e≡p\cdot r\cdot h+m(modq)$。</p>
-<h4 id="解密"><a href="#解密" class="headerlink" title="解密"></a>解密</h4><p>当Bob收到密文$e$后，首先利用私钥$f$计算</p>
-<p>$a&#x3D;f\cdot e &#x3D; f\cdot (p\cdot r\cdot f_q\cdot g+m) &#x3D; p\cdot r \cdot g+f\cdot m (mod q)$</p>
-<p>模上p得：$a \equiv f\cdot m (modp)$</p>
-<p>于是$m &#x3D; a \cdot f_p(modp)$。</p>
-<p>例题：</p>
-<h4 id="构造矩阵"><a href="#构造矩阵" class="headerlink" title="构造矩阵"></a>构造矩阵</h4><p>$\begin{pmatrix} I&amp;H \ 0&amp;q\ \end{pmatrix}$</p>
-<p>$H$是根据公钥多项式的系数生成的循环矩阵。</p>
-<p>构建一个这样的矩阵，然后进行LLL算法得到解密密钥。</p>
-<h3 id="DASCTF2022-07赋能赛"><a href="#DASCTF2022-07赋能赛" class="headerlink" title="DASCTF2022.07赋能赛"></a>DASCTF2022.07赋能赛</h3><h4 id="easyNTRU"><a href="#easyNTRU" class="headerlink" title="easyNTRU"></a>easyNTRU</h4><pre><code class="python">from Crypto.Hash import SHA3_256
-from Crypto.Cipher import AES
-from Crypto.Util.Padding import pad
-from secret import flag
+            <h3 id="Myself"><a href="#Myself" class="headerlink" title="Myself"></a>Myself</h3><p>在读大学牲😎</p>
+<p>没啥技术水平，一直在挣扎。学了一年多的Crypto，但菜的嘛不谈，最近有在学Reverse。</p>
+<h3 id="Bold"><a href="#Bold" class="headerlink" title="Bold"></a>Bold</h3><p>主要用来记录一些学习内容，生活上或许也会也会，反正随性发挥😃</p>
+<p>在CSDN上写过一段时间，后面在GitHub上搭建了博客，但后面不知道出了什么问题，现在又重新搭建了，这相当于第三个博客，文章我直接搬过来了。</p>
 
-N = 10
-p = 3
-q = 512
-d = 3
-assert q&gt;(6*d+1)*p
-#基础条件满足
-R.&lt;x&gt; = ZZ[]
-
-#d1 1s and #d2 -1s
-def T(d1, d2):
-    assert N &gt;= d1+d2
-    s = [1]*d1 + [-1]*d2 + [0]*(N-d1-d2)#系数条件满足
-    shuffle(s)#随机排序
-    return R(s)#建立多项式并返回
-
-def invertModPrime(f, p):
-    Rp = R.change_ring(Integers(p)).quotient(x^N-1)
-    return R(lift(1 / Rp(f)))
-
-def convolution(f, g):
-    return (f*g) % (x^N-1)
-
-def liftMod(f, q):
-    g = list(((f[i] + q//2) % q) - q//2 for i in range(N))
-    return R(g)
-
-def polyMod(f, q):
-    g = [f[i]%q for i in range(N)]
-    return R(g)
-
-def invertModPow2(f, q):
-    assert q.is_power_of(2)
-    g = invertModPrime(f,2)
-    while True:
-        r = liftMod(convolution(g,f),q)
-        if r == 1: return g
-        g = liftMod(convolution(g,2 - r),q)
-
-def genMessage():
-    result = list(randrange(p) - 1 for j in range(N))
-    return R(result)
-
-def genKey():
-  while True:
-    try:
-      f = T(d+1, d)
-      g = T(d, d)#计算私钥f、g
-      Fp = polyMod(invertModPrime(f, p), p)
-      Fq = polyMod(invertModPow2(f, q), q)#分别计算f在Rp和Rq中的逆，p为素数
-      break
-    except:
-      continue
-  h = polyMod(convolution(Fq, g), q)
-  return h, (f, g)
-
-def encrypt(m, h):
-  e = liftMod(p*convolution(h, T(d, d)) + m, q)#e=(p*h*r+m)%q
-  return e
-
-# Step 1
-h, secret = genKey()#获取公钥h，私钥f、g
-m = genMessage()#发送的信息m
-e = encrypt(m, h)#加密
-
-print(&#39;h = %s&#39; % h)
-print(&#39;e = %s&#39; % e)
-
-# Step 2
-sha3 = SHA3_256.new()
-sha3.update(bytes(str(m).encode(&#39;utf-8&#39;)))
-key = sha3.digest()
-
-cypher = AES.new(key, AES.MODE_ECB)
-c = cypher.encrypt(pad(flag, 32))
-print(&#39;c = %s&#39; % c)
-
-&quot;&quot;&quot;
-h = 39*x^9 + 60*x^8 + 349*x^7 + 268*x^6 + 144*x^5 + 469*x^4 + 449*x^3 + 165*x^2 + 248*x + 369
-e = -144*x^9 - 200*x^8 - 8*x^7 + 248*x^6 + 85*x^5 + 102*x^4 + 167*x^3 + 30*x^2 - 203*x - 78
-c = b&#39;\xb9W\x8c\x8b\x0cG\xde\x7fl\xf7\x03\xbb9m\x0c\xc4L\xfe\xe9Q\xad\xfd\xda!\x1a\xea@&#125;U\x9ay4\x8a\xe3y\xdf\xd5BV\xa7\x06\xf9\x08\x96=&quot;f\xc1\x1b\xd7\xdb\xc1j\x82F\x0b\x16\x06\xbcJMB\xc8\x80&#39;
-&quot;&quot;&quot;
-</code></pre>
-<p>相关分析还是写在代码里好了，题目比较长。</p>
-<p>很显然需要需要先求m，m出来了就是标准的AES过程。密钥生成和加密过程与上面的一致，按照流程来就行，需要注意的是$f$的生成，因为N&#x3D;10，私钥域很小，所以进行爆破即可，到这并未涉及到造格：</p>
-<pre><code class="python">import itertools
-from Crypto.Hash import SHA3_256
-from Crypto.Cipher import AES
-
-N = 10
-p = 3
-q = 512
-d = 3
-c = b&#39;\xb9W\x8c\x8b\x0cG\xde\x7fl\xf7\x03\xbb9m\x0c\xc4L\xfe\xe9Q\xad\xfd\xda!\x1a\xea@&#125;U\x9ay4\x8a\xe3y\xdf\xd5BV\xa7\x06\xf9\x08\x96=&quot;f\xc1\x1b\xd7\xdb\xc1j\x82F\x0b\x16\x06\xbcJMB\xc8\x80&#39;
-e = [-78, -203, 30, 167, 102, 85, 248, -8, -200, -144] 
-h = [369, 248, 165, 449, 469, 144, 268, 349, 60, 39]
-#为了简化一些流程，提取给的多项式系数，按照给加密函数重新构造多项式
-ls = [1, 0, -1]#系数从0，-1，1中选取
-R.&lt;x&gt; = ZZ[]
-
-e = R(e)
-h = R(h)
-
-#  这里要用到题目给出的多项式运算函数，所以导入
-def liftMod(f, q):
-    g = list(((f[i] + q//2) % q) - q//2 for i in range(N))
-    return R(g)
-
-def polyMod(f, q):
-    g = [f[i]%q for i in range(N)]
-    return R(g)4
-
-def invertModPrime(f, p):
-    Rp = R.change_ring(Integers(p)).quotient(x^N-1)
-    return R(lift(1 / Rp(f)))
-
-def convolution(f, g):
-    return (f*g) % (x^N-1)
-
-for i in itertools.product(ls, repeat=N):
-    f = list(i)
-    f = R(f)
-    a = liftMod(convolution(e, f), q)
-    try:
-        Fp = polyMod(invertModPrime(f, p), p)#查找有逆的
-    except:
-        continue
-    m = liftMod(convolution(a, Fp), p)
-    sha3 = SHA3_256.new()
-    sha3 = sha3.update(bytes(str(m).encode(&#39;utf-8&#39;)))
-    key = sha3.digest()
-    aes = AES.new(key, AES.MODE_ECB)
-    flag = aes.decrypt(c)
-    if b&quot;DASCTF&quot; in flag:
-        print(flag)
-        break
-</code></pre>
-<h4 id="NTRURSA"><a href="#NTRURSA" class="headerlink" title="NTRURSA"></a>NTRURSA</h4><pre><code class="python">from Crypto.Util.number import *
-from gmpy2 import *
-from secret import flag
-
-
-def gen():
-    p1 = getPrime(256)
-    while True:
-        f = getRandomRange(1, iroot(p1 // 2, 2)[0])
-        g = getRandomRange(iroot(p1 // 4, 2)[0], iroot(p1 // 2, 2)[0])
-        if gcd(f, p1) == 1 and gcd(f, g) == 1 and isPrime(g) == 1:
-            break
-    rand = getRandomRange(0, 2 ^ 20)
-    g1 = g ^^ rand
-    h = (inverse(f, p1) * g1) % p1
-    return h, p1, g, f, g1
-
-
-def gen_irreducable_poly(deg):
-    while True:
-        out = R.random_element(degree=deg)
-        if out.is_irreducible():
-            return out
-
-
-h, p1, g, f, g1 = gen()
-q = getPrime(1024)
-n = g * q 
-e = 0x10001
-c1 = pow(bytes_to_long(flag), e, n)
-hint = list(str(h))
-length = len(hint)
-bits = 16
-p2 = random_prime(2 ^ bits - 1, False, 2 ^ (bits - 1))
-R.&lt;x&gt; = PolynomialRing(GF(p2))
-P = gen_irreducable_poly(ZZ.random_element(length, 2 * length))
-Q = gen_irreducable_poly(ZZ.random_element(length, 2 * length))
-N = P * Q
-S.&lt;x&gt; = R.quotient(N)
-m = S(hint)
-c2 = m ^ e
-print(&quot;p1 =&quot;, p1)
-print(&quot;c1 =&quot;, c1)
-print(&quot;p2 =&quot;, p2)
-print(&quot;c2 =&quot;, c2)
-print(&quot;n =&quot;, n)
-print(&quot;N =&quot;, N)
-
-&#39;&#39;&#39;
-p1 = 106472061241112922861460644342336453303928202010237284715354717630502168520267
-c1 = 20920247107738496784071050239422540936224577122721266141057957551603705972966457203177812404896852110975768315464852962210648535130235298413611598658659777108920014929632531307409885868941842921815735008981335582297975794108016151210394446009890312043259167806981442425505200141283138318269058818777636637375101005540308736021976559495266332357714
-p2 = 64621
-c2 = 19921*x^174 + 49192*x^173 + 18894*x^172 + 61121*x^171 + 50271*x^170 + 11860*x^169 + 53128*x^168 + 38658*x^167 + 14191*x^166 + 9671*x^165 + 40879*x^164 + 15187*x^163 + 33523*x^162 + 62270*x^161 + 64211*x^160 + 54518*x^159 + 50446*x^158 + 2597*x^157 + 32216*x^156 + 10500*x^155 + 63276*x^154 + 27916*x^153 + 55316*x^152 + 30898*x^151 + 43706*x^150 + 5734*x^149 + 35616*x^148 + 14288*x^147 + 18282*x^146 + 22788*x^145 + 48188*x^144 + 34176*x^143 + 55952*x^142 + 9578*x^141 + 9177*x^140 + 22083*x^139 + 14586*x^138 + 9748*x^137 + 21118*x^136 + 155*x^135 + 64224*x^134 + 18193*x^133 + 33732*x^132 + 38135*x^131 + 51992*x^130 + 8203*x^129 + 8538*x^128 + 55203*x^127 + 5003*x^126 + 2009*x^125 + 45023*x^124 + 12311*x^123 + 21428*x^122 + 24110*x^121 + 43537*x^120 + 21885*x^119 + 50212*x^118 + 40445*x^117 + 17768*x^116 + 46616*x^115 + 4771*x^114 + 20903*x^113 + 47764*x^112 + 13056*x^111 + 50837*x^110 + 22313*x^109 + 39698*x^108 + 60377*x^107 + 59357*x^106 + 24051*x^105 + 5888*x^104 + 29414*x^103 + 31726*x^102 + 4906*x^101 + 23968*x^100 + 52360*x^99 + 58063*x^98 + 706*x^97 + 31420*x^96 + 62468*x^95 + 18557*x^94 + 1498*x^93 + 17590*x^92 + 62990*x^91 + 27200*x^90 + 7052*x^89 + 39117*x^88 + 46944*x^87 + 45535*x^86 + 28092*x^85 + 1981*x^84 + 4377*x^83 + 34419*x^82 + 33754*x^81 + 2640*x^80 + 44427*x^79 + 32179*x^78 + 57721*x^77 + 9444*x^76 + 49374*x^75 + 21288*x^74 + 44098*x^73 + 57744*x^72 + 63457*x^71 + 43300*x^70 + 1508*x^69 + 13775*x^68 + 23197*x^67 + 43070*x^66 + 20751*x^65 + 47479*x^64 + 18496*x^63 + 53392*x^62 + 10387*x^61 + 2317*x^60 + 57492*x^59 + 25441*x^58 + 52532*x^57 + 27150*x^56 + 33788*x^55 + 43371*x^54 + 30972*x^53 + 39583*x^52 + 36407*x^51 + 35564*x^50 + 44564*x^49 + 1505*x^48 + 47519*x^47 + 38695*x^46 + 43107*x^45 + 1676*x^44 + 42057*x^43 + 49879*x^42 + 29083*x^41 + 42241*x^40 + 8853*x^39 + 33546*x^38 + 48954*x^37 + 30352*x^36 + 62020*x^35 + 39864*x^34 + 9519*x^33 + 24828*x^32 + 34696*x^31 + 2387*x^30 + 27413*x^29 + 55829*x^28 + 40217*x^27 + 30205*x^26 + 42328*x^25 + 6210*x^24 + 52442*x^23 + 58495*x^22 + 2014*x^21 + 26452*x^20 + 33547*x^19 + 19840*x^18 + 5995*x^17 + 16850*x^16 + 37855*x^15 + 7221*x^14 + 32200*x^13 + 8121*x^12 + 23767*x^11 + 46563*x^10 + 51673*x^9 + 19372*x^8 + 4157*x^7 + 48421*x^6 + 41096*x^5 + 45735*x^4 + 53022*x^3 + 35475*x^2 + 47521*x + 27544
-n = 31398174203566229210665534094126601315683074641013205440476552584312112883638278390105806127975406224783128340041129316782549009811196493319665336016690985557862367551545487842904828051293613836275987595871004601968935866634955528775536847402581734910742403788941725304146192149165731194199024154454952157531068881114411265538547462017207361362857
-N = 25081*x^175 + 8744*x^174 + 9823*x^173 + 9037*x^172 + 6343*x^171 + 42205*x^170 + 28573*x^169 + 55714*x^168 + 17287*x^167 + 11229*x^166 + 42630*x^165 + 64363*x^164 + 50759*x^163 + 3368*x^162 + 20900*x^161 + 55947*x^160 + 7082*x^159 + 23171*x^158 + 48510*x^157 + 20013*x^156 + 16798*x^155 + 60438*x^154 + 58779*x^153 + 9289*x^152 + 10623*x^151 + 1085*x^150 + 23473*x^149 + 13795*x^148 + 2071*x^147 + 31515*x^146 + 42832*x^145 + 38152*x^144 + 37559*x^143 + 47653*x^142 + 37371*x^141 + 39128*x^140 + 48750*x^139 + 16638*x^138 + 60320*x^137 + 56224*x^136 + 41870*x^135 + 63961*x^134 + 47574*x^133 + 63954*x^132 + 9668*x^131 + 62360*x^130 + 15244*x^129 + 20599*x^128 + 28704*x^127 + 26857*x^126 + 34885*x^125 + 33107*x^124 + 17693*x^123 + 52753*x^122 + 60744*x^121 + 21305*x^120 + 63785*x^119 + 54400*x^118 + 17812*x^117 + 64549*x^116 + 20035*x^115 + 37567*x^114 + 38607*x^113 + 32783*x^112 + 24385*x^111 + 5387*x^110 + 5134*x^109 + 45893*x^108 + 58307*x^107 + 33821*x^106 + 54902*x^105 + 14236*x^104 + 58044*x^103 + 41257*x^102 + 46881*x^101 + 42834*x^100 + 1693*x^99 + 46058*x^98 + 15636*x^97 + 27111*x^96 + 3158*x^95 + 41012*x^94 + 26028*x^93 + 3576*x^92 + 37958*x^91 + 33273*x^90 + 60228*x^89 + 41229*x^88 + 11232*x^87 + 12635*x^86 + 17942*x^85 + 4*x^84 + 25397*x^83 + 63526*x^82 + 54872*x^81 + 40318*x^80 + 37498*x^79 + 52182*x^78 + 48817*x^77 + 10763*x^76 + 46542*x^75 + 36060*x^74 + 49972*x^73 + 63603*x^72 + 46506*x^71 + 44788*x^70 + 44905*x^69 + 46112*x^68 + 5297*x^67 + 26440*x^66 + 28470*x^65 + 15525*x^64 + 11566*x^63 + 15781*x^62 + 36098*x^61 + 44402*x^60 + 55331*x^59 + 61583*x^58 + 16406*x^57 + 59089*x^56 + 53161*x^55 + 43695*x^54 + 49580*x^53 + 62685*x^52 + 31447*x^51 + 26755*x^50 + 14810*x^49 + 3281*x^48 + 27371*x^47 + 53392*x^46 + 2648*x^45 + 10095*x^44 + 25977*x^43 + 22912*x^42 + 41278*x^41 + 33236*x^40 + 57792*x^39 + 7169*x^38 + 29250*x^37 + 16906*x^36 + 4436*x^35 + 2729*x^34 + 29736*x^33 + 19383*x^32 + 11921*x^31 + 26075*x^30 + 54616*x^29 + 739*x^28 + 38509*x^27 + 19118*x^26 + 20062*x^25 + 21280*x^24 + 12594*x^23 + 14974*x^22 + 27795*x^21 + 54107*x^20 + 1890*x^19 + 13410*x^18 + 5381*x^17 + 19500*x^16 + 47481*x^15 + 58488*x^14 + 26433*x^13 + 37803*x^12 + 60232*x^11 + 34772*x^10 + 1505*x^9 + 63760*x^8 + 20890*x^7 + 41533*x^6 + 16130*x^5 + 29769*x^4 + 49142*x^3 + 64184*x^2 + 55443*x + 45925
-&#39;&#39;&#39;
-</code></pre>
-<pre><code class="python">h, p1, g, f, g1 = gen()
-</code></pre>
-<p>生成密钥，且有下面的关系：</p>
-<ul>
-<li>$h &#x3D; f_{p1} * g1 \space mod \space p1$，$(f_{p1}是f关于p1的逆)$</li>
-<li>$g1 &#x3D; g \bigoplus {rand}$</li>
-</ul>
-<p>接着生成素数$q$与$g$相乘作为RSA加密flag的模数n。</p>
-<p>后面的部分是在多项式上进行RSA加密$h$，我一开始理解错了，以为直接异或能求出$m$。</p>
-<p>多项式以$p2$为域，比较小，且$P、Q$的生成是以$h$长度来决定的，所以可以直接分解多项式$N$得到$P、Q$。然后就能求$m$了。</p>
-<p>$m$得到了，那么$h$也能得到。</p>
-<p>有了$h$，应该就是从最上面的关系入手求出$g$来解最后的RSA了，当然这一步也是题目的重点。</p>
-<p>$h &#x3D; f_{p1} * g1 \space mod \space p1$变形为$h\cdot f - k\cdot p1&#x3D; g1$</p>
-<p>根据参数构造在最上面原理里面类似的矩阵：</p>
-<p>$\begin{pmatrix} 1&amp;h \ 0&amp;p1\ \end{pmatrix}$</p>
-<p>则有：</p>
-<p>$\begin{pmatrix} f&amp;{-k} \end{pmatrix}$ $\cdot$ $\begin{pmatrix} 1&amp;h \ 0&amp;p1\ \end{pmatrix}$ &#x3D; $\begin{pmatrix} f&amp;{g1} \end{pmatrix}$</p>
-<pre><code class="python">rand = getRandomRange(0, 2 ^ 20)
-</code></pre>
-<p>求出$g1$后，爆破$rand$求出$g$，代码如下：</p>
-<pre><code class="python">e = 0x10001
-p2 = 64621
-P.&lt;x&gt; = PolynomialRing(GF(p2))#注意这个得写在多项式的前面，找半天下面的factor总是报错，搞心态了
-c2 = ...
-N = ...
-
-P, Q = factor(N)[0][0], factor(N)[1][0]#得到最高次数
-phi = (p2^P.degree() - 1) * (p2^Q.degree() - 1)
-d = inverse_mod(e, phi)
-m2 = pow(c2, d, N)
-</code></pre>
-<p>多项式中欧拉函数的求法与普通的不同，之前的文章中有写到：</p>
-<p><a target="_blank" rel="noopener" href="https://luiino.github.io/2023/01/18/%E5%A4%9A%E9%A1%B9%E5%BC%8FRSA%E4%B8%ADphi-n%E6%B1%82%E8%A7%A3/">多项式RSA中phi_n求解 | Luino’s Bold (luiino.github.io)</a></p>
-<p>提取系数就得到了$h$，注意次数从高到低提取对应系数。</p>
-<pre><code>h = int((&quot;&quot;.join(list(map(str, list(m2))))))
-print(h)
-#88520242910362871448352317137540300262448941340486475602003226117035863930302
-</code></pre>
-<p>LLL算法求$g1$</p>
-<pre><code class="python">M = matrix([[1, h],[0, p1]])
-print(M.LLL())
-g1 = M.LLL()[0][1]
-&#39;&#39;&#39;
-[ 183610829622016944154542682943585488074  228679177303871981036829786447405151037]
-[-344695043550068372332452142815534169513  150576533629722940447408641799576269639]
-&#39;&#39;&#39;
-</code></pre>
-<p>这里不太能理解的地方是为什么$g1 &#x3D; M.LLL()[0][1]$</p>
-<p>接着爆破求$g$：</p>
-<pre><code class="python">g1 = 228679177303871981036829786447405151037
-n = ...
-c1 = ...
-e = 0x10001
-for r in range(0,2^20):
-    g = g1 ^^ r
-    if n % g == 0:
-        q = n // g
-        print(g,q)
-        break
-</code></pre>
-<p>有了$g,q$就是基础RSA了，不多bb。</p>
-<h3 id="巅峰极客"><a href="#巅峰极客" class="headerlink" title="巅峰极客"></a>巅峰极客</h3><h4 id="NTRU"><a href="#NTRU" class="headerlink" title="NTRU"></a>NTRU</h4><pre><code class="python">from Crypto.Util.number import *
-import gmpy2
-from flag import flag
-
-def generate():
-    p = getStrongPrime(2048)
-    while True:
-        f = getRandomNBitInteger(1024)
-        g = getStrongPrime(768)
-        h = gmpy2.invert(f, p) * g % p
-        return (p, f, g, h)
-
-def encrypt(plaintext, p, h):
-    m = bytes_to_long(plaintext)
-    r = getRandomNBitInteger(1024)
-    c = (r * h + m) % p
-    return c
-
-p, f, g, h = generate()
-c = encrypt(flag, p, h)
-with open(&quot;cipher.txt&quot;, &quot;w&quot;) as f:
-    f.write(&quot;h = &quot; + str(h) + &quot;\n&quot;)
-    f.write(&quot;p = &quot; + str(p) + &quot;\n&quot;)
-    f.write(&quot;c = &quot; + str(c) + &quot;\n&quot;)
-</code></pre>
-<pre><code class="python">h = 7257231567493321493497732423756001924698993879741072696808433246581786362611889417289029671240997843541696187487722285762633068287623369923457879458577466240950224087015909821079480431797917376609839097610864517760515986973340148901898582075413756737310797402537478388864632901178463429574227279668004092519322204990617969134092793157225082977967228366838748193084097651575835471869030934527383379794480007872562067799484905159381690179011192017159985260435844246766711550315143517066359521598424992244464723490166447105679062078049379153154659732304112563255058750656946353654402824529058734270363154894216317570784
-p = 23969137365202547728693945383611572667294904799854243194734466236017441545927679469239814785947383727854265554138290421827510545078908517696536495567625593439996528098119344504866817224169113920532528233185011693829122447604993468817512696036673804626830507903206709121383065701222707251053362179946170981868061834734684494881504724254812067180384269711822738708203454131838741703416329765575995359232573740932069147491776326045743679105041246906081872936901848272288949389026129761726749334006319072981386763830897454245553866145620689939497868469730297795063648030738668273210516497399954626983672357236110363894081
-c = 6388077150013017095358415295704360631706672647932184267739118115740221804173068089559645506533240372483689997499821300861865955720630884024099415936433339512125910973936154713306915269365877588850574948033131161679256849814325373882706559635563285860782658950169507940368219930971600522754831612134153314448445006958300840618894359885321144158064446236744722180819829183828290798747455324761671198097712539900569386477647697973195787663298318786718012522378981137877863153067057280649127202971806609339007027052518049995341356359016898069863799529357397514218249272201695539181908803360181347114492616706419618151757
-</code></pre>
-<p>$generate()$函数就是生成相关密钥，不多说了。直接看加密部分：</p>
-<p>$c \equiv (r \cdot h + m) \space mod \space p$</p>
-<p>$把h \equiv f_p \cdot g \space mod \space p，代入：$</p>
-<p>$c \equiv (r \cdot (f_p \cdot g ) + m) \space mod \space p$</p>
-<p>$f_p是f关于p的逆，那么可以得到：$</p>
-<p>$c \cdot f \equiv (r\cdot g + m\cdot f) \space mod \space p $</p>
-<p>$分析可知，(r\cdot g + m\cdot f)这部分是要小于p的，故：$</p>
-<p>$c \cdot f &#x3D; r\cdot g + m\cdot f，两边模上g：$</p>
-<p>$c \cdot f \space mod \space g&#x3D; m\cdot f \space mod \space g$</p>
-<p>$记a &#x3D; c \cdot f \space mod \space g，则：$</p>
-<p>$a &#x3D; m\cdot f \space mod \space g$</p>
-<p>$\Rightarrow m &#x3D; a\cdot f^{-1} \space mod \space g$</p>
-<p>所以，如果能求$f,g$便能解了，造格：</p>
-<p>$m &#x3D; \begin{pmatrix} 1&amp;h \ 0&amp;p \end{pmatrix}$</p>
-<pre><code class="python">h = ...
-p = ...
-c = ...
-
-m = matrix([[1, h],[0, p]])
-
-print(m.LLL())
-f, g = m.LLL()[0][0],m.LLL()[0][1]
-
-a = c*f % p % g
-m = inverse_mod(f,g)*a % g
-print(long_to_bytes(m))
-#b&#39;flag&#123;c3bb1f88-2c0b-48fc-9902-beada6d50df6&#125;&#39;
-</code></pre>
-<p>注意求$a$时，初始域不能忘记模。然后$f^{-1}$不是在定义中关于$p$的逆，这是后面在我们自己定义的关于$g$的逆，一开始我这里出了点问题。</p>
-
-      
-       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 1666739907@qq.com </span>
-    </div>
-</article>
-
-
-
-
-
-
-
-    
-        <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-    "HTML-CSS": {
-        preferredFont: "TeX",
-        availableFonts: ["STIX","TeX"],
-        linebreaks: { automatic:true },
-        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
-    },
-    tex2jax: {
-        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
-        processEscapes: true,
-        ignoreClass: "tex2jax_ignore|dno",
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-    TeX: {
-        equationNumbers: { autoNumber: "AMS" },
-        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
-        Macros: { href: "{}" }
-    },
-    messageStyle: "none"
-    });
-</script>
-<!-- 给MathJax元素添加has-jax class -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-<!-- 通过连接CDN加载MathJax的js代码 -->
-<script type="text/javascript" async
-        src="//cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
-<input type="hidden" id="MathJax-js"
-        value="//cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
-</input>
-    
-
-
-
-
+        </article>
+        
+        
     </div>
     <div class="copyright">
         <p class="footer-entry">
@@ -1408,11 +985,11 @@ print(long_to_bytes(m))
 <p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
 
     </div>
-    <div class="full-toc">
-        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+</div>
+<div class="full-toc">
+    <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
 <a class="" id="rocket" ></a>
 
-    </div>
 </div>
 
 </body>
