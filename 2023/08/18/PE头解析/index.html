@@ -2,21 +2,20 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>滴水三期学习笔记（一） | Luino&#39;s Bold</title>
+  <title>PE头解析 | Luino&#39;s Bold</title>
   <meta name="keywords" content="">
-  <meta name="description" content="滴水三期学习笔记（一） | Luino&#39;s Bold">
+  <meta name="description" content="PE头解析 | Luino&#39;s Bold">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="记录一下一些常用语法，总是每次想写又要去搜。 单边括号$$a&#x3D;\left{\begin{matrix} x \ y\end{matrix}\right.$$ $$ a&#x3D;\left\&amp;#123; \begin&amp;#123;matrix&amp;#125;  x \\  y  \end&amp;#123;matrix&amp;#125; \right. $$  $$\left.\begin{matrix}x \y\e">
+<meta name="description" content="CryptoEzRSAhint用不上，e&#x3D;3直接开方就好 FunnyEncrypt✧✡✭ ✡✮ ✣✴✯ ✤✶✬✬✱ ✬✤ ✱✦✢✥✮✯✧✧, ✴✬✷✯ ✡✧ ✣✴✯ ✶✡✰✴✣. ✡✣ ❂✢✡✮✰✧ ✩✬✸✤✬✢✣, ✤✦✡✣✴, ✦✮✱ ✩✬✮✤✡✱✯✮✩✯. ✡✣ ✰✡✲✯✧ ✳✧ ✰✳✡✱✦✮✩✯ ★✴✯✮ ★✯ ✦✢✯ ✶✬✧✣, ✦✮✱ ✰✡✲✯✧ ✧✳✷✷✬✢✣ ★✴✯✮ ★">
 <meta property="og:type" content="article">
-<meta property="og:title" content="markdown常用语法">
-<meta property="og:url" content="http://example.com/2023/08/21/markdown%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95/index.html">
+<meta property="og:title" content="NSSCTF-2nd-2023">
+<meta property="og:url" content="http://example.com/2023/08/29/NSSCTF-2nd-2023/index.html">
 <meta property="og:site_name" content="Luino&#39;s Bold">
-<meta property="og:description" content="记录一下一些常用语法，总是每次想写又要去搜。 单边括号$$a&#x3D;\left{\begin{matrix} x \ y\end{matrix}\right.$$ $$ a&#x3D;\left\&amp;#123; \begin&amp;#123;matrix&amp;#125;  x \\  y  \end&amp;#123;matrix&amp;#125; \right. $$  $$\left.\begin{matrix}x \y\e">
+<meta property="og:description" content="CryptoEzRSAhint用不上，e&#x3D;3直接开方就好 FunnyEncrypt✧✡✭ ✡✮ ✣✴✯ ✤✶✬✬✱ ✬✤ ✱✦✢✥✮✯✧✧, ✴✬✷✯ ✡✧ ✣✴✯ ✶✡✰✴✣. ✡✣ ❂✢✡✮✰✧ ✩✬✸✤✬✢✣, ✤✦✡✣✴, ✦✮✱ ✩✬✮✤✡✱✯✮✩✯. ✡✣ ✰✡✲✯✧ ✳✧ ✰✳✡✱✦✮✩✯ ★✴✯✮ ★✯ ✦✢✯ ✶✬✧✣, ✦✮✱ ✰✡✲✯✧ ✧✳✷✷✬✢✣ ★✴✯✮ ★">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-08-21T07:41:36.000Z">
-<meta property="article:modified_time" content="2023-08-21T13:04:42.789Z">
+<meta property="article:published_time" content="2023-08-29T05:46:29.000Z">
+<meta property="article:modified_time" content="2023-08-29T08:55:55.759Z">
 <meta property="article:author" content="Luino">
-<meta property="article:tag" content="markdown">
 <meta name="twitter:card" content="summary">
 
 
@@ -166,7 +165,7 @@
     <li>
         <div class="all active" data-rel="All">All
             
-                <small>(59)</small>
+                <small>(65)</small>
             
         </div>
     </li>
@@ -178,7 +177,7 @@
         <div data-rel="Match">
             
             Match
-            <small>(21)</small>
+            <small>(23)</small>
         </div>
         
     </li>
@@ -193,7 +192,7 @@
         <div data-rel="Crypto学习记录">
             
             Crypto学习记录
-            <small>(21)</small>
+            <small>(22)</small>
         </div>
         
     </li>
@@ -238,7 +237,22 @@
         <div data-rel="Reverse">
             
             Reverse
-            <small>(8)</small>
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="滴水笔记">
+            
+            滴水笔记
+            <small>(9)</small>
         </div>
         
     </li>
@@ -283,8 +297,8 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="59">
-<input type="hidden" id="yelog_site_word_count" value="80.5k">
+<input type="hidden" id="yelog_site_posts_number" value="65">
+<input type="hidden" id="yelog_site_word_count" value="85.7k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -434,6 +448,10 @@
             </li>
         
             <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>roca</a>
+            </li>
+        
+            <li class="article-tag-list-item">
                 <i class="iconfont icon-tag"></i><a>RSA</a>
             </li>
         
@@ -451,6 +469,60 @@
 
     
     <nav id="title-list-nav">
+        
+        
+        <a  class="All Match "
+           href="/2023/08/29/NSSCTF-2nd-2023/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="NSSCTF-2nd-2023">NSSCTF-2nd-2023</span>
+            <span class="post-date" title="2023-08-29 13:46:29">2023/08/29</span>
+        </a>
+        
+        
+        <a  class="All 滴水笔记 "
+           href="/2023/08/28/FileBuffer%E5%92%8CImageBuffer/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="FileBuffer和ImageBuffer">FileBuffer和ImageBuffer</span>
+            <span class="post-date" title="2023-08-28 20:10:25">2023/08/28</span>
+        </a>
+        
+        
+        <a  class="All 滴水笔记 "
+           href="/2023/08/28/%E8%8A%82%E8%A1%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="节表">节表</span>
+            <span class="post-date" title="2023-08-28 16:30:43">2023/08/28</span>
+        </a>
+        
+        
+        <a  class="All 滴水笔记 "
+           href="/2023/08/28/%E7%BC%96%E5%86%99%E7%A8%8B%E5%BA%8F%E8%BE%93%E5%87%BAPE%E5%A4%B4%E4%BF%A1%E6%81%AF/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="编写程序输出PE头信息">编写程序输出PE头信息</span>
+            <span class="post-date" title="2023-08-28 16:12:26">2023/08/28</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/08/25/WMCTF2023/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="WMCTF2023">WMCTF2023</span>
+            <span class="post-date" title="2023-08-25 11:11:40">2023/08/25</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/08/24/Roca%E9%97%AE%E9%A2%98/"
+           data-tag="roca"
+           data-author="" >
+            <span class="post-title" title="Roca问题">Roca问题</span>
+            <span class="post-date" title="2023-08-24 10:07:09">2023/08/24</span>
+        </a>
         
         
         <a  class="All else "
@@ -471,47 +543,47 @@
         </a>
         
         
-        <a  class="All Reverse "
-           href="/2023/08/18/%E6%BB%B4%E6%B0%B4%E4%B8%89%E6%9C%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%85%AD%EF%BC%89/"
+        <a  class="All 滴水笔记 "
+           href="/2023/08/18/PE%E5%A4%B4%E8%A7%A3%E6%9E%90/"
            data-tag=""
            data-author="" >
-            <span class="post-title" title="滴水三期学习笔记（六）">滴水三期学习笔记（六）</span>
+            <span class="post-title" title="PE头解析">PE头解析</span>
             <span class="post-date" title="2023-08-18 11:29:01">2023/08/18</span>
         </a>
         
         
-        <a  class="All Reverse "
-           href="/2023/08/14/%E6%BB%B4%E6%B0%B4%E4%B8%89%E6%9C%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%94%EF%BC%89/"
+        <a  class="All 滴水笔记 "
+           href="/2023/08/14/%E6%8C%87%E9%92%88/"
            data-tag=""
            data-author="" >
-            <span class="post-title" title="滴水三期学习笔记（五）">滴水三期学习笔记（五）</span>
+            <span class="post-title" title="指针">指针</span>
             <span class="post-date" title="2023-08-14 20:15:01">2023/08/14</span>
         </a>
         
         
-        <a  class="All Reverse "
-           href="/2023/08/13/%E6%BB%B4%E6%B0%B4%E4%B8%89%E6%9C%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89/"
+        <a  class="All 滴水笔记 "
+           href="/2023/08/13/%E5%B8%B8%E7%94%A8%E8%AF%AD%E5%8F%A5%E6%B1%87%E7%BC%96/"
            data-tag=""
            data-author="" >
-            <span class="post-title" title="滴水三期学习笔记（四）">滴水三期学习笔记（四）</span>
+            <span class="post-title" title="常用语句汇编">常用语句汇编</span>
             <span class="post-date" title="2023-08-13 18:55:51">2023/08/13</span>
         </a>
         
         
-        <a  class="All Reverse "
-           href="/2023/08/06/%E6%BB%B4%E6%B0%B4%E4%B8%89%E6%9C%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/"
+        <a  class="All 滴水笔记 "
+           href="/2023/08/06/%E5%8F%82%E6%95%B0%E3%80%81%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E3%80%81%E8%BF%94%E5%9B%9E%E5%80%BC/"
            data-tag=""
            data-author="" >
-            <span class="post-title" title="滴水三期学习笔记（三）">滴水三期学习笔记（三）</span>
+            <span class="post-title" title="参数、局部变量、返回值">参数、局部变量、返回值</span>
             <span class="post-date" title="2023-08-06 16:26:46">2023/08/06</span>
         </a>
         
         
-        <a  class="All Reverse "
-           href="/2023/08/05/%E6%BB%B4%E6%B0%B4%E4%B8%89%E6%9C%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/"
+        <a  class="All 滴水笔记 "
+           href="/2023/08/05/%E5%9F%BA%E7%A1%80%E7%A8%8B%E5%BA%8F%E9%80%86%E5%90%91/"
            data-tag=""
            data-author="" >
-            <span class="post-title" title="滴水三期学习笔记（二）">滴水三期学习笔记（二）</span>
+            <span class="post-title" title="基础程序逆向">基础程序逆向</span>
             <span class="post-date" title="2023-08-05 15:46:34">2023/08/05</span>
         </a>
         
@@ -525,11 +597,11 @@
         </a>
         
         
-        <a  class="All Reverse "
-           href="/2023/08/04/%E6%BB%B4%E6%B0%B4%E4%B8%89%E6%9C%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/"
+        <a  class="All 滴水笔记 "
+           href="/2023/08/04/%E5%87%BD%E6%95%B0/"
            data-tag=""
            data-author="" >
-            <span class="post-title" title="滴水三期学习笔记（一）">滴水三期学习笔记（一）</span>
+            <span class="post-title" title="函数">函数</span>
             <span class="post-date" title="2023-08-04 15:02:43">2023/08/04</span>
         </a>
         
@@ -1001,9 +1073,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-滴水三期学习笔记（一）" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-PE头解析" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">滴水三期学习笔记（一）</h1>
+        <h1 class="article-title">PE头解析</h1>
     
     <div class="article-meta">
         
@@ -1013,7 +1085,7 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="Reverse">Reverse</a>
+            <a  data-rel="滴水笔记">滴水笔记</a>
             
         </span>
         
@@ -1021,12 +1093,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2023-08-04 15:03:17'>2023-08-04 15:02</time>
+            Created At : <time class="date" title='Updated At: 2023-08-28 20:29:08'>2023-08-18 11:29</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:2.1k</span>
+        <span>Count:574</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -1045,7 +1117,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A3%B8%E5%87%BD%E6%95%B0"><span class="toc-text">裸函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E7%BA%A6%E5%AE%9A"><span class="toc-text">常见的函数调用约定</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#PE%E6%96%87%E4%BB%B6%E7%9A%84%E4%B8%A4%E7%A7%8D%E7%8A%B6%E6%80%81"><span class="toc-text">PE文件的两种状态</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E6%98%A0%E5%B0%84"><span class="toc-text">文件映射</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8B%89%E4%BC%B8"><span class="toc-text">拉伸</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E8%8A%82"><span class="toc-text">分节</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DOC%E5%A4%B4"><span class="toc-text">DOC头:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NT%E5%A4%B4%EF%BC%88%E5%8C%85%E5%90%AB%E6%A0%87%E5%87%86PE%E5%A4%B4%E5%92%8C%E5%8F%AF%E9%80%89PE%E5%A4%B4%EF%BC%89"><span class="toc-text">NT头（包含标准PE头和可选PE头）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E5%87%86PE%E5%A4%B4"><span class="toc-text">标准PE头</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E9%80%89PE%E5%A4%B4"><span class="toc-text">可选PE头</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -1061,300 +1133,76 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="E:/My_bold/bold/source/images/image-20230730113710435.png" alt="image-20230730113710435"></p>
-<h3 id="裸函数"><a href="#裸函数" class="headerlink" title="裸函数"></a>裸函数</h3><pre><code class="c">void __declspec(naked) Plus()&#123;
-    __asm&#123;
-        ret
-    &#125;//自己加上汇编代码
-&#125;
+        <h3 id="PE文件的两种状态"><a href="#PE文件的两种状态" class="headerlink" title="PE文件的两种状态"></a>PE文件的两种状态</h3><h4 id="文件映射"><a href="#文件映射" class="headerlink" title="文件映射"></a>文件映射</h4><p>PE文件在硬盘上和在内存上的状态是不一样的。</p>
+<p>PE文件在磁盘上的状态称作FileBuffer，在内存中的状态称为ImageBuffer。</p>
+<p>PE文件进入内存会经过”拉伸”的过程。这使得两种状态下的大小会不同。</p>
+<h4 id="拉伸"><a href="#拉伸" class="headerlink" title="拉伸"></a>拉伸</h4><p>根据内存对齐的大小进行拉伸（内存对齐的大小由编译器决定）。</p>
+<p>拉伸的目的：节省硬盘空间。</p>
+<h4 id="分节"><a href="#分节" class="headerlink" title="分节"></a>分节</h4><p>PE文件在硬盘上和内存中都是分成一节一节的。</p>
+<p>分节目的：1、节省硬盘空间；2、节省内存，以qq多开为例，某些只读的数据节不会被修改，可多次利用。</p>
+<p><img src="E:\My_bold\bold\source\images\image-20230828145557822.png" alt="image-20230828145557822"></p>
+<h3 id="DOC头"><a href="#DOC头" class="headerlink" title="DOC头:"></a>DOC头:</h3><pre><code>WORD	e_magic;*//MZ标记,用来标记是否为可执行文件 
+WORD	e_cblp;
+WORD	e_cp;
+WORD	e_crlc;
+WORD	e_cparhdr;
+WORD	e_minalloc;
+WORD	e_maxalloc;
+WORD	e_ss;
+WORD	e_sp;
+WORD	e_csum;
+WORD	e_ip;
+WORD	e_cs;
+WORD	e_lfarlc;
+WORD	e_ovno;
+WORD	e_res[4];
+WORD	e_oemid;
+WORD	e_oeminfo;
+WORD	e__res2[10];
+DWORD 	e_lfanew;*//MZ标记,用来标记是否为可执行文件
 </code></pre>
-<p>让编译器和连接器不生成对应汇编代码。</p>
-<p>用裸函数实现x+y的功能：</p>
-<pre><code class="c">int __declspec(naked) Plus(int x,int y)&#123;
-    //此时x和y已经进入栈中，分别是[ebp+8]和[ebp+0xC]
-    __asm&#123;
-        //保留栈底
-        push ebp
-        //提升堆栈
-        mov ebp,esp
-        sub esp,0x40
-        //保留现场
-        push ebx
-        push esi
-        push edi
-        //填充缓冲区    
-        mov eax,0xCCCCCCCC
-        mov ecx,0x10
-        lea edi,dword ptr ds:[ebp-0x40]
-        rep stosd
-        //函数核心功能
-        mov eax,dword ptr ds:[ebp+8]
-        add eax,dword ptr ds:[ebp+0xC]
-        //恢复现场
-        pop edi
-        pop esi
-        pop ebx
-        //降低堆栈
-        mov esp,ebp
-        //恢复栈底
-        pop ebp
-        ret
-    &#125;
-&#125;
+<h3 id="NT头（包含标准PE头和可选PE头）"><a href="#NT头（包含标准PE头和可选PE头）" class="headerlink" title="NT头（包含标准PE头和可选PE头）"></a>NT头（包含标准PE头和可选PE头）</h3><pre><code>DWORD	Signature;// PE签名 相对该结构的偏移0x00
+_IMAGE_FILE_HEADER	FileHeader;//标准PE头
+_IMAGE_OPTIONAL_HEADER	OptionalHeader;//可选PE头
 </code></pre>
-<p>练习，汇编实现：</p>
-<pre><code class="c">int plus(int x,int y,int z)			
-&#123;			
-    int a = 2;		
-    int b = 3;		
-    int c = 4;		
-    return x+y+z+a+b+c;		
-&#125;			
+<h3 id="标准PE头"><a href="#标准PE头" class="headerlink" title="标准PE头"></a>标准PE头</h3><pre><code>WORD	Machine;*//程序运行的CPU型号
+WORD	NumberOfSections;*//文件的节的总数
+DWORD 	TimeDatestamp;*//时间戳：文件的创建时间，编译器填写的
+DWORD 	PointerToSymbolTable;
+DWORD 	NumberOfSymbols;
+WORD	SizeOFOptionalHeader;*//可选PE头的大小
+WORD	characteristics;*//PE文件属性
 </code></pre>
-<pre><code class="c">    __asm &#123;
-        push ebp
-        mov ebp,esp
-        sub esp,0x4C
-        push ebx
-        push esi
-        push edi
-        mov eax,0xCCCCCCCC
-        mov ecx,0x13
-        lea edi,dword ptr ds:[ebp-0x40]
-        rep stos dword ptr [edi]
-        mov dword ptr [ebp-4],2
-        mov dword ptr [ebp-8],3
-        mov dword ptr [ebp-0xC],4
-        mov eax,dword ptr ds:[ebp+8]
-        add eax,dword ptr ds:[ebp+0xC]
-        add eax,dword ptr ds:[ebp+0x10]
-        add eax,dword ptr ds:[ebp-4]
-        add eax,dword ptr ds:[ebp-8]
-        add eax,dword ptr ds:[ebp-0XC]
-
-        pop edi
-        pop esi
-        pop ebx
-        mov esp,ebp
-        pop ebp
-        ret
-&#125;
-</code></pre>
-<h3 id="常见的函数调用约定"><a href="#常见的函数调用约定" class="headerlink" title="常见的函数调用约定"></a>常见的函数调用约定</h3><p><strong>__cdecl(默认)</strong></p>
-<p>参数压栈顺序：从右至左入栈</p>
-<p>平衡堆栈：调用者清理堆栈（即哪个函数调用的，哪个函数来平衡堆栈，外平栈）</p>
-<p><strong>__stdcall</strong></p>
-<p>参数压栈顺序：从右至左入栈</p>
-<p>平衡堆栈：自身清理堆栈（即在调用的函数里面平衡堆栈，内平栈）</p>
-<p><strong>__fastcall</strong></p>
-<p>参数压栈顺序：ECX&#x2F;EDX传送前两个参数，剩下的参数从右至左入栈</p>
-<p>平衡堆栈：自身清理堆栈</p>
-<p><strong>很显然，对于__fastcall，当传入的参数个数小于等于2时，不需要平衡堆栈；当传入的参数个数大于2时，使用内平栈。所以当传入的参数个数小于等于2时，使用__fastcall，用寄存器传送参数速度会快很多。另一个需要注意的是，ret 后值不一定代表了参数的个数，使用__fastcall需要额外加上两个寄存器的参数</strong></p>
-<p>main函数的识别：</p>
-<p>main函数被调用前要先调用的函数如下：</p>
-<pre><code class="c">GetVersion()
-_heap_init()
-GetCommandLineA()
-_crtGetEnvironmentStringsA()
-_setargv()
-_setenvp()
-_cinit()
-</code></pre>
-<p>例题分析：</p>
-<p>找main的入口点，找到上面调用main前需调用的函数后，接着往下找传三个参数的地方（这里是GetCommandLineA()函数后）：</p>
-<pre><code class="assembly">PUSH EDX
-MOV EAX,DWORD PTR DS:[4225F4]
-PUSH EAX
-MOV ECX,DWORD PTR DS:[4225F0]
-PUSH ECX
-CALL 00401014
-ADD ESP,0C
-</code></pre>
-<p>那么CALL 00401014就是入口，进入main：</p>
-<pre><code class="assembly">00401110  /&gt; \55            PUSH EBP;保留栈底
-00401111  |.  8BEC          MOV EBP,ESP
-00401113  |.  83EC 44       SUB ESP,44;提升堆栈
-00401116  |.  53            PUSH EBX
-00401117  |.  56            PUSH ESI
-00401118  |.  57            PUSH EDI;保留现场
-00401119  |.  8D7D BC       LEA EDI,[EBP-44]
-0040111C  |.  B9 11000000   MOV ECX,11
-00401121  |.  B8 CCCCCCCC   MOV EAX,CCCCCCCC
-00401126  |.  F3:AB         REP STOS DWORD PTR ES:[EDI];填充缓冲区
-;注意这上面的部分是保存调用main函数的函数而生成的汇编，我们分析main从下面这一行开始分析
-00401128  |.  6A 07         PUSH 7
-0040112A  |.  6A 06         PUSH 6
-0040112C  |.  6A 04         PUSH 4
-0040112E  |.  BA 03000000   MOV EDX,3
-00401133  |.  B9 01000000   MOV ECX,1;传入5个参数，可以知道main采用的是__fastcall，这里我分析错的地方是：1和3是交给寄存器的，实际不用压入堆栈，我一直当成压入堆栈，然后后面就分析错了。。。
-00401138  |.  E8 DCFEFFFF   CALL 00401019;调用函数
-0040113D  |.  8945 FC       MOV DWORD PTR SS:[EBP-4],EAX
-00401140  |.  8B45 FC       MOV EAX,DWORD PTR SS:[EBP-4]
-00401143  |.  50            PUSH EAX
-00401144  |.  68 0CF14100   PUSH OFFSET 0041F10C                     ; ASCII &quot;%d&quot;
-00401149  |.  E8 92A60000   CALL 0040B7E0
-0040114E  |.  83C4 08       ADD ESP,8
-00401151  |.  33C0          XOR EAX,EAX
-00401153  |.  5F            POP EDI
-00401154  |.  5E            POP ESI
-00401155  |.  5B            POP EBX
-00401156  |.  83C4 44       ADD ESP,44
-00401159  |.  3BEC          CMP EBP,ESP
-0040115B  |.  E8 10000000   CALL 00401170
-00401160  |.  8BE5          MOV ESP,EBP
-00401162  |.  5D            POP EBP
-00401163  \.  C3            RETN
-;从左至右依次是地址，硬编码，汇编代码，我就不改了，有点麻烦
-</code></pre>
-<p>进入CALL 00401019：</p>
-<pre><code class="assembly">004010A0  /&gt; \55            PUSH EBP;保留栈底
-004010A1  |.  8BEC          MOV EBP,ESP
-004010A3  |.  83EC 50       SUB ESP,50;提升堆栈
-004010A6  |.  53            PUSH EBX
-004010A7  |.  56            PUSH ESI
-004010A8  |.  57            PUSH EDI
-004010A9  |.  51            PUSH ECX;保留现场
-004010AA  |.  8D7D B0       LEA EDI,[EBP-50]
-004010AD  |.  B9 14000000   MOV ECX,14
-004010B2  |.  B8 CCCCCCCC   MOV EAX,CCCCCCCC
-004010B7  |.  F3:AB         REP STOS DWORD PTR ES:[EDI];填充缓冲区
-004010B9  |.  59            POP ECX
-004010BA  |.  8955 F8       MOV DWORD PTR SS:[EBP-8],EDX
-004010BD  |.  894D FC       MOV DWORD PTR SS:[EBP-4],ECX;依次传入参数3和1
-004010C0  |.  8B45 08       MOV EAX,DWORD PTR SS:[EBP+8]
-004010C3  |.  50            PUSH EAX;4
-004010C4  |.  8B4D F8       MOV ECX,DWORD PTR SS:[EBP-8]
-004010C7  |.  51            PUSH ECX;3
-004010C8  |.  8B55 FC       MOV EDX,DWORD PTR SS:[EBP-4]
-004010CB  |.  52            PUSH EDX;1
-004010CC  |.  E8 4DFFFFFF   CALL 0040101E;调用函数，根据上面几行，可以知道调用这个函数也是用的__fastcall，用了eax、ecx和edx传参
-004010D1  |.  8945 F4       MOV DWORD PTR SS:[EBP-0C],EAX;将放在eax里的结果存入缓冲区中
-004010D4  |.  8B45 F8       MOV EAX,DWORD PTR SS:[EBP-8]
-004010D7  |.  50            PUSH EAX
-004010D8  |.  8B4D FC       MOV ECX,DWORD PTR SS:[EBP-4]
-004010DB  |.  51            PUSH ECX
-004010DC  |.  E8 24FFFFFF   CALL 00401005;这里又传入2个参数，
-;SS:[EBP-8]--3  SS:[EBP-4]--1
-004010E1  |.  83C4 08       ADD ESP,8;使用外平栈
-004010E4  |.  8945 F0       MOV DWORD PTR SS:[EBP-10],EAX;同样将放在eax里的结果存入缓冲区中，就放在8的上面（这个说法不太准确）
-004010E7  |.  8B55 F0       MOV EDX,DWORD PTR SS:[EBP-10]
-004010EA  |.  52            PUSH EDX
-004010EB  |.  8B45 F4       MOV EAX,DWORD PTR SS:[EBP-0C]
-004010EE  |.  50            PUSH EAX
-004010EF  |.  E8 11FFFFFF   CALL 00401005;又调用相同的函数，即取上面两次相加的结果进行相加，(1+3+4=8) + (1+3=4) = 12 
-004010F4  |.  83C4 08       ADD ESP,8
-004010F7  |.  5F            POP EDI
-004010F8  |.  5E            POP ESI
-004010F9  |.  5B            POP EBX
-004010FA  |.  83C4 50       ADD ESP,50
-004010FD  |.  3BEC          CMP EBP,ESP
-004010FF  |.  E8 6C000000   CALL 00401170;这个函数编译器加上去的，不用逆，用来判断堆栈是否平衡
-00401104  |.  8BE5          MOV ESP,EBP
-00401106  |.  5D            POP EBP
-00401107  \.  C2 0C00       RETN 0C
-</code></pre>
-<p>进入CALL 0040101E：</p>
-<pre><code class="assembly">00401060  /&gt; \55            PUSH EBP;保留栈底
-00401061  |.  8BEC          MOV EBP,ESP
-00401063  |.  83EC 40       SUB ESP,40;提升堆栈
-00401066  |.  53            PUSH EBX
-00401067  |.  56            PUSH ESI
-00401068  |.  57            PUSH EDI;保留现场
-00401069  |.  8D7D C0       LEA EDI,[EBP-40]
-0040106C  |.  B9 10000000   MOV ECX,10
-00401071  |.  B8 CCCCCCCC   MOV EAX,CCCCCCCC
-00401076  |.  F3:AB         REP STOS DWORD PTR ES:[EDI];填充缓冲区
-00401078  |.  8B45 08       MOV EAX,DWORD PTR SS:[EBP+8]
-0040107B  |.  0345 0C       ADD EAX,DWORD PTR SS:[EBP+0C]
-0040107E  |.  0345 10       ADD EAX,DWORD PTR SS:[EBP+10];函数核心功能，可以知道就是取几个值进行相加，关键是要知道取的都是哪些值，
-;SS:[EBP+8]--1  SS:[EBP+0C]--3  SS:[EBP+10]--4
-00401081  |.  5F            POP EDI
-00401082  |.  5E            POP ESI
-00401083  |.  5B            POP EBX;恢复现场
-00401084  |.  8BE5          MOV ESP,EBP;降低堆栈
-00401086  |.  5D            POP EBP;恢复栈底
-00401087  \.  C2 0C00       RETN 0C;返回并平衡堆栈，详单与retN后进行，esp+0C，因为传了三个参数
-</code></pre>
-<p>注意最后相加得的值给了EAX。</p>
-<p>进入CALL 00401005：</p>
-<pre><code class="assembly">00401030  /&gt; \55            PUSH EBP
-00401031  |.  8BEC          MOV EBP,ESP
-00401033  |.  83EC 40       SUB ESP,40
-00401036  |.  53            PUSH EBX
-00401037  |.  56            PUSH ESI
-00401038  |.  57            PUSH EDI
-00401039  |.  8D7D C0       LEA EDI,[EBP-40]
-0040103C  |.  B9 10000000   MOV ECX,10
-00401041  |.  B8 CCCCCCCC   MOV EAX,CCCCCCCC
-00401046  |.  F3:AB         REP STOS DWORD PTR ES:[EDI]
-00401048  |.  8B45 08       MOV EAX,DWORD PTR SS:[EBP+8]
-0040104B  |.  0345 0C       ADD EAX,DWORD PTR SS:[EBP+0C]
-0040104E  |.  5F            POP EDI
-0040104F  |.  5E            POP ESI
-00401050  |.  5B            POP EBX
-00401051  |.  8BE5          MOV ESP,EBP
-00401053  |.  5D            POP EBP
-00401054  \.  C3            RETN
-</code></pre>
-<p>与之前的函数功能相同，就是将传入的参数相加并返回，即返回1+3 &#x3D; 4。同样最后相加得的值给了EAX。</p>
-<p>通过分析，我们可以写出C语言的代码来。</p>
-<pre><code class="c">int __cdecl fun3(int x,int y) &#123;
-    return x+y;
-&#125;
-int __stdcall fun2(int x,int y,int z) &#123;
-    return x+y+z;
-&#125;
-int __fastcall fun1(int a,int b,int c,int d,int e) &#123;
-    int x = a;
-    int y = b;
-    int m = fun2(x,y,c); 
-    int n = fun3(x,y);   
-    return fun3(m,n);  
-&#125;
-int main(int argc,char* argv []) &#123;
-    int x = func1(1,3,4,6,7);
-    printf(&quot;%d\n&quot;,x); 
-&#125;
-</code></pre>
-<p>下面是我用IDA反汇编得到的C语言代码，有些差异。</p>
-<pre><code class="c">int __cdecl sub_401030(int a1, int a2)
-&#123;
-  return a2 + a1;
-&#125;
-int __cdecl sub_401005(int a1, int a2)
-&#123;
-  return sub_401030(a1, a2);
-&#125;
-int __stdcall sub_401060(int a1, int a2, int a3)
-&#123;
-  return a3 + a2 + a1;
-&#125;
-int __stdcall sub_40101E(int a1, int a2, int a3)
-&#123;
-  return sub_401060(a1, a2, a3);
-&#125;
-int __fastcall sub_4010A0(int a1, int a2, int a3, int a4, int a5)
-&#123;
-  int v6; // [esp+4Ch] [ebp-10h]
-  int v7; // [esp+50h] [ebp-Ch]
-
-  v7 = sub_40101E(a1, a2, a3);
-  v6 = sub_401005(a1, a2);
-  return sub_401005(v7, v6);
-&#125;
-int __stdcall sub_401019(int a1, int a2, int a3)
-&#123;
-  return sub_4010A0(a1, a2, a3);
-&#125;
-
-int __cdecl main_0(int argc, const char **argv, const char **envp)
-&#123;
-  int v4; // [esp+4Ch] [ebp-4h]
-
-  v4 = sub_401019(4, 6, 7);
-  printf(&quot;%d&quot;, v4);
-  return 0;
-&#125;
+<h3 id="可选PE头"><a href="#可选PE头" class="headerlink" title="可选PE头"></a>可选PE头</h3><pre><code>WORD	Magic;*//说明文件类型，32位--10B 64位--20B
+BYTE	MajorLinkerUersion;
+BYTE	MinorLinkerUersion;
+DWORD	SizeOfCode;*//所有代码节的和
+DWORD	SizeOfInitializedData;*//已初始化数据大小的和
+DWORD	SizeOfUninitializedData;*//未初始化数据大小的和
+DWORD	addressOfEntryPoint;*程序入口
+DWORD	BaseOfCode;*//代码开始的基址
+DWORD	BaseOfData;*//数据开始的基址
+DWORD	ImageBase;*//内存镜像基址：内存中所有数据的起点
+DWORD	SectionAlignment;*//内存对齐
+DWORD	FileAlignment;*--文件对齐
+WORD	MajorOperatingsystemVersion;
+WORD	MinorOperatingsystemVersion;
+WORD	MajorImageVersion;
+WORD	MinorImageVersion;
+WORD	MajorSubsystemVersion;
+WORD	MinorSubsystemVersion;
+DWORD	Win32VersionValue;
+DWORD	SizeofImage;*//内存中整个PE文件的映射的尺寸
+DWORD	SizeofHeaders;*//所有头+节表+按照文件对齐后的大小
+DWORD	CheckSum;*//校验和
+WORD	Subsystem;
+WORD	D1Characteristics;
+DWORD	SizeOfStackReserve;*//初始化时保留堆栈大小
+DWORD	SizeOfStackCommit;*//初始化实际提交的大小
+DWORD	SizeOfHeapReserve;*//初始化时保留的堆大小
+DWORD	SizeOfHeapCommit;*//初始化实践提交的大小
+DWORD	LoaderFlags;
+DWORD 	NumberOfRvaAndSizes;//目录项数目	
 </code></pre>
 
       
