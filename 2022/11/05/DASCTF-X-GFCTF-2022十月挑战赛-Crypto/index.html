@@ -6,16 +6,17 @@
   <meta name="keywords" content="">
   <meta name="description" content="DASCTF X GFCTF 2022十月挑战赛--Crypto | Luino&#39;s Bold">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="CryptoEzRSAhint用不上，e&#x3D;3直接开方就好 FunnyEncrypt✧✡✭ ✡✮ ✣✴✯ ✤✶✬✬✱ ✬✤ ✱✦✢✥✮✯✧✧, ✴✬✷✯ ✡✧ ✣✴✯ ✶✡✰✴✣. ✡✣ ❂✢✡✮✰✧ ✩✬✸✤✬✢✣, ✤✦✡✣✴, ✦✮✱ ✩✬✮✤✡✱✯✮✩✯. ✡✣ ✰✡✲✯✧ ✳✧ ✰✳✡✱✦✮✩✯ ★✴✯✮ ★✯ ✦✢✯ ✶✬✧✣, ✦✮✱ ✰✡✲✯✧ ✧✳✷✷✬✢✣ ★✴✯✮ ★">
+<meta name="description" content="来自赣育杯的两道题 Wilson之前做过，还是想记录一下，加深印象 from os import urandom from gmpy2 import next_prime from Crypto.Util.number import getPrime, bytes_to_long  p &#x3D; getPrime(512) q &#x3D; next_prime(p) f &#x3D; open(&#39;flag.txt">
 <meta property="og:type" content="article">
-<meta property="og:title" content="NSSCTF-2nd-2023">
-<meta property="og:url" content="http://example.com/2023/08/29/NSSCTF-2nd-2023/index.html">
+<meta property="og:title" content="Crypto刷题记录（四）">
+<meta property="og:url" content="http://example.com/2023/09/19/Crypto%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%88%E5%9B%9B%EF%BC%89/index.html">
 <meta property="og:site_name" content="Luino&#39;s Bold">
-<meta property="og:description" content="CryptoEzRSAhint用不上，e&#x3D;3直接开方就好 FunnyEncrypt✧✡✭ ✡✮ ✣✴✯ ✤✶✬✬✱ ✬✤ ✱✦✢✥✮✯✧✧, ✴✬✷✯ ✡✧ ✣✴✯ ✶✡✰✴✣. ✡✣ ❂✢✡✮✰✧ ✩✬✸✤✬✢✣, ✤✦✡✣✴, ✦✮✱ ✩✬✮✤✡✱✯✮✩✯. ✡✣ ✰✡✲✯✧ ✳✧ ✰✳✡✱✦✮✩✯ ★✴✯✮ ★✯ ✦✢✯ ✶✬✧✣, ✦✮✱ ✰✡✲✯✧ ✧✳✷✷✬✢✣ ★✴✯✮ ★">
+<meta property="og:description" content="来自赣育杯的两道题 Wilson之前做过，还是想记录一下，加深印象 from os import urandom from gmpy2 import next_prime from Crypto.Util.number import getPrime, bytes_to_long  p &#x3D; getPrime(512) q &#x3D; next_prime(p) f &#x3D; open(&#39;flag.txt">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-08-29T05:46:29.000Z">
-<meta property="article:modified_time" content="2023-08-29T08:55:55.759Z">
+<meta property="article:published_time" content="2023-09-19T09:13:14.000Z">
+<meta property="article:modified_time" content="2023-09-19T10:11:27.880Z">
 <meta property="article:author" content="Luino">
+<meta property="article:tag" content="Crypto日常刷题">
 <meta name="twitter:card" content="summary">
 
 
@@ -165,7 +166,7 @@
     <li>
         <div class="all active" data-rel="All">All
             
-                <small>(65)</small>
+                <small>(72)</small>
             
         </div>
     </li>
@@ -177,7 +178,7 @@
         <div data-rel="Match">
             
             Match
-            <small>(23)</small>
+            <small>(25)</small>
         </div>
         
     </li>
@@ -192,7 +193,7 @@
         <div data-rel="Crypto学习记录">
             
             Crypto学习记录
-            <small>(22)</small>
+            <small>(23)</small>
         </div>
         
     </li>
@@ -222,7 +223,7 @@
         <div data-rel="Crypto">
             
             Crypto
-            <small>(4)</small>
+            <small>(5)</small>
         </div>
         
     </li>
@@ -252,7 +253,7 @@
         <div data-rel="滴水笔记">
             
             滴水笔记
-            <small>(9)</small>
+            <small>(12)</small>
         </div>
         
     </li>
@@ -297,8 +298,8 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="65">
-<input type="hidden" id="yelog_site_word_count" value="85.7k">
+<input type="hidden" id="yelog_site_posts_number" value="72">
+<input type="hidden" id="yelog_site_word_count" value="93.6k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -469,6 +470,69 @@
 
     
     <nav id="title-list-nav">
+        
+        
+        <a  class="All Crypto "
+           href="/2023/09/19/Crypto%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%88%E5%9B%9B%EF%BC%89/"
+           data-tag="Crypto日常刷题"
+           data-author="" >
+            <span class="post-title" title="Crypto刷题记录（四）">Crypto刷题记录（四）</span>
+            <span class="post-date" title="2023-09-19 17:13:14">2023/09/19</span>
+        </a>
+        
+        
+        <a  class="All 滴水笔记 "
+           href="/2023/09/13/%E6%96%B0%E5%A2%9E%E8%8A%82-%E6%B7%BB%E5%8A%A0%E4%BB%A3%E7%A0%81/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="新增节-添加代码">新增节-添加代码</span>
+            <span class="post-date" title="2023-09-13 21:33:14">2023/09/13</span>
+        </a>
+        
+        
+        <a  class="All 滴水笔记 "
+           href="/2023/09/13/%E4%BB%BB%E6%84%8F%E4%BB%A3%E7%A0%81%E7%A9%BA%E7%99%BD%E5%8C%BA%E6%B7%BB%E5%8A%A0%E4%BB%A3%E7%A0%81/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="任意代码空白区添加代码">任意代码空白区添加代码</span>
+            <span class="post-date" title="2023-09-13 20:25:31">2023/09/13</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/09/11/16%E4%BD%8D%E9%9A%8F%E6%9C%BA%E6%95%B0%E9%A2%84%E6%B5%8B%E4%BE%8B%E9%A2%98/"
+           data-tag="MT19937"
+           data-author="" >
+            <span class="post-title" title="16位随机数预测例题">16位随机数预测例题</span>
+            <span class="post-date" title="2023-09-11 22:31:23">2023/09/11</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/09/08/NepCTF2023-random_RSA/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="NepCTF2023-random_RSA">NepCTF2023-random_RSA</span>
+            <span class="post-date" title="2023-09-08 15:10:59">2023/09/08</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/09/03/%E7%BE%8A%E5%9F%8E%E6%9D%AF2023/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="羊城杯2023">羊城杯2023</span>
+            <span class="post-date" title="2023-09-03 13:09:36">2023/09/03</span>
+        </a>
+        
+        
+        <a  class="All 滴水笔记 "
+           href="/2023/08/30/%E4%BB%A3%E7%A0%81%E8%8A%82%E7%A9%BA%E7%99%BD%E5%8C%BA%E6%89%8B%E5%8A%A8%E6%B7%BB%E5%8A%A0%E4%BB%A3%E7%A0%81/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="代码节空白区手动添加代码">代码节空白区手动添加代码</span>
+            <span class="post-date" title="2023-08-30 10:08:27">2023/08/30</span>
+        </a>
         
         
         <a  class="All Match "
@@ -1093,12 +1157,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2023-06-08 19:43:49'>2022-11-05 20:12</time>
+            Created At : <time class="date" title='Updated At: 2023-09-19 15:54:58'>2022-11-05 20:12</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:714</span>
+        <span>Count:598</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -1261,59 +1325,10 @@ m = 0x666c61677b3230366538353964386538353463346636303063623132373537626266396635
 <pre><code class="python">m = &#39;666c61677b32303665383539643865383534633466363030636231323735376262663966357d&#39;
 flag = binascii.unhexlify(m.encode(&#39;utf-8&#39;))
 </code></pre>
-<p> 总体代码如下：</p>
-<pre><code class="python">from gmpy2 import *
-from Crypto.Util.number import *
-import binascii
-
-#encrypt3
-e_2 = 3
-c_2 = 332431
-n_2 = 675835056744450121024004008337170937331109883435712066354955474563267257037603081555653829598886559337325172694278764741403348512872239277008719548968016702852609803016353158454788807563316656327979897318887566108985783153878668451688372252234938716250621575338314779485058267785731636967957494369458211599823364746908763588582489400785865427060804408606617016267936273888743392372620816053927031794575978032607311497491069242347165424963308662091557862342478844612402720375931726316909635118113432836702120449010
-k = 0
-while True:
-    res = iroot(c_2+k*n_2,e_2)
-    if res[1] == True:
-        n_1 = res[0]
-        break
-    k += 1
-print(n_1)
-#n_1 = 70406706457855863712635967741447303613971473150228480705119773604469794649140239446237334040048504811343327173817296308781190911727763110615393368497803655390445303946160971
-
-#encrypt2
-e_1 = 65537
-c_1 = 47029848959680138397125259006172340325269302342762903311733700258745280761154948381409328053449580957972265859283407071931484707002138926840483316880087281153554181290481533
-p = 2224243981
-q = 2732337821
-r = 11585031296201346891716939633970482508158508580350404805965250133832632323150440185890235814142601827544669601048550999405490149435265122374459158586377571
-phi_n = (p-1)*(q-1)*(r-1)
-d = invert(e_1,phi_n)
-m1 = pow(c_1,d,n_1)
-
-
-#encrypt4
-&#39;&#39;&#39;
-#Sage
-e_2 = 3
-n_3 = 91294511667572917673898699346231897684542006136956966126836916292947639514392684487940336406038086150289315439796780158189004157494824987037667065310517044311794725172075653186677331434123198117797575528982908532086038107428540586044471407073066169603930082133459486076777574046803264038780927350142555712567
-c_3 = 11951299411967534922967467740790967733301092706094553308467975774492025797106594440070380723007894861454249455013202734019215071856834943490096156048504952328784989777263664832098681831398770963056616417301705739505187754236801407014715780468333977293887519001724078504320344074325196167699818117367329779609
-m = 9530454742891231590945778054072843874837824815724564463369259282490619049557772650832818763768769359762168560563265763313176741847581931364
-k = 8139616873420730499092246564709331937498029453340099806219977060224838957080870950877930756958455278369862703151353509623205172658012437573652818022676431
-p.&lt;k2&gt; = PolynomialRing(Zmod(n_3))
-f = (m+k2*k)^e_2 - c_3
-f = f.monic()
-k2 = f.small_roots()[0]
-flag = int(m+k2*k)
-print(flag)
-&#39;&#39;&#39;
-m1 = b&#39;0x666c61677b3230366538353964&#39;
-m2 = b&#39;383539643865383534633466363030636231323735376262663966357d&#39;
-#m2 = 9530454742891231590945778054072843874837824815724564463369259282490619049557772650832818763768769359762168560563265763313176741847581931364
-#print(long_to_bytes(m2))
-m = &#39;666c61677b32303665383539643865383534633466363030636231323735376262663966357d&#39;
-flag = binascii.unhexlify(m.encode(&#39;utf-8&#39;))
-print(flag)
-</code></pre>
+<hr>
+<p>其余两题可参考：</p>
+<p><a target="_blank" rel="noopener" href="https://gal2xy.github.io/2022/10/26/2022DASTF%E5%8D%81%E6%9C%88%E8%B5%9B/#Proof-Yourself">2022DASTF十月赛 - gla2xy’s blog (gal2xy.github.io)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.ctfiot.com/65942.html">DASCTF X GFCTF 2022 ｜十月赛官方Write Up | CTF导航 (ctfiot.com)</a></p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 1666739907@qq.com </span>

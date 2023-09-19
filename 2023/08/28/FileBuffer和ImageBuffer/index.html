@@ -6,16 +6,17 @@
   <meta name="keywords" content="">
   <meta name="description" content="FileBuffer和ImageBuffer | Luino&#39;s Bold">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="CryptoEzRSAhint用不上，e&#x3D;3直接开方就好 FunnyEncrypt✧✡✭ ✡✮ ✣✴✯ ✤✶✬✬✱ ✬✤ ✱✦✢✥✮✯✧✧, ✴✬✷✯ ✡✧ ✣✴✯ ✶✡✰✴✣. ✡✣ ❂✢✡✮✰✧ ✩✬✸✤✬✢✣, ✤✦✡✣✴, ✦✮✱ ✩✬✮✤✡✱✯✮✩✯. ✡✣ ✰✡✲✯✧ ✳✧ ✰✳✡✱✦✮✩✯ ★✴✯✮ ★✯ ✦✢✯ ✶✬✧✣, ✦✮✱ ✰✡✲✯✧ ✧✳✷✷✬✢✣ ★✴✯✮ ★">
+<meta name="description" content="来自赣育杯的两道题 Wilson之前做过，还是想记录一下，加深印象 from os import urandom from gmpy2 import next_prime from Crypto.Util.number import getPrime, bytes_to_long  p &#x3D; getPrime(512) q &#x3D; next_prime(p) f &#x3D; open(&#39;flag.txt">
 <meta property="og:type" content="article">
-<meta property="og:title" content="NSSCTF-2nd-2023">
-<meta property="og:url" content="http://example.com/2023/08/29/NSSCTF-2nd-2023/index.html">
+<meta property="og:title" content="Crypto刷题记录（四）">
+<meta property="og:url" content="http://example.com/2023/09/19/Crypto%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%88%E5%9B%9B%EF%BC%89/index.html">
 <meta property="og:site_name" content="Luino&#39;s Bold">
-<meta property="og:description" content="CryptoEzRSAhint用不上，e&#x3D;3直接开方就好 FunnyEncrypt✧✡✭ ✡✮ ✣✴✯ ✤✶✬✬✱ ✬✤ ✱✦✢✥✮✯✧✧, ✴✬✷✯ ✡✧ ✣✴✯ ✶✡✰✴✣. ✡✣ ❂✢✡✮✰✧ ✩✬✸✤✬✢✣, ✤✦✡✣✴, ✦✮✱ ✩✬✮✤✡✱✯✮✩✯. ✡✣ ✰✡✲✯✧ ✳✧ ✰✳✡✱✦✮✩✯ ★✴✯✮ ★✯ ✦✢✯ ✶✬✧✣, ✦✮✱ ✰✡✲✯✧ ✧✳✷✷✬✢✣ ★✴✯✮ ★">
+<meta property="og:description" content="来自赣育杯的两道题 Wilson之前做过，还是想记录一下，加深印象 from os import urandom from gmpy2 import next_prime from Crypto.Util.number import getPrime, bytes_to_long  p &#x3D; getPrime(512) q &#x3D; next_prime(p) f &#x3D; open(&#39;flag.txt">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-08-29T05:46:29.000Z">
-<meta property="article:modified_time" content="2023-08-29T08:55:55.759Z">
+<meta property="article:published_time" content="2023-09-19T09:13:14.000Z">
+<meta property="article:modified_time" content="2023-09-19T10:11:27.880Z">
 <meta property="article:author" content="Luino">
+<meta property="article:tag" content="Crypto日常刷题">
 <meta name="twitter:card" content="summary">
 
 
@@ -165,7 +166,7 @@
     <li>
         <div class="all active" data-rel="All">All
             
-                <small>(65)</small>
+                <small>(72)</small>
             
         </div>
     </li>
@@ -177,7 +178,7 @@
         <div data-rel="Match">
             
             Match
-            <small>(23)</small>
+            <small>(25)</small>
         </div>
         
     </li>
@@ -192,7 +193,7 @@
         <div data-rel="Crypto学习记录">
             
             Crypto学习记录
-            <small>(22)</small>
+            <small>(23)</small>
         </div>
         
     </li>
@@ -222,7 +223,7 @@
         <div data-rel="Crypto">
             
             Crypto
-            <small>(4)</small>
+            <small>(5)</small>
         </div>
         
     </li>
@@ -252,7 +253,7 @@
         <div data-rel="滴水笔记">
             
             滴水笔记
-            <small>(9)</small>
+            <small>(12)</small>
         </div>
         
     </li>
@@ -297,8 +298,8 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="65">
-<input type="hidden" id="yelog_site_word_count" value="85.7k">
+<input type="hidden" id="yelog_site_posts_number" value="72">
+<input type="hidden" id="yelog_site_word_count" value="93.6k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -469,6 +470,69 @@
 
     
     <nav id="title-list-nav">
+        
+        
+        <a  class="All Crypto "
+           href="/2023/09/19/Crypto%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%88%E5%9B%9B%EF%BC%89/"
+           data-tag="Crypto日常刷题"
+           data-author="" >
+            <span class="post-title" title="Crypto刷题记录（四）">Crypto刷题记录（四）</span>
+            <span class="post-date" title="2023-09-19 17:13:14">2023/09/19</span>
+        </a>
+        
+        
+        <a  class="All 滴水笔记 "
+           href="/2023/09/13/%E6%96%B0%E5%A2%9E%E8%8A%82-%E6%B7%BB%E5%8A%A0%E4%BB%A3%E7%A0%81/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="新增节-添加代码">新增节-添加代码</span>
+            <span class="post-date" title="2023-09-13 21:33:14">2023/09/13</span>
+        </a>
+        
+        
+        <a  class="All 滴水笔记 "
+           href="/2023/09/13/%E4%BB%BB%E6%84%8F%E4%BB%A3%E7%A0%81%E7%A9%BA%E7%99%BD%E5%8C%BA%E6%B7%BB%E5%8A%A0%E4%BB%A3%E7%A0%81/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="任意代码空白区添加代码">任意代码空白区添加代码</span>
+            <span class="post-date" title="2023-09-13 20:25:31">2023/09/13</span>
+        </a>
+        
+        
+        <a  class="All Crypto学习记录 "
+           href="/2023/09/11/16%E4%BD%8D%E9%9A%8F%E6%9C%BA%E6%95%B0%E9%A2%84%E6%B5%8B%E4%BE%8B%E9%A2%98/"
+           data-tag="MT19937"
+           data-author="" >
+            <span class="post-title" title="16位随机数预测例题">16位随机数预测例题</span>
+            <span class="post-date" title="2023-09-11 22:31:23">2023/09/11</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/09/08/NepCTF2023-random_RSA/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="NepCTF2023-random_RSA">NepCTF2023-random_RSA</span>
+            <span class="post-date" title="2023-09-08 15:10:59">2023/09/08</span>
+        </a>
+        
+        
+        <a  class="All Match "
+           href="/2023/09/03/%E7%BE%8A%E5%9F%8E%E6%9D%AF2023/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="羊城杯2023">羊城杯2023</span>
+            <span class="post-date" title="2023-09-03 13:09:36">2023/09/03</span>
+        </a>
+        
+        
+        <a  class="All 滴水笔记 "
+           href="/2023/08/30/%E4%BB%A3%E7%A0%81%E8%8A%82%E7%A9%BA%E7%99%BD%E5%8C%BA%E6%89%8B%E5%8A%A8%E6%B7%BB%E5%8A%A0%E4%BB%A3%E7%A0%81/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="代码节空白区手动添加代码">代码节空白区手动添加代码</span>
+            <span class="post-date" title="2023-08-30 10:08:27">2023/08/30</span>
+        </a>
         
         
         <a  class="All Match "
@@ -1093,7 +1157,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2023-08-29 21:59:13'>2023-08-28 20:10</time>
+            Created At : <time class="date" title='Updated At: 2023-09-12 20:47:00'>2023-08-28 20:10</time>
         
     </div>
     <div class="article-meta">
@@ -1135,17 +1199,16 @@
       
         <p>文件从FileBuffer经过拉伸后成为ImageBuffer，此时还无法运行，但已经很接近运行的状态了。</p>
 <h3 id="代码实现从文件–FileBuffer–ImageBuffer–NewBuffer–硬盘的过程"><a href="#代码实现从文件–FileBuffer–ImageBuffer–NewBuffer–硬盘的过程" class="headerlink" title="代码实现从文件–FileBuffer–ImageBuffer–NewBuffer–硬盘的过程"></a>代码实现从文件–FileBuffer–ImageBuffer–NewBuffer–硬盘的过程</h3><pre><code class="c">#define _CRT_SECURE_NO_WARNINGS
-//用于在Visual Studio中禁用特定的编译警告。在使用某些函数（如scanf ()函数）时，编译器会发出警告，提示可能存在安全隐患。添加#define _CRT_SECURE_NO_WARNINGS，可以禁用这些警告，使得编译通过。
-#include &lt;stdio.h&gt;
+#include &quot;stdio.h&quot;
 #include &lt;stdlib.h&gt;
 #include &lt;malloc.h&gt;
-#include &lt;windows.h&gt;
-#include &lt;memory.h&gt;
+#include&lt;windows.h&gt;
+#include&lt;memory.h&gt;
 
-int GetFilesize(FILE* fptr);
-char* ReadFile(const char* Filepath);
+int GetFileszie(FILE* fptr);
+char* ReadFilea(const char* Filepath);               
 
-void FileToImage() &#123;
+void  FileToImage() &#123;
     char* pFileBuffer = NULL;
     PIMAGE_DOS_HEADER pDosHeader = NULL;//DOS头 
     PIMAGE_NT_HEADERS pNTHeader = NULL;//NT头 
@@ -1153,60 +1216,63 @@ void FileToImage() &#123;
     PIMAGE_OPTIONAL_HEADER32 pOptionHeader = NULL;//可选PE头 
     PIMAGE_SECTION_HEADER pSectionHeader = NULL;//节表头
     
-    pFileBuffer = ReadFile(&quot;C:\\Windows\\System32\\notepad.exe&quot;);
+    pFileBuffer = ReadFilea(&quot;D:\\ipmsg\\IPMsg_2.exe&quot;);
     pDosHeader = (PIMAGE_DOS_HEADER)pFileBuffer;
     pNTHeader = (PIMAGE_NT_HEADERS)(pFileBuffer + pDosHeader-&gt;e_lfanew);
     pPEHeader = (PIMAGE_FILE_HEADER)(pFileBuffer + pDosHeader-&gt;e_lfanew + 4);
     pOptionHeader = (PIMAGE_OPTIONAL_HEADER32)(pFileBuffer + pDosHeader-&gt;e_lfanew + 4 + IMAGE_SIZEOF_FILE_HEADER);
-    pSectionHeader = (PIMAGE_SECTION_HEADER)(pFileBuffer + pDosHeader-&gt;e_lfanew + 4 + IMAGE_SIZEOF_FILE_HEADER + pPEHeader-&gt;SizeOfOptionalHeader)
-    //找到对应头部地址
-    
+    char* fptr = (pFileBuffer + (pDosHeader-&gt;e_lfanew) + 4 + IMAGE_SIZEOF_FILE_HEADER + pPEHeader-&gt;SizeOfOptionalHeader);
+    pSectionHeader = PIMAGE_SECTION_HEADER(fptr);
+
     char* pImageBuffer = NULL;
     pImageBuffer = (char*)malloc(pOptionHeader-&gt;SizeOfImage);
     if(!pImageBuffer)
         printf(&quot;申请空间失败！\n&quot;);
-    //申请空间的大小为pOptionHeader-&gt;SizeOfImage
+    //申请空间的大小为SizeOfImage
     
-    menset(pImageBuffer, 0, pOptionHeader-&gt;SizeOfImage);
+    memset(pImageBuffer, 0, pOptionHeader-&gt;SizeOfImage);
     //一定要初始化
     memcpy(pImageBuffer, pFileBuffer, pOptionHeader-&gt;SizeOfHeaders);
     //头部信息可以先直接全部复制
+    //注意复制的大小为SizeOfHeaders
     
     for(size_t i = 0; i&lt;pPEHeader-&gt;NumberOfSections; i++) &#123;//size_t 类型表示C中任何对象所能达到的最大长度，它是无符号整数 
-        memcpy((void*)((DWORD)pImageBuffer + pSectionHeader-&gt;VirtualAddress), (void*)((DWORD)pFileBuffer + pSectionHeader-&gt;PointerToRawData), pSectionHeader-&gt;SizeOfRawData);
-        //将FileBuffer中从第一个节点开始，把SizeOfRawData大的节点复制到pImageBuffer+pSectionHeader-&gt;VirtualAddress处
+        memcpy((void*)(pImageBuffer + pSectionHeader-&gt;VirtualAddress), (void*)(pFileBuffer + pSectionHeader-&gt;PointerToRawData), pSectionHeader-&gt;SizeOfRawData);
+        //将FileBuffer中从第一个节点开始，把SizeOfRawData大的节点复制到pImageBuffer+VirtualAddress处
         pSectionHeader++; 	
     &#125;
-    //复制节点（拉伸） 
+    //复制节点（拉伸）
     
+    //拉伸后存盘
     FILE* nFp;
-    fopen_s(&amp;nFp, &quot;D:\\notepad.exe&quot;, &quot;wb&quot;);//复制到指定位置
-    fwrite(ImageBuffer, pOptionHeader-&gt;SizeOfImage, 1, nFp);
-    fclose(nFp); 
-    
-    char* NewBuffer = NULL;
-    NewBuffer = (char*)malloc(165888);
-    //申请空间的大小我直接算的notepad.exe的大小，无论如何都不会比这大了吧
-    if(!NewBuffer)
+    nFp = fopen(&quot;D:\\ipmsg\\IPMsg_new2.exe&quot;, &quot;wb&quot;);//复制到指定位置
+    fwrite(pImageBuffer, pOptionHeader-&gt;SizeOfImage, 1, nFp);
+    fclose(nFp);
+
+
+    //还原后存盘
+    char* NewFileBuffer = NULL;
+    NewFileBuffer = (char*)malloc(0x22A600);//开辟一个空间，但是由于生成的文件不知道多大，所以不好计算，我就直接计算了未拉伸的文件长度
+    if(!NewFileBuffer)
         printf(&quot;申请空间失败！\n&quot;);
-    memset(NewBuffer, 0, 165888);
+    memset(NewFileBuffer, 0, 0x22A600);
     //不要忘记初始化
-    memcpy(NewBuffer, ImageBuffer, pOptionHeader-&gt;SizeOfHeaders);
+    memcpy(NewFileBuffer, pImageBuffer, pOptionHeader-&gt;SizeOfHeaders);
     //头部还是保持不变
     fptr = (pFileBuffer + (pDosHeader-&gt;e_lfanew) + 4 + IMAGE_SIZEOF_FILE_HEADER + pPEHeader-&gt;SizeOfOptionalHeader);
     pSectionHeader = PIMAGE_SECTION_HEADER(fptr);
     //让其重新指向第一个节点 
     for(size_t i = 0; i &lt; pPEHeader-&gt;NumberOfSections; i++) &#123;
-        memcpy((void*)((DWORD)NewBuffer + pSectionHeader-&gt;PointerToRawData), (void*)((DWORD)ImageBuffer + pSectionHeader-&gt;VirtualAddress), pSectionHeader-&gt;SizeOfRawData);
+        memcpy((void*)(NewFileBuffer + pSectionHeader-&gt;PointerToRawData), (void*)(pImageBuffer + pSectionHeader-&gt;VirtualAddress), pSectionHeader-&gt;SizeOfRawData);
         pSectionHeader++;
     &#125; 
     FILE* nFp1;
-    fopen_s(&amp;nFp1, &quot;C:\\Windows\\System32\\notepad.exe&quot;, &quot;wb&quot;);
-    fwrite(NewBuffer, 165888, 1, nFp1);
+    nFp1 = fopen(&quot;D:\\ipmsg\\IPMsg_2.exe&quot;, &quot;wb&quot;);
+    fwrite(NewFileBuffer, 0x22A600, 1, nFp1);
     
     fclose(nFp1);
-    free(NewBuffer); NewBuffer = NULL;
-    free(ImageBuffer); ImageBuffer = NULL;
+    free(NewFileBuffer); NewFileBuffer = NULL;
+    free(pImageBuffer); pImageBuffer = NULL;
     free(pFileBuffer); pFileBuffer = NULL;
 &#125;
 
@@ -1249,10 +1315,11 @@ int GetFileszie(FILE* fptr) &#123;
 &#125;
     
 int main() &#123;
-    PrintNTHeaders();
+    //PrintNTHeaders();
     FileToImage();
 &#125;
 </code></pre>
+<p>要注意执行完后生成的.exe程序还没法执行。</p>
 <h3 id="RVA和FOA互相转换"><a href="#RVA和FOA互相转换" class="headerlink" title="RVA和FOA互相转换"></a>RVA和FOA互相转换</h3><p>RVA：文件被装载到内存后相对基址的偏移地址。</p>
 <p>FOA：文件偏移地址，即文件在硬盘上相对文件开头的偏移地址。</p>
 <p><img src="/../images/image-20230829204920600.png" alt="image-20230829204920600"></p>
