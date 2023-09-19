@@ -299,7 +299,7 @@
     </div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="72">
-<input type="hidden" id="yelog_site_word_count" value="93.6k">
+<input type="hidden" id="yelog_site_word_count" value="94.1k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -1157,12 +1157,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2023-09-13 22:27:44'>2023-09-13 21:33</time>
+            Created At : <time class="date" title='Updated At: 2023-09-19 22:02:08'>2023-09-13 21:33</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:337</span>
+        <span>Count:924</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -1181,7 +1181,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C%EF%BC%9A"><span class="toc-text">准备工作：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0%EF%BC%9A"><span class="toc-text">手动实现：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%9A"><span class="toc-text">代码实现：</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -1197,8 +1197,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>准备工作：</p>
-<p>1、判断是否有足够的空间可以添加一个节表.</p>
+        <h3 id="准备工作："><a href="#准备工作：" class="headerlink" title="准备工作："></a>准备工作：</h3><p>1、判断是否有足够的空间可以添加一个节表.</p>
 <p>判断条件：SizeOfHeader - (DOS + 垃圾数据 + PE标记 + 标准PE头 + 可选PE头 + 已存在节表) &gt;&#x3D; 2个节表的大小</p>
 <p>2、需要修改的数据</p>
 <ol>
@@ -1209,8 +1208,7 @@
 <li>再原有数据的最后，新增一个节的数据(内存对齐的整数倍).</li>
 <li>修正新增节表的属性</li>
 </ol>
-<p> 手动实现：</p>
-<p>复制一个exe程序（本文复制IPMSG.exe）用于实验，用010打开，找到节表信息，发现有4个节，且发现节表后面的空白区足够放下代码。为了使得添加完代码后的程序具有可执行的特征，选择复制第一个节点的所有信息（40个字节），复制到最后一个节点后面：</p>
+<h3 id="手动实现："><a href="#手动实现：" class="headerlink" title="手动实现："></a>手动实现：</h3><p>复制一个exe程序（本文复制IPMSG.exe）用于实验，用010打开，找到节表信息，发现有4个节，且发现节表后面的空白区足够放下代码。为了使得添加完代码后的程序具有可执行的特征，选择复制第一个节点的所有信息（40个字节），复制到最后一个节点后面：</p>
 <p><img src="/../images/image-20230913215045606.png" alt="image-20230913215045606"></p>
 <p>假设在新的节中添加4096个字节。</p>
 <p>修改节的数量：</p>
@@ -1218,13 +1216,144 @@
 <p>修改SizeOfImage（原始值为0022B000）为0022C000</p>
 <p><img src="/../images/image-20230913215849209.png" alt="image-20230913215849209"></p>
 <p>插入4096个字节的内容，在文件末尾：</p>
-<p><img src="/../images/image-20230913220923656.png" alt="image-20230913220923656"></p>
+<p><img src="/../images/image-20230919201450144.png" alt="image-20230919201450144"></p>
 <p>修改添加节点的成员信息：</p>
 <p>Name：改为tttt</p>
 <p>VirtualSize：直接改成在文件中对齐后的长度1000</p>
-<p>VirtualAddress：用上一个节点的之前VirtualAddress+SizeOfRawData &#x3D; 22 A600</p>
+<p>VirtualAddress：等于SizeOfImage修改前的大小</p>
 <p>SizeOfRawData：1000</p>
-<p>PointerToRawData：</p>
+<p>PointerToRawData：用上一个节点的PointerToRawData+SizeOfRawData &#x3D; 22 2200</p>
+<p>Characteristics：无需修改</p>
+<p>保持后打开文件，能够正常打开，说明添加节点成功。</p>
+<h3 id="代码实现："><a href="#代码实现：" class="headerlink" title="代码实现："></a>代码实现：</h3><pre><code class="python">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;malloc.h&gt;
+#include &lt;windows.h&gt;
+#include &lt;memory.h&gt;
+
+int GetFileszie(FILE* fptr);
+char* ReadFilea(const char* Filepath);  
+
+void addSection(char* Filepath) &#123;
+    PIMAGE_DOS_HEADER pDosHeader = NULL;
+    PIMAGE_NT_HEADERS pNTHeader = NULL;
+    PIMAGE_FILE_HEADER pPEHeader = NULL;
+    PIMAGE_OPTIONAL_HEADER32 pOptionHeader = NULL;
+    PIMAGE_SECTION_HEADER pSectionHeader = NULL;
+    
+    char* pFileBuffer = ReadFilea(Filepath);
+    if(!pFileBuffer) &#123;
+        printf(&quot;读取文件是失败&quot;);
+        return;
+    &#125;
+    
+    pDosHeader = (PIMAGE_DOS_HEADER)pFileBuffer;
+    pNTHeader = (PIMAGE_NT_HEADERS)(pFileBuffer + (pDosHeader-&gt;e_lfanew));
+    pPEHeader = (PIMAGE_FILE_HEADER)(pFileBuffer + (pDosHeader-&gt;e_lfanew) + 4);
+    pOptionHeader = (PIMAGE_OPTIONAL_HEADER32)(pFileBuffer + (pDosHeader-&gt;e_lfanew) + 4 + IMAGE_SIZEOF_FILE_HEADER);
+    pSectionHeader = (PIMAGE_SECTION_HEADER)(pFileBuffer + (pDosHeader-&gt;e_lfanew) + 4 + IMAGE_SIZEOF_FILE_HEADER + pPEHeader-&gt;SizeOfOptionalHeader);
+    
+    DWORD restSpace = pOptionHeader-&gt;SizeOfHeaders - ((uintptr_t)pSectionHeader + pPEHeader-&gt;NumberOfSections - (uintptr_t)pFileBuffer);
+    if(restSpace &lt; 80) &#123;
+        printf(&quot;剩余空间不够&quot;);
+        return;
+    &#125;
+    
+    PIMAGE_SECTION_HEADER new_pSectionHeader = pSectionHeader + pPEHeader-&gt;NumberOfSections;
+
+    //修改添加节点的成员信息： 
+    //Name：改为tttt
+    strcpy((char*)new_pSectionHeader-&gt;Name,&quot;.tttt&quot;); 
+    //VirtualSize：直接改成在文件中对齐后的长度1000
+    new_pSectionHeader-&gt;Misc.VirtualSize = 0x1000; 
+    //VirtualAddress：等于SizeOfImage修改前的大小
+    new_pSectionHeader-&gt;VirtualAddress = pOptionHeader-&gt;SizeOfImage;
+    //SizeOfRawData：1000
+    new_pSectionHeader-&gt;SizeOfRawData = 0x1000;
+    //PointerToRawData：用上一个节点的PointerToRawData+SizeOfRawData = 22 2200
+    new_pSectionHeader-&gt;PointerToRawData = (new_pSectionHeader-1)-&gt;PointerToRawData + (new_pSectionHeader-1)-&gt;SizeOfRawData;
+    //Characteristics：无需修改
+    new_pSectionHeader-&gt;Characteristics = pSectionHeader-&gt;Characteristics;
+    
+    //插入全0的节表
+    LPVOID new_sectionBegin = LPVOID(new_pSectionHeader + 1);
+    memset(new_sectionBegin,0,40);
+    //修改节的数量
+    pPEHeader-&gt;NumberOfSections += 1;
+    //修改SizeOfImage(插入4096个字节)
+    pOptionHeader-&gt;SizeOfImage += 0x1000;
+    
+    //写回文件
+    FILE* nFp1;
+    nFp1 = fopen(&quot;D:\\ipmsg\\IPMsg_2_3.exe&quot;, &quot;rb&quot;); 
+    int size_file = GetFileszie(nFp1);
+    fclose(nFp1);
+    nFp1 = fopen(&quot;D:\\ipmsg\\IPMsgnew_2_3.exe&quot;, &quot;wb&quot;); 
+    if(!nFp1) &#123;
+        printf(&quot;打开写出文件失败\n&quot;);
+        free(pFileBuffer);
+        return ;
+    &#125;
+    //把修改完的写回去
+    fwrite(pFileBuffer, size_file, 1, nFp1);
+    //新节表填充 
+    LPVOID new_Buffer = malloc(0x1000);
+    if(!new_Buffer) &#123;
+        printf(&quot;给新结点申请空间失败&quot;);
+        free(pFileBuffer);
+        return;
+    &#125;
+    memset(new_Buffer,0,0x1000);
+    fwrite(new_Buffer,0x1000,1,nFp1);
+    fclose(nFp1);
+    free(new_Buffer); free(pFileBuffer);
+    new_Buffer = NULL; pFileBuffer = NULL;
+&#125;
+
+char* ReadFilea(const char *Filepath )&#123;
+    FILE* fptr = NULL;
+    fptr = fopen(Filepath,&quot;rb&quot;);
+    if(!fptr) &#123;
+        printf(&quot;打开失败&quot;);
+        return NULL;
+    &#125;
+    int filesize = 0;
+    filesize = GetFileszie(fptr);
+    if (filesize == 0) &#123;
+        printf(&quot;获取文件大小失败&quot;);
+        return NULL;
+    &#125;
+    char* FileBuffer = (char*)malloc(filesize);
+    if(!FileBuffer) &#123;
+        printf(&quot;开辟空间失败&quot;);
+        return NULL;
+    &#125;
+    size_t n=fread(FileBuffer,  1, filesize, fptr);//将文件内容读到内存中
+    if(!n) &#123;
+        printf(&quot;读取数据失败&quot;);
+        free(FileBuffer);
+        FileBuffer = NULL;
+        fclose(fptr);
+        return NULL;
+    &#125;
+    fclose(fptr);
+    return FileBuffer;
+&#125;
+    
+int GetFileszie(FILE* fptr) &#123;
+    int num = 0;
+    fseek(fptr, 0, SEEK_END);
+    num = ftell(fptr);
+    fseek(fptr, 0, SEEK_SET);
+    return num;
+&#125;
+
+int main() &#123;
+    char* path = (char*)&quot;D:\\ipmsg\\IPMsg_2_3.exe&quot;;
+    addSection(path);
+    return 0;
+&#125;
+</code></pre>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 1666739907@qq.com </span>
