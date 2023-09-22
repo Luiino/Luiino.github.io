@@ -6,17 +6,16 @@
   <meta name="keywords" content=" Crypto日常刷题 ">
   <meta name="description" content="Crypto刷题记录（四） | Luino&#39;s Bold">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="来自赣育杯的两道题 Wilson之前做过，还是想记录一下，加深印象 from os import urandom from gmpy2 import next_prime from Crypto.Util.number import getPrime, bytes_to_long  p &#x3D; getPrime(512) q &#x3D; next_prime(p) f &#x3D; open(&#39;flag.txt">
+<meta name="description" content="扩大最后一个节1、拉伸到内存									2、分配一块新的空间：SizeOfImage + Ex								3、将最后一个节的SizeOfRawData和VirtualSize改成N								   SizeOfRawData &#x3D; VirtualSize &#x3D; N								   N &#x3D; (SizeOfRawData或者VirtualSize 内存对齐后">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Crypto刷题记录（四）">
-<meta property="og:url" content="http://example.com/2023/09/19/Crypto%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%88%E5%9B%9B%EF%BC%89/index.html">
+<meta property="og:title" content="扩大节-合并节-数据目录">
+<meta property="og:url" content="http://example.com/2023/09/20/%E6%89%A9%E5%A4%A7%E8%8A%82-%E5%90%88%E5%B9%B6%E8%8A%82-%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95/index.html">
 <meta property="og:site_name" content="Luino&#39;s Bold">
-<meta property="og:description" content="来自赣育杯的两道题 Wilson之前做过，还是想记录一下，加深印象 from os import urandom from gmpy2 import next_prime from Crypto.Util.number import getPrime, bytes_to_long  p &#x3D; getPrime(512) q &#x3D; next_prime(p) f &#x3D; open(&#39;flag.txt">
+<meta property="og:description" content="扩大最后一个节1、拉伸到内存									2、分配一块新的空间：SizeOfImage + Ex								3、将最后一个节的SizeOfRawData和VirtualSize改成N								   SizeOfRawData &#x3D; VirtualSize &#x3D; N								   N &#x3D; (SizeOfRawData或者VirtualSize 内存对齐后">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-09-19T09:13:14.000Z">
-<meta property="article:modified_time" content="2023-09-19T10:11:27.880Z">
+<meta property="article:published_time" content="2023-09-20T11:50:36.000Z">
+<meta property="article:modified_time" content="2023-09-20T14:27:19.864Z">
 <meta property="article:author" content="Luino">
-<meta property="article:tag" content="Crypto日常刷题">
 <meta name="twitter:card" content="summary">
 
 
@@ -166,7 +165,7 @@
     <li>
         <div class="all active" data-rel="All">All
             
-                <small>(72)</small>
+                <small>(73)</small>
             
         </div>
     </li>
@@ -253,7 +252,7 @@
         <div data-rel="滴水笔记">
             
             滴水笔记
-            <small>(12)</small>
+            <small>(13)</small>
         </div>
         
     </li>
@@ -298,8 +297,8 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="72">
-<input type="hidden" id="yelog_site_word_count" value="94.1k">
+<input type="hidden" id="yelog_site_posts_number" value="73">
+<input type="hidden" id="yelog_site_word_count" value="96.8k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -470,6 +469,15 @@
 
     
     <nav id="title-list-nav">
+        
+        
+        <a  class="All 滴水笔记 "
+           href="/2023/09/20/%E6%89%A9%E5%A4%A7%E8%8A%82-%E5%90%88%E5%B9%B6%E8%8A%82-%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="扩大节-合并节-数据目录">扩大节-合并节-数据目录</span>
+            <span class="post-date" title="2023-09-20 19:50:36">2023/09/20</span>
+        </a>
         
         
         <a  class="All Crypto "
@@ -1164,12 +1172,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2023-09-19 18:11:27'>2023-09-19 17:13</time>
+            Created At : <time class="date" title='Updated At: 2023-09-22 16:42:24'>2023-09-19 17:13</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:908</span>
+        <span>Count:1.5k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -1188,7 +1196,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Wilson"><span class="toc-text">Wilson</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lost-N"><span class="toc-text">lost_N</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B5%A3%E8%82%B2%E6%9D%AFWilson"><span class="toc-text">赣育杯Wilson</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B5%A3%E8%82%B2%E6%9D%AFlost-N"><span class="toc-text">赣育杯lost_N</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2022%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B45-vgcd"><span class="toc-text">2022第五空间5_vgcd</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -1204,8 +1212,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>来自赣育杯的两道题</p>
-<h3 id="Wilson"><a href="#Wilson" class="headerlink" title="Wilson"></a>Wilson</h3><p>之前做过，还是想记录一下，加深印象</p>
+        <h3 id="赣育杯Wilson"><a href="#赣育杯Wilson" class="headerlink" title="赣育杯Wilson"></a>赣育杯Wilson</h3><p>之前做过，还是想记录一下，加深印象</p>
 <pre><code class="python">from os import urandom
 from gmpy2 import next_prime
 from Crypto.Util.number import getPrime, bytes_to_long
@@ -1271,7 +1278,7 @@ cs.append(c2)
 m = solve_crt(cs,ns)
 print(long_to_bytes(m))
 </code></pre>
-<h3 id="lost-N"><a href="#lost-N" class="headerlink" title="lost_N"></a>lost_N</h3><pre><code class="python">import gmpy2
+<h3 id="赣育杯lost-N"><a href="#赣育杯lost-N" class="headerlink" title="赣育杯lost_N"></a>赣育杯lost_N</h3><pre><code class="python">import gmpy2
 from Crypto.Util.number import *
 # part1
 flag = b&#39;SangFor&#123;&#125;&#39;
@@ -1407,6 +1414,57 @@ m = pow(c1,d,n1)
 print(long_to_bytes(m))
 </code></pre>
 <p><strong>共私钥指数攻击</strong>可参考<a target="_blank" rel="noopener" href="https://lazzzaro.github.io/2020/05/06/crypto-RSA/#Common-Private-Exponent%EF%BC%88%E5%85%B1%E7%A7%81%E9%92%A5%E6%8C%87%E6%95%B0%E6%94%BB%E5%87%BB%EF%BC%8Cd%E7%9B%B8%E5%90%8C%EF%BC%89">RSA | Lazzaro (lazzzaro.github.io)</a></p>
+<h3 id="2022第五空间5-vgcd"><a href="#2022第五空间5-vgcd" class="headerlink" title="2022第五空间5_vgcd"></a>2022第五空间5_vgcd</h3><pre><code class="python">from random import getrandbits, seed
+from Crypto.Util.number import getPrime, inverse, bytes_to_long, isPrime
+from os import urandom
+from secret import flag
+
+def sample(rho, eta, gamma, p):
+    seed(urandom(8))
+    return p * getrandbits(gamma - eta) + getrandbits(rho)
+
+def gen_vector(rho, eta, gamma, m, p, K):
+    v = vector([sample(rho, eta, gamma, p) for i in range(m)])
+    return K*v 
+    
+rho = 6
+m = 3
+eta = 288
+gamma = 512
+p = getPrime(gamma)
+q = getPrime(gamma)
+n = p * q
+e = 65537
+phi = (p - 1) * (q - 1)
+c = pow(bytes_to_long(flag), e, n)
+print(n)
+print(c)
+
+pp = p &gt;&gt; (gamma - eta)
+assert isPrime(pp)
+K = Matrix.random(Integers(pp), m, m).lift()
+t1 = [gen_vector(rho, eta, gamma, m, pp, K) for i in range(1024)]
+print(t1)
+for i in range(4):
+    t2 = [gen_vector(rho, eta, gamma, m, pp, K) for i in range(512)]
+    print(t2)
+</code></pre>
+<p>想办法得到pp从而恢复p解出flag。</p>
+<p>$t &#x3D; K\cdot v$</p>
+<p>$K\cdot v &#x3D; \begin{bmatrix}<br>k_{11}&amp;k_{12}&amp;k_{13}\<br>k_{21}&amp;k_{22}&amp;k_{23}\<br>k_{31}&amp;k_{32}&amp;k_{33}\<br>\end{bmatrix}<br> \cdot<br>\begin{pmatrix}<br>pp\cdot r_{224}+r_6,&amp;pp\cdot rr_{224}+rr_6,&amp;pp\cdot rrr_{224}+rrr_6\<br>\end{pmatrix}$</p>
+<p>$&#x3D;\begin{pmatrix}<br>a_1\cdot pp+b_1 &amp; a_2\cdot pp+b_2 &amp;a_3\cdot pp+b_3 &amp;<br> \end{pmatrix} $</p>
+<p>其中：</p>
+<p>$a_i &#x3D; k_{1i}\cdot r_{224} + k_{2i}\cdot r_{224}+k_{3i}\cdot r_{224}$ </p>
+<p>$b_i &#x3D; k_{1i}\cdot r_{6} + k_{2i}\cdot rr_{6}+k_{3i}\cdot rrr_{6}$</p>
+<p>通过多组形如$a\cdot pp + b$的式子，找到两个式子，相减消去b后求gcd可以得到pp。</p>
+<p>可能有这样的疑惑，不同的式子b是不同的，怎么能消去，这里用到生日攻击的理论。<br>在本题中，rho&#x3D;6，即$r_6、rr_6、rrr_6$都是6位的，相对较小，那么b总共就只有$2^6\cdot 2^6\cdot 2^6\cdot &#x3D; 2^{18}$种情况，题目一共给了3072个输出数据。带入生日悖论的公式：$P &#x3D; 1-e^{-\frac{n(n-1)}{2N}} &#x3D; 1-e^{-\frac{3072(3072-1)}{2\cdot 2^{18}}}$。算出来的概率是近似百分之百的。简单理解就是在这么多的数据中，大概率存在相同的$r_6、rr_6、rrr_6$。</p>
+<p>所以我们只需要遍历所有结果，找到b相同的式子求gcd从而得到pp。</p>
+<p>得到pp后就是基础的高位攻击，无需多说。</p>
+<p>这道题主要是记一下生日攻击的思想。</p>
+<p>可参考：</p>
+<p><a target="_blank" rel="noopener" href="https://gal2xy.github.io/2022/10/03/2022%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B4/">2022第五空间 - gla2xy’s blog (gal2xy.github.io)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_51999772/article/details/127103846">生日攻击及CTF例子_M3ng@L的博客-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u010883831/article/details/126944260">【2022 第五空间】5_vgcd WriteUP_2vgcd_Mr_AgNO3的博客-CSDN博客</a></p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 1666739907@qq.com </span>

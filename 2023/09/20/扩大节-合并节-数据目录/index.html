@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>NepCTF2023-random_RSA | Luino&#39;s Bold</title>
+  <title>扩大节-合并节-数据目录 | Luino&#39;s Bold</title>
   <meta name="keywords" content="">
-  <meta name="description" content="NepCTF2023-random_RSA | Luino&#39;s Bold">
+  <meta name="description" content="扩大节-合并节-数据目录 | Luino&#39;s Bold">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="扩大最后一个节1、拉伸到内存									2、分配一块新的空间：SizeOfImage + Ex								3、将最后一个节的SizeOfRawData和VirtualSize改成N								   SizeOfRawData &#x3D; VirtualSize &#x3D; N								   N &#x3D; (SizeOfRawData或者VirtualSize 内存对齐后">
 <meta property="og:type" content="article">
@@ -1145,9 +1145,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-NepCTF2023-random_RSA" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-扩大节-合并节-数据目录" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">NepCTF2023-random_RSA</h1>
+        <h1 class="article-title">扩大节-合并节-数据目录</h1>
     
     <div class="article-meta">
         
@@ -1157,7 +1157,7 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="Match">Match</a>
+            <a  data-rel="滴水笔记">滴水笔记</a>
             
         </span>
         
@@ -1165,12 +1165,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2023-09-11 20:04:04'>2023-09-08 15:10</time>
+            Created At : <time class="date" title='Updated At: 2023-09-20 22:27:19'>2023-09-20 19:50</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:737</span>
+        <span>Count:554</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -1189,7 +1189,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#random-RSA"><span class="toc-text">random_RSA</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%81%A2%E5%A4%8Dp%E3%80%81q%E3%80%81d%EF%BC%9A"><span class="toc-text">恢复p、q、d：</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A9%E5%A4%A7%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E8%8A%82"><span class="toc-text">扩大最后一个节</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%88%E5%B9%B6%E8%8A%82"><span class="toc-text">合并节</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -1205,120 +1205,108 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="random-RSA"><a href="#random-RSA" class="headerlink" title="random_RSA"></a>random_RSA</h3><pre><code class="python">from gmpy2 import next_prime, invert as inverse_mod
-from Crypto.Cipher import PKCS1_v1_5
-from Crypto.PublicKey import RSA
-from random import getrandbits
-from math import lcm
-from sys import exit
+        <h3 id="扩大最后一个节"><a href="#扩大最后一个节" class="headerlink" title="扩大最后一个节"></a>扩大最后一个节</h3><p>1、拉伸到内存									<br>2、分配一块新的空间：SizeOfImage + Ex								<br>3、将最后一个节的SizeOfRawData和VirtualSize改成N								<br>   SizeOfRawData &#x3D; VirtualSize &#x3D; N								<br>   N &#x3D; (SizeOfRawData或者VirtualSize 内存对齐后的值) + Ex									<br>4、修改SizeOfImage大小										<br>   SizeOfImage &#x3D; SizeOfImage + Ex						</p>
+<pre><code class="python">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;malloc.h&gt;
+#include &lt;windows.h&gt;
+#include &lt;memory.h&gt;
 
-global_bits = 1024
+int GetFilesize(FILE* fptr);
+char* ReadFilea(const char* Filepath); 
 
-BANNER = rb&quot;&quot;&quot;
-...
-&quot;&quot;&quot;
+//返回对齐后的大小
+DWORD alignment(DWORD alignment_value, DWORD addend) &#123;
+    int t = addend / alignment_value;
+    int res_value = addend % alignment_value;
+    if (t &lt; 0 || (t == 1 &amp;&amp; res_value == 0))
+        return alignment_value;
+    return (t+1)*alignment_value;
+&#125; 
 
-def generate_prime(bits: int):
-    p = (getrandbits(bits - 32) &lt;&lt; 32)
-    return next_prime(p)
+bool enlarge(char* path) &#123;
+    PIMAGE_DOS_HEADER pDosHeader = NULL;
+    PIMAGE_NT_HEADERS pNTHeader = NULL;
+    PIMAGE_FILE_HEADER pPEHeader = NULL;
+    PIMAGE_OPTIONAL_HEADER32 pOptionHeader = NULL;
+    PIMAGE_SECTION_HEADER pSectionHeader = NULL;
+    
+    char* pFileBuffer = ReadFilea(path);
+    if (!pFileBuffer) &#123;
+        printf(&quot;读取文件失败&quot;);
+        return false;
+    &#125;
+    pDosHeader = (PIMAGE_DOS_HEADER)pFileBuffer;
+    pNTHeader = (PIMAGE_NT_HEADERS)(pFileBuffer + (pDosHeader-&gt;e_lfanew));
+    pPEHeader = (PIMAGE_FILE_HEADER)(pFileBuffer + (pDosHeader-&gt;e_lfanew) + 4);
+    pOptionHeader = (PIMAGE_OPTIONAL_HEADER32)(pFileBuffer + (pDosHeader-&gt;e_lfanew) + 4 + IMAGE_SIZEOF_FILE_HEADER);
+    pSectionHeader = (PIMAGE_SECTION_HEADER)(pFileBuffer + (pDosHeader-&gt;e_lfanew) + 4 + IMAGE_SIZEOF_FILE_HEADER + pPEHeader-&gt;SizeOfOptionalHeader);
+     
+    for (size_t i = 0; i&lt;pPEHeader-&gt;NumberOfSections-1; i++) 
+        pSectionHeader++;
+    DWORD max = (pSectionHeader-&gt;PointerToRawData &gt; pSectionHeader-&gt;Misc.VirtualSize ? pSectionHeader-&gt;SizeOfRawData : pSectionHeader-&gt;Misc.VirtualSize);
+    pSectionHeader-&gt;SizeOfRawData = max + 0x1000;
+    pSectionHeader-&gt;Misc.VirtualSize = max + 0x1000;
+    pOptionHeader-&gt;SizeOfImage = alignment(0x1000,pOptionHeader-&gt;SizeOfImage + 0x1000);
+    
+    int filesize = pSectionHeader-&gt;PointerToRawData + pSectionHeader-&gt;SizeOfRawData;
+    char* newBuffer = (char*)malloc(filesize);
+    memset(newBuffer, 0, filesize);
+    memcpy(newBuffer, pFileBuffer, filesize);
+    FILE* nFp;
+    nFp2 = fopen(&quot;D:\\ipmsg\\IPMsgnew_2_4.exe&quot;,&quot;wb&quot;);
+    fwrite(newBuffer, filesize, 1, nFp);
+    fclose(nFp);
+    free(newBuffer);
+    free(pFileBuffer);
+    newBuffer = NULL; pFileBuffer = NULL;
+    
+&#125;
+char* ReadFilea(const char* Filepath) &#123;
+    FILE* fptr = NULL;
+    fptr = fopen(Filepath,&quot;rb&quot;);
+    if (!fptr) &#123;
+        printf(&quot;文件打开失败\n&quot;);
+        return NULL;
+    &#125; 
+    int filesize = 0;
+    filesize = GetFilesize(fptr);
+    if (filesize == 0) &#123;
+        printf(&quot;获取文件大小失败\n&quot;);
+        return NULL;
+    &#125;
+    char* FileBuffer = (char*)malloc(filesize);
+    if (!FileBuffer) &#123;
+        printf(&quot;开辟空间失败\n&quot;);
+        return NULL;
+    &#125;
+    //读取文件内容到内存 
+    size_t n = fread(FileBuffer, 1, filesize, fptr);
+    if (!n) &#123;
+        printf(&quot;读取数据失败\n&quot;);
+        free(FileBuffer); FileBuffer = NULL;
+        fclose(fptr);
+        return NULL;
+    &#125;
+    fclose(fptr);
+    return FileBuffer;
+&#125;
 
-def generate_private_key(bits: int):
-    p, q = generate_prime(bits), generate_prime(bits)
-    n, phi = p * q, lcm(p-1, q - 1)
+int GetFilesize(FILE* fptr) &#123;
+    int num = 0;
+    fseek(fptr, 0, SEEK_END);
+    num = ftell(fptr);
+    fseek(fptr, 0, SEEK_SET);
+    return num;
+&#125;
 
-    d = inverse_mod(0x10001, phi)
-    privateKey = RSA.construct((int(n), int(0x10001), int(d), int(p), int(q)))
-    return privateKey, p &gt; q
-
-if __name__ == &quot;__main__&quot;:
-    print(BANNER.decode())
-    print(&quot;Welcome to the world of random RSA.&quot;)
-    print(&quot;Please make your choice.&quot;)
-    for _ in range(8):
-        choice = input()
-
-        if choice == &#39;1&#39;:
-            p, q = generate_prime(global_bits), generate_prime(global_bits)
-            N = p*q
-            d = generate_prime(global_bits-32)
-            e = inverse_mod(d, (p * p - 1) * (q * q - 1))
-            print(f&quot;&#123;int(N)&#125;&quot;)
-            print(f&quot;&#123;int(e)&#125;&quot;)
-
-        elif choice == &#39;2&#39;:
-            privateKey, signal = generate_private_key(global_bits)
-            Cipher = PKCS1_v1_5.new(privateKey)
-            c = (Cipher.encrypt(flag.encode()))
-            print(c)
-            exit()
-
-        else:
-            exit()
+int main() &#123;
+    char* path = (char*)&quot;D:\\ipmsg\\IPMsg_2_4.exe&quot;;
+    enlarge(path);
+    return 0;
+&#125;
 </code></pre>
-<p>八次交互机会，输入1可通过生成随机数生成p、q、d，且有e的生成规则：$ed \equiv 1\pmod  {(p^2-1)\cdot (q^2-1)}$,最后给出N、e，属于RSA的变体，有论文可参考：<a target="_blank" rel="noopener" href="https://citeseerx.ist.psu.edu/pdf/cfdf59414fe73f7f1f41e67b98225f9dd733c26f">CiteSeerX (psu.edu)</a>，想看懂属实费劲，记住是通过找$\frac{e}{N^2-\frac{9}{4}\cdot N+1}$的连分数可恢复d，从而恢复p、q。输入2构造基础RSA加密flag。</p>
-<p>显然最后加密flag中生成的p、q需要通过菜单1的随机数预测得到，8次交互，可以让前7次选择菜单1，最后一次选择菜单2，如此便得到：((1024-32) &#x2F; 32 * 2+ (1024-32-32) &#x2F; 32) * 7 &#x3D; 644个32位的随机数，接着就能恢复菜单2中的p、q。</p>
-<h4 id="恢复p、q、d："><a href="#恢复p、q、d：" class="headerlink" title="恢复p、q、d："></a>恢复p、q、d：</h4><p>先交互得到7组N、e</p>
-<pre><code class="python">def contfrac_attack(n,e):
-    convergents = continued_fraction(ZZ(e) / ZZ(int(n^2 -9/4*n +1))).convergents()
-    for c in convergents:
-        k = c.numerator()
-        d = c.denominator()
-        if pow(pow(2,int(e),int(n)),int(d),n) == 2:
-            phi = (e*d - 1)//k
-            p_add_q = iroot(n^2+1 -phi +2*n,2)[0]
-            p_sub_q = iroot(n^2+1 -phi -2*n,2)[0]
-            p = (p_add_q + p_sub_q)//2
-            q = n//p 
-            #if p&lt;q:
-            #    p,q = q,p 
-            #print(&#39;[&#39;,p,&#39;,&#39;,q,&#39;,&#39;,d,&#39;],&#39;)
-            return int(p),int(q),int(d)
-
-N = [...]
-E = [...]
-pqd = []
-for n,e in zip(N,E):
-    p,q,d = contfrac_attack(n,e)
-    pqd.append([p,q,d])
-</code></pre>
-<p>接着调用MT19937的模板即可得到p、q来，要注意的是因为p、q的顺序不知道，需要进行爆破：</p>
-<pre><code class="python">from Crypto.Cipher import PKCS1_v1_5
-from Crypto.PublicKey import RSA
-from extend_mt19937_predictor import ExtendMT19937Predictor
-from gmpy2 import invert,next_prime
-from math import lcm
-import itertools
-
-c = b&#39;...&#39;
-
-def get_random(bits):
-    p = predictor.predict_getrandbits(bits - 32) &lt;&lt; 32
-    return next_prime(p)
-
-for o in itertools.product([0,1],repeat=7):
-    try:
-        predictor = ExtendMT19937Predictor()
-        for i,v in enumerate(pqd):
-            predictor.setrandbits(v[o[i]]&gt;&gt;32, 992) 
-            predictor.setrandbits(v[1-o[i]]&gt;&gt;32, 992)
-            predictor.setrandbits(v[2]&gt;&gt;32, 960)
-    except:
-        continue
-    p,q = get_random(1024),get_random(1024)
-    n = p*q
-    phi = lcm(p-1,q-1)
-    d = inverse(e,phi)
-    privateKey = RSA.construct((int(n), int(0x10001), int(d), int(p), int(q)))
-    Cipher = PKCS1_v1_5.new(privateKey)
-    flag = (Cipher.decrypt(c,&#39;\x00&#39;))
-    if b&#39;NepCTF&#39; in flag:
-        print(flag)
-        break
-</code></pre>
-<p>其他题可参考：</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41626232/article/details/132286512?spm=1001.2014.3001.5502">NepCTF2023 Crypto wp_无趣的浅的博客-CSDN博客</a></p>
-<p>[<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_52640415/article/details/132286489">NepCTF 2023] crypto 复现_石氏是时试的博客-CSDN博客</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.ctfiot.com/130016.html">2023 NepCTF | CTF导航 (ctfiot.com)</a></p>
+<h3 id="合并节"><a href="#合并节" class="headerlink" title="合并节"></a>合并节</h3><p>1、拉伸到内存								<br>2、将第一个节的内存大小、文件大小改成一样								<br>   Max &#x3D; SizeOfRawData&gt;VirtualSize?SizeOfRawData:VirtualSize								<br>   SizeOfRawData &#x3D; VirtualSize &#x3D; 最后一个节的VirtualAddress + Max - SizeOfHeaders内存对齐后的大小						<br>3、将第一个节的属性改为包含所有节的属性						 			<br>4、修改节的数量为1						</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 1666739907@qq.com </span>
@@ -1331,46 +1319,6 @@ for o in itertools.product([0,1],repeat=7):
 
 
 
-    
-        <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-    "HTML-CSS": {
-        preferredFont: "TeX",
-        availableFonts: ["STIX","TeX"],
-        linebreaks: { automatic:true },
-        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
-    },
-    tex2jax: {
-        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
-        processEscapes: true,
-        ignoreClass: "tex2jax_ignore|dno",
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-    TeX: {
-        equationNumbers: { autoNumber: "AMS" },
-        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
-        Macros: { href: "{}" }
-    },
-    messageStyle: "none"
-    });
-</script>
-<!-- 给MathJax元素添加has-jax class -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-<!-- 通过连接CDN加载MathJax的js代码 -->
-<script type="text/javascript" async
-        src="//cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
-<input type="hidden" id="MathJax-js"
-        value="//cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
-</input>
     
 
 
